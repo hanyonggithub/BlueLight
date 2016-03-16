@@ -9,13 +9,13 @@
     <!-- HOME -->
 
     <LinearLayout
+        android:id="@+id/llt_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="5dp" >
 
          <View
-            android:id="@+id/ivw_home"
             android:layout_width="34dp"
             android:layout_height="23dp"
             android:layout_gravity="center_horizontal"
@@ -25,7 +25,6 @@
             android:textColor="@color/theme_blue" /> 
 
         <TextView
-            android:id="@+id/tvw_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -37,6 +36,7 @@
     <!-- switcher -->
 
     <LinearLayout
+        android:id="@+id/llt_switcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -44,7 +44,6 @@
         android:padding="5dp" >
 
         <View
-            android:id="@+id/ivw_sw"
             android:layout_width="23dp"
             android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
@@ -54,7 +53,6 @@
             android:textColor="@color/theme_blue" />
 
         <TextView
-            android:id="@+id/tvw_sw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -66,6 +64,7 @@
     <!-- brightness -->
 
     <LinearLayout
+          android:id="@+id/llt_brightness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -73,7 +72,6 @@
         android:padding="5dp" >
 
         <View
-            android:id="@+id/ivw_bt"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_horizontal"
@@ -83,7 +81,6 @@
             android:textColor="@color/theme_blue" />
 
         <TextView
-            android:id="@+id/tvw_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
