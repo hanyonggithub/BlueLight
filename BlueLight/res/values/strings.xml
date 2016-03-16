@@ -4,5 +4,8 @@
     <string name="app_name">BlueLight</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="brightness">brightness</string>
+    <string name="home">home</string>
+    <string name="switcher">home</string>
 
 </resources>
