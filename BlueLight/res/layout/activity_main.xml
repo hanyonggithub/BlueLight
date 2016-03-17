@@ -1,15 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.vui.bluelight.MainActivity" >
 
     <RelativeLayout
         android:id="@+id/rlt_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@android:color/white"
-        android:paddingBottom="50dp" >
+         >
 
         <com.vui.bluelight.base.view.TopBarView
             android:id="@+id/topbar"
@@ -26,52 +28,10 @@
             />
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/sw_bg" />
-
-    <RelativeLayout
-        android:id="@+id/rlt_bottom_bar"
+    <include
+        android:id="@+id/inc_foot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/darker_gray" >
-
-        <TextView
-            android:id="@+id/tvw_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="20dp"
-            android:drawableTop="@drawable/home"
-            android:gravity="center_horizontal"
-            android:text="HOME"
-            android:textColor="@color/theme_blue" />
-
-        <TextView
-            android:id="@+id/tvw_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp"
-            android:drawableTop="@drawable/sw"
-            android:gravity="center_horizontal"
-            android:text="switch"
-            android:textColor="@color/theme_blue" />
-
-        <TextView
-            android:id="@+id/tvw_brightness"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="20dp"
-            android:drawableTop="@drawable/brightness"
-            android:gravity="center_horizontal"
-            android:text="brightness"
-            android:textColor="@color/theme_blue" />
-    </RelativeLayout>
-
-</RelativeLayout>
+        layout="@layout/bottom_switcher_bar" />
+</LinearLayout>

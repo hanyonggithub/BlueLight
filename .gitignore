@@ -1,3 +1,4 @@
-﻿/BlueLight/bin/
-/BlueLight/gen/
+﻿/BlueLight/bin/*
+/BlueLight/gen/*
 *.classpath
+*.class
