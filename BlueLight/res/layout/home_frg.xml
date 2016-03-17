@@ -70,9 +70,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:background="@color/theme_blue" >
+         >
 
         <LinearLayout
+            android:id="@+id/llt_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
@@ -81,10 +82,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:orientation="horizontal"
+                android:background="@drawable/bluerectframe"
                 android:gravity="center_vertical"
-                 >
+                android:orientation="horizontal" >
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -107,73 +107,242 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                  
-                     >
-                    <TextView 
+                    android:layout_height="wrap_content" >
+
+                    <TextView
                         android:id="@+id/user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nina"
                         android:textSize="20sp"
-                        android:textStyle="bold"
-                      
-                        />
-                    <ImageView 
+                        android:textStyle="bold" />
+
+                    <ImageView
                         android:id="@+id/light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/light_on"
-                        android:layout_toRightOf="@id/user_name"
                         android:layout_marginLeft="25dp"
-                        />
-                    <TextView 
+                        android:layout_toRightOf="@id/user_name"
+                        android:src="@drawable/light_on" />
+
+                    <TextView
                         android:id="@+id/lefttime_light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2 hrs 55 munites" 
-                        android:layout_toRightOf="@id/light"
                         android:layout_marginLeft="10dp"
-                        />
-                    <TextView 
+                        android:layout_toRightOf="@id/light"
+                        android:text="2 hrs 55 munites" />
+
+                    <TextView
                         android:id="@+id/user_job"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Designer"
-                        android:textSize="15sp"
                         android:layout_below="@id/user_name"
-                        />
-                    <ImageView 
+                        android:text="Designer"
+                        android:textSize="15sp" />
+
+                    <ImageView
                         android:id="@+id/music"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/music_on"
-                        android:layout_toRightOf="@id/user_job"
-                        android:layout_below="@id/user_name"
                         android:layout_alignLeft="@id/light"
-                        />
-                    <TextView 
+                        android:layout_below="@id/user_name"
+                        android:layout_toRightOf="@id/user_job"
+                        android:src="@drawable/music_on" />
+
+                    <TextView
                         android:id="@+id/lefttime_music"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2 hrs 55 munites" 
-                        android:layout_toRightOf="@id/music"
-                        android:layout_below="@id/user_name"
                         android:layout_alignLeft="@id/lefttime_light"
-                        />
+                        android:layout_below="@id/user_name"
+                        android:layout_toRightOf="@id/music"
+                        android:text="2 hrs 55 munites" />
                 </RelativeLayout>
             </LinearLayout>
-            <View 
+
+            <TextView
+                android:id="@+id/tvw_songname"
                 android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="@android:color/white"
+                android:layout_height="wrap_content"
+                android:text="Beat It--Machel Jackson"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
                 android:layout_marginTop="5dp"
+                android:background="@color/theme_blue"
+                android:gravity="center"
                 />
-         
-                
-                
+            <LinearLayout 
+                android:id="@+id/llt_music_play"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/theme_blue"
+                />
+            <RelativeLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/theme_blue"
+                 android:paddingLeft="30dp"
+                 android:paddingRight="30dp"
+                >
+                   <ImageView 
+                    android:id="@+id/ivw_last_song"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/last_song"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                   
+                    />
+                <ImageView 
+                    android:id="@+id/ivw_play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/stop"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20dp"
+                    />
+                <ImageView 
+                    android:id="@+id/ivw_next_song"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/next_song"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@android:color/white"
+                android:paddingTop="5dp"
+                android:paddingBottom="10dp"
+                >
+                <LinearLayout 
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    >
+                    <LinearLayout 
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bluerectframe"
+                        android:padding="20dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        >
+                        <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RGBW"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/rgbw"
+                        android:drawablePadding="10dp"
+                        />
+                        <TextView 
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Over 16 millons colors"
+                            android:layout_marginTop="10dp"
+                            />
+                    </LinearLayout>
+                      <LinearLayout 
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bluerectframe"
+                        android:padding="20dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:layout_marginLeft="5dp"
+                        >
+                        <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mode"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/mode"
+                        android:drawablePadding="10dp"
+                        />
+                        <TextView 
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lighting Mode setting"
+                            android:layout_marginTop="10dp"
+                            />
+                    </LinearLayout>
+                   
+                    
+                </LinearLayout>
+                  <LinearLayout 
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    >
+                     <LinearLayout 
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bluerectframe"
+                        android:padding="20dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        >
+                        <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Timer"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/timmer"
+                        android:drawablePadding="10dp"
+                        />
+                        <TextView 
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="lights timer setting"
+                            android:layout_marginTop="10dp"
+                            />
+                    </LinearLayout>
+                     <LinearLayout 
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bluerectframe"
+                        android:padding="20dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                         android:layout_marginLeft="5dp"
+                        >
+                        <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Group"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/group"
+                        android:drawablePadding="10dp"
+                        />
+                        <TextView 
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="lighting group setting"
+                            android:layout_marginTop="10dp"
+                            />
+                    </LinearLayout>
+                   
+                    
+                </LinearLayout>
+                </LinearLayout>
+          
+   
             
-           
         </LinearLayout>
     </ScrollView>
 
