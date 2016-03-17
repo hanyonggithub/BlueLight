@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+<RelativeLayout 
+    android:id="@+id/item_left_"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="15dp" >
+
+    <TextView
+        android:id="@+id/tv_lightson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="lights on"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/tv_lightson"
+        android:text="6:30"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/llt_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/tv_time"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="@dimen/timer_circle_size"
+            android:layout_height="@dimen/timer_circle_size"
+            android:layout_marginRight="@dimen/timer_circle_mar_size"
+            android:background="@drawable/bg_timer_circle_on"
+            android:textSize="@dimen/timer_circle_num_size"
+            android:gravity="center"
+            android:text="1" />
+
+        <TextView
+            android:layout_width="@dimen/timer_circle_size"
+            android:layout_height="@dimen/timer_circle_size"
+            android:layout_marginRight="@dimen/timer_circle_mar_size"
+            android:background="@drawable/bg_timer_circle_on"
+             android:textSize="@dimen/timer_circle_num_size"
+            android:gravity="center"
+            android:text="2" />
+
+        <TextView
+            android:layout_width="@dimen/timer_circle_size"
+            android:layout_height="@dimen/timer_circle_size"
+            android:layout_marginRight="@dimen/timer_circle_mar_size"
+            android:background="@drawable/bg_timer_circle_on"
+             android:textSize="@dimen/timer_circle_num_size"
+            android:gravity="center"
+            android:text="3" />
+
+        <TextView
+            android:layout_width="@dimen/timer_circle_size"
+            android:layout_height="@dimen/timer_circle_size"
+            android:layout_marginRight="@dimen/timer_circle_mar_size"
+            android:background="@drawable/bg_timer_circle_on"
+             android:textSize="@dimen/timer_circle_num_size"
+            android:gravity="center"
+            android:text="4" />
+
+        <TextView
+            android:layout_width="@dimen/timer_circle_size"
+            android:layout_height="@dimen/timer_circle_size"
+            android:layout_marginRight="@dimen/timer_circle_mar_size"
+            android:background="@drawable/bg_timer_circle_on"
+             android:textSize="@dimen/timer_circle_num_size"
+            android:gravity="center"
+            android:text="5" />
+
+        <TextView
+            android:layout_width="@dimen/timer_circle_size"
+            android:layout_height="@dimen/timer_circle_size"
+            android:layout_marginRight="@dimen/timer_circle_mar_size"
+            android:background="@drawable/bg_timer_circle_on"
+             android:textSize="@dimen/timer_circle_num_size"
+            android:gravity="center"
+            android:text="6" />
+
+        <TextView
+            android:layout_width="@dimen/timer_circle_size"
+            android:layout_height="@dimen/timer_circle_size"
+            android:layout_marginRight="@dimen/timer_circle_mar_size"
+            android:background="@drawable/bg_timer_circle_on"
+             android:textSize="@dimen/timer_circle_num_size"
+            android:gravity="center"
+            android:text="7" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/state_on" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/tv_lightson"
+        android:layout_marginTop="15dp"
+        android:background="#000000" />
+
+</RelativeLayout>
+
+<TextView 
+    android:id="@+id/item_right"
+     android:layout_width="@dimen/timer_swipelistview_right_width"
+     android:layout_height="wrap_content"
+     android:background="#000000"
+     android:gravity="center"
+     android:textSize="12sp"
+     android:textColor="#ffffff"
+     android:text="DELETE"
+    />
+</LinearLayout>
+

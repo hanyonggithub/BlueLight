@@ -67,7 +67,7 @@ public class SwipeAdapter extends BaseAdapter {
             item = new ViewHolder();
             item.item_left_ = (View)convertView.findViewById(R.id.item_left_);
             item.item_right = (View)convertView.findViewById(R.id.item_right);
-            item.item_left_txt = (TextView)convertView.findViewById(R.id.item_left_txt);
+           // item.item_left_txt = (TextView)convertView.findViewById(R.id.item_left_txt);
             item.item_right_txt = (TextView)convertView.findViewById(R.id.item_right_txt);
             convertView.setTag(item);
         } else {// 有直接获得ViewHolder

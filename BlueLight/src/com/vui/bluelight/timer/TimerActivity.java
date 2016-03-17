@@ -17,15 +17,16 @@ public class TimerActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.aty_timer);
-		initView();
 		initFragment();
+		initView();
+		
 	}
 
 	private void initFragment() {
 		FragmentManager fm=getFragmentManager();
 		FragmentTransaction transacction=fm.beginTransaction();
 		TimerFragment timerFragment =  new TimerFragment();
-		LogUtils.i("================llpp");
+		LogUtils.i("initFragment================llpp");
 		transacction.replace(R.id.id_content, timerFragment).commit();
 	}
 

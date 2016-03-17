@@ -7,5 +7,6 @@
     <string name="brightness">brightness</string>
     <string name="home">home</string>
     <string name="switcher">home</string>
+    <string name="state_on">ON</string>
 
 </resources>
