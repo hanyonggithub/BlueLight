@@ -26,8 +26,9 @@ public class TimerActivity extends Activity{
 		FragmentManager fm=getFragmentManager();
 		FragmentTransaction transacction=fm.beginTransaction();
 		TimerFragment timerFragment =  new TimerFragment();
+		TimerRGBFragment timerRGBFragment = new TimerRGBFragment();
 		LogUtils.i("initFragment================llpp");
-		transacction.replace(R.id.id_content, timerFragment).commit();
+		transacction.replace(R.id.id_content, timerRGBFragment).commit();
 	}
 
 	private void initView() {

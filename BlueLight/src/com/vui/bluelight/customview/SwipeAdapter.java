@@ -1,5 +1,5 @@
 
-package com.vui.bluelight.swipeview;
+package com.vui.bluelight.customview;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.vui.bluelight.R;
