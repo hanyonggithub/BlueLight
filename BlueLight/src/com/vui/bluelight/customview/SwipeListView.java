@@ -1,5 +1,5 @@
 
-package com.vui.bluelight.swipeview;
+package com.vui.bluelight.customview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
