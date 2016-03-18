@@ -4,10 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/v_topbar" />
+    </FrameLayout>
+
     <TextView
         android:id="@+id/tv_frg_time"
         android:layout_width="match_parent"
         android:layout_height="160dp"
+        android:layout_below="@id/fl_content"
         android:background="#1BA4CB"
         android:gravity="center"
         android:text="12:35"
@@ -16,12 +28,12 @@
 
     <com.vui.bluelight.customview.SwipeListView
         android:id="@+id/listview"
-        android:layout_below="@id/tv_frg_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:dividerHeight="0dp"
+        android:layout_below="@id/tv_frg_time"
+        android:background="#cccccc"
         android:divider="@null"
-        android:listSelector="@android:color/transparent"
-        android:background="#cccccc" />
+        android:dividerHeight="0dp"
+        android:listSelector="@android:color/transparent" />
 
 </RelativeLayout>

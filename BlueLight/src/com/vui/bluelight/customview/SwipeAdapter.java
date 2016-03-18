@@ -29,30 +29,38 @@ public class SwipeAdapter extends BaseAdapter {
 		mContext = ctx;
 		mRightWidth = rightWidth;
 		mListener = l;
-		initData(mContext);
+		TimerEntity timerEntity= getTimerEntity(mContext);
+		if(timerEntity!=null){
+			this.timerEntity=timerEntity;
+		}else{
+			LogUtils.e("llpp:================:timerEntity==null");	
+		}
 	}
 
 	public static final String sp_timer_light_list="timer_light_list";
 	public static final String key_timer_light_list="key_timer_light_list";
 	public TimerEntity timerEntity;
-	private void initData(Context mContext) {
+	/**
+	 * 获取数据
+	 * @param mContext
+	 * @return
+	 */
+	public static TimerEntity getTimerEntity(Context mContext) {
 		try {
 			SharedPreferences sp = mContext.getSharedPreferences(sp_timer_light_list, Context.MODE_PRIVATE);
 			String timer_light = sp.getString(key_timer_light_list, null);
+			TimerEntity timerEntity=null;
 			if(timer_light!=null){
 				Gson gson = new Gson();
-				TimerEntity timerEntity = gson.fromJson(timer_light, TimerEntity.class);
-				if(timerEntity!=null){
-					this.timerEntity = timerEntity;
-				}else{
-					LogUtils.e("llpp:================:timerEntity==null");
-				}
+				timerEntity= gson.fromJson(timer_light, TimerEntity.class);				
 			}else{
 				LogUtils.e("llpp:================:timer_light==null");
 			}
+			return timerEntity;
 		} catch (JsonSyntaxException e) {
 			LogUtils.e("llpp:==initData=====================Exception:"+e.toString());
 			e.printStackTrace();
+			return null;
 		}
 	}
 
@@ -117,7 +125,7 @@ public class SwipeAdapter extends BaseAdapter {
 					timerEntity.items.get(thisPosition).state=0;
 					item.tv_switcher.setText("OFF");
 				}
-				saveToLocal();
+				saveToLocal(timerEntity,mContext);
 			}
 		});
 		item.item_right.setOnClickListener(new OnClickListener() {
@@ -131,10 +139,10 @@ public class SwipeAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	public void saveToLocal() {
+	public static void saveToLocal(TimerEntity  timerEntity,Context context) {
 		Gson gson = new Gson();
-		String json = gson.toJson(this.timerEntity);
-		SharedPreferences sp = this.mContext.getSharedPreferences(SwipeAdapter.sp_timer_light_list,
+		String json = gson.toJson(timerEntity);
+		SharedPreferences sp =context.getSharedPreferences(SwipeAdapter.sp_timer_light_list,
 				Context.MODE_PRIVATE);
 		sp.edit().putString(SwipeAdapter.key_timer_light_list,json).commit();
 	}

@@ -21,6 +21,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vui.bluelight.utils.ScreenUtils;
+
 public class WheelView extends ScrollView {
     public static final String TAG = WheelView.class.getSimpleName();
 
@@ -31,7 +33,7 @@ public class WheelView extends ScrollView {
 
 
     private Context context;
-    private LinearLayout views;
+    private LinearLayout llt_content;
 
     public WheelView(Context context) {
         super(context);
@@ -94,9 +96,9 @@ public class WheelView extends ScrollView {
 //        this.setOrientation(VERTICAL);
         this.setVerticalScrollBarEnabled(false);
 
-        views = new LinearLayout(context);
-        views.setOrientation(LinearLayout.VERTICAL);
-        this.addView(views);
+        llt_content = new LinearLayout(context);
+        llt_content.setOrientation(LinearLayout.VERTICAL);
+        this.addView(llt_content);
 
         scrollerTask = new Runnable() {
 
@@ -162,7 +164,7 @@ public class WheelView extends ScrollView {
         displayItemCount = offset * 2 + 1;
 
         for (String item : items) {
-            views.addView(createView(item));
+        	llt_content.addView(createView(item));
         }
 
         refreshItemView(0);
@@ -182,9 +184,10 @@ public class WheelView extends ScrollView {
         if (0 == itemHeight) {
             itemHeight = getViewMeasuredHeight(tv);
             Log.d(TAG, "itemHeight: " + itemHeight);
-            views.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemHeight * displayItemCount));
+            llt_content.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemHeight * displayItemCount));
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) this.getLayoutParams();
-            this.setLayoutParams(new LinearLayout.LayoutParams(500, itemHeight * displayItemCount));
+            int screenWidth = ScreenUtils.getScreenWidth(context);
+            this.setLayoutParams(new LinearLayout.LayoutParams(screenWidth/2, itemHeight * displayItemCount));
         }
         return tv;
     }
@@ -263,16 +266,16 @@ public class WheelView extends ScrollView {
 //            position = divided + offset + 1;
         }
 
-        int childSize = views.getChildCount();
+        int childSize = llt_content.getChildCount();
         for (int i = 0; i < childSize; i++) {
-            TextView itemView = (TextView) views.getChildAt(i);
+            TextView itemView = (TextView) llt_content.getChildAt(i);
             if (null == itemView) {
                 return;
             }
             if (position == i) {
-                itemView.setTextColor(Color.parseColor("#0288ce"));
+                itemView.setTextColor(Color.parseColor("#ffffff"));
             } else {
-                itemView.setTextColor(Color.parseColor("#99000000"));
+                itemView.setTextColor(Color.parseColor("#99ffffff"));
             }
         }
     }
@@ -309,7 +312,7 @@ public class WheelView extends ScrollView {
 
         if (null == paint) {
             paint = new Paint();
-            paint.setColor(Color.parseColor("#83cde6"));
+            paint.setColor(Color.parseColor("#ffffff"));
             paint.setStrokeWidth(dip2px(1f));
         }
 

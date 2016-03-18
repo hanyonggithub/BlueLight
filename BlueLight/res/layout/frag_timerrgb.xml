@@ -1,10 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llt_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/llt_root"
-    android:background="#ffcccc"
+    android:background="#1BA4CB"
     android:orientation="vertical" >
 
+    <include 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/v_topbar"
+        />
+    <RadioGroup
+        android:id="@+id/rg_onoff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/rb_on"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/timer_onoff_left"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="lights on"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/rb_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/timer_onoff_right"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="lights off"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tv_tip_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="lights on 2hrs and 55 munites later"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <com.vui.bluelight.customview.WheelView
+            android:id="@+id/main_wv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.vui.bluelight.customview.WheelView
+            android:id="@+id/main_wv2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <!-- 下面三部分的容器 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/llt_week_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/cb_1"
+                android:layout_width="@dimen/timer_week_cir_size"
+                android:layout_height="@dimen/timer_week_cir_size"
+                android:layout_marginRight="@dimen/timer_week_cir_margin"
+                android:background="@drawable/timer_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Mon."
+                android:textSize="@dimen/timer_week_cir_textsize" />
+
+            <CheckBox
+                android:id="@+id/cb_2"
+                android:layout_width="@dimen/timer_week_cir_size"
+                android:layout_height="@dimen/timer_week_cir_size"
+                android:layout_marginRight="@dimen/timer_week_cir_margin"
+                android:background="@drawable/timer_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Tue."
+                android:textSize="@dimen/timer_week_cir_textsize" />
+
+            <CheckBox
+                android:id="@+id/cb_3"
+                android:layout_width="@dimen/timer_week_cir_size"
+                android:layout_height="@dimen/timer_week_cir_size"
+                android:layout_marginRight="@dimen/timer_week_cir_margin"
+                android:background="@drawable/timer_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Wed."
+                android:textSize="@dimen/timer_week_cir_textsize" />
+
+            <CheckBox
+                android:id="@+id/cb_4"
+                android:layout_width="@dimen/timer_week_cir_size"
+                android:layout_height="@dimen/timer_week_cir_size"
+                android:layout_marginRight="@dimen/timer_week_cir_margin"
+                android:background="@drawable/timer_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Thu."
+                android:textSize="@dimen/timer_week_cir_textsize" />
+
+            <CheckBox
+                android:id="@+id/cb_5"
+                android:layout_width="@dimen/timer_week_cir_size"
+                android:layout_height="@dimen/timer_week_cir_size"
+                android:layout_marginRight="@dimen/timer_week_cir_margin"
+                android:background="@drawable/timer_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Fri."
+                android:textSize="@dimen/timer_week_cir_textsize" />
+
+            <CheckBox
+                android:id="@+id/cb_6"
+                android:layout_width="@dimen/timer_week_cir_size"
+                android:layout_height="@dimen/timer_week_cir_size"
+                android:layout_marginRight="@dimen/timer_week_cir_margin"
+                android:background="@drawable/timer_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Sat."
+                android:textSize="@dimen/timer_week_cir_textsize" />
+
+            <CheckBox
+                android:id="@+id/cb_7"
+                android:layout_width="@dimen/timer_week_cir_size"
+                android:layout_height="@dimen/timer_week_cir_size"
+                android:background="@drawable/timer_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Sun."
+                android:textSize="@dimen/timer_week_cir_textsize" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_choose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_rec_corner_selector"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="choose RGB color"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:id="@+id/rg_type_select_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rb_rgb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/timer_type_left"
+                android:button="@null"
+                android:gravity="center"
+                android:checked="true"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="RGB"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/rb_white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/timer_type_center"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="White"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/rb_music"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/timer_type_center"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Music"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/rb_flicker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/timer_type_right"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Flicker"
+                android:textSize="12sp" />
+        </RadioGroup>
+    </LinearLayout>
 
 </LinearLayout>
