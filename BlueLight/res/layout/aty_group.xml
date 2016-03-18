@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme_blue"
+    android:orientation="vertical" >
+
+    <com.vui.bluelight.base.view.TopBarView
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff0000" >
+    </com.vui.bluelight.base.view.TopBarView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="20dp" >
+
+        <RelativeLayout
+            android:id="@+id/rlt_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="my groups"
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
+
+            <RelativeLayout
+                android:id="@+id/add_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" >
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="2dp"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/white" />
+
+                <TextView
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/white" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/rlt_group"
+            android:background="@android:color/white" />
+
+        <GridView
+            android:id="@+id/gvw_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider"
+            android:layout_marginTop="10dp"
+            android:background="@color/theme_blue"
+            android:horizontalSpacing="10dp"
+            android:listSelector="@color/theme_blue"
+            android:numColumns="2"
+            android:verticalSpacing="10dp" >
+        </GridView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="20dp" >
+
+        <RelativeLayout
+            android:id="@+id/rlt_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="ungroup devices"
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
+
+            <RelativeLayout
+                android:id="@+id/add_devices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" >
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="2dp"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/white" />
+
+                <TextView
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/white" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/rlt_devices"
+            android:background="@android:color/white" />
+
+        <GridView
+            android:id="@+id/gvw_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider2"
+            android:layout_marginTop="10dp"
+            android:background="@color/theme_blue"
+            android:horizontalSpacing="10dp"
+            android:listSelector="@color/theme_blue"
+            android:numColumns="3"
+            android:verticalSpacing="10dp" >
+        </GridView>
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/inc_foot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/bottom_switcher_bar" />
+
+</LinearLayout>
