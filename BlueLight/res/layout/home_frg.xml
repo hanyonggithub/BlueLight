@@ -229,6 +229,7 @@
                     android:orientation="horizontal"
                     >
                     <LinearLayout 
+                         android:id="@+id/llt_rgbw"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -253,6 +254,7 @@
                             />
                     </LinearLayout>
                       <LinearLayout 
+                           android:id="@+id/llt_mode"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -288,6 +290,7 @@
                     android:layout_marginTop="5dp"
                     >
                      <LinearLayout 
+                          android:id="@+id/llt_timer"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -312,6 +315,7 @@
                             />
                     </LinearLayout>
                      <LinearLayout 
+                         android:id="@+id/llt_group"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

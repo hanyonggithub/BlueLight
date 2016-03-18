@@ -2,16 +2,23 @@ package com.vui.bluelight;
 
 import com.vui.bluelight.base.view.TopBarView;
 import com.vui.bluelight.base.view.VisualizerView;
+import com.vui.bluelight.group.GroupActivity;
+import com.vui.bluelight.music.MusicListActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.audiofx.Equalizer;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 public class MainActivity extends Activity {
@@ -28,12 +35,17 @@ public class MainActivity extends Activity {
     VisualizerView mBaseVisualizerView;
     TopBarView tbv;
     ImageButton play;
+    ImageView setting;
     
-
+    private LinearLayout llt_rgbw;
+    private LinearLayout llt_mode;
+    private LinearLayout llt_timer;
+    private LinearLayout llt_group;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		tbv=(TopBarView) findViewById(R.id.topbar);
 		mLayout=(LinearLayout) findViewById(R.id.llt_music_play);
@@ -59,6 +71,35 @@ public class MainActivity extends Activity {
 
         mMediaPlayer.start();//开始播放
         mMediaPlayer.setLooping(true);//循环播放
+        
+        setting=(ImageView) findViewById(R.id.setting);
+        setting.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(MainActivity.this,SettingActivity.class);
+				MainActivity.this.startActivity(intent);
+			}
+		});
+        
+        llt_group=(LinearLayout) findViewById(R.id.llt_group);
+        llt_group.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(MainActivity.this,GroupActivity.class);
+				MainActivity.this.startActivity(intent);
+			}
+		});
+        
+        mLayout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(MainActivity.this,MusicListActivity.class);
+				MainActivity.this.startActivity(intent);
+				
+			}
+		});
 		
 	}
 	
