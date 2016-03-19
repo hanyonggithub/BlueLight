@@ -44,29 +44,25 @@ public class TimerHalfRingView extends View {
 		paint.setAntiAlias(true);  //消除锯齿   
 		
 	}
-    int margin =0;
     int radius;
     int cy;
 	@Override
 	protected void onDraw(Canvas canvas) {
-		if(margin==0){
-			margin=DensityUtils.dp2px(getContext(), -13);
-			radius=DensityUtils.dp2px(getContext(), 5);
-			cy=DensityUtils.dp2px(getContext(), 12);
-		}
 		int left=0;
 		int top=0;
 		int right=0;
 		int bottom = 0;
 		int width = getWidth();
 		int height = getHeight();
-		int diameter = height;
+		int diameter = height*9/10;
+		cy= (height - diameter)/2;
+		radius=cy/4;
 		//宽度大于高度
 		//高度为直径画圆 择top=0 bottom=top+diameter
 		//left=(width-height)/2 right=left+diameter
 		if(oval==null){
 			left=(width-diameter)/2;
-			top = 0;
+			top = (height-diameter)/2;
 			right=left+diameter;
 			bottom=top+diameter;
 			oval = new RectF(left, top, right, bottom);
@@ -81,7 +77,7 @@ public class TimerHalfRingView extends View {
 			canvas.drawArc(oval,-84, 80, false, paint);
 			paint.setColor(Color.parseColor("#FF8400"));
 			paint.setStyle(Style.FILL);
-			canvas.drawCircle(getWidth()/2, getHeight()/2, radius, paint);
+			canvas.drawCircle(getWidth()/2, cy, radius, paint);
 		}
 		
 		super.onDraw(canvas);

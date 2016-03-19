@@ -176,7 +176,7 @@ public class WheelView extends ScrollView {
         tv.setText(item);
         tv.setGravity(Gravity.CENTER);
         int padding = dip2px(5);
-        tv.setPadding(padding, padding, padding, padding);
+        tv.setPadding(padding, padding, dip2px(9), dip2px(3));
         if (0 == itemHeight) {
             itemHeight = getViewMeasuredHeight(tv);
            // Log.d(TAG, "itemHeight: " + itemHeight);

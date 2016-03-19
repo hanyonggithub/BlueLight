@@ -69,7 +69,7 @@ private void backLastFragment() {
 private void initWheelView(View view) {
 	final WheelView wva = (WheelView) view. findViewById(R.id.main_wv);
 	final WheelView wva2 = (WheelView) view. findViewById(R.id.main_wv2);
-	//final View cus_view_halring = (View) view. findViewById(R.id.cus_view_halring);
+	final View cus_view_halring = (View) view. findViewById(R.id.cus_view_halring);
 	
 	wva.setCustomWidth(ScreenUtils.getScreenWidth(getActivity())/8);
 	wva.setIsDrawLine(false);
@@ -80,8 +80,8 @@ private void initWheelView(View view) {
 		public void onSelected(int selectedIndex, String item) {
 			LogUtils.i( "llpp======selectedIndex: " + selectedIndex + ", item: " + 
 					item+"displayItemCount:"+wva.displayItemCount);	
-			iv_roll_cir.setRotation(Integer.parseInt(item));
-			//cus_view_halring.setRotation(Integer.parseInt(item));
+			iv_roll_cir.setRotation(Integer.parseInt(item)*360/100);
+			cus_view_halring.setRotation(Integer.parseInt(item)*360/100);
 			wva2.setCurrentPosition(selectedIndex-1);
 		}
 
@@ -97,8 +97,8 @@ private void initWheelView(View view) {
 		public void onSelected(int selectedIndex, String item) {
 			LogUtils.i( "llpp======selectedIndex: " + selectedIndex + ", item: " + 
 					item+"displayItemCount:"+wva2.displayItemCount);	
-			iv_roll_cir.setRotation(Integer.parseInt(item));
-		//	cus_view_halring.setRotation(Integer.parseInt(item));
+			iv_roll_cir.setRotation(Integer.parseInt(item)*360/100);
+			cus_view_halring.setRotation(Integer.parseInt(item)*360/100);
 			wva.setCurrentPosition(selectedIndex-1);
 		}
 
