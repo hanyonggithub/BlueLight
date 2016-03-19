@@ -87,6 +87,7 @@
                 android:orientation="horizontal" >
 
                 <RelativeLayout
+                    android:id="@+id/rlt_user_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
@@ -162,7 +163,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tvw_songname"
+                android:id="@+id/tvw_music_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Beat It--Machel Jackson"
@@ -189,27 +190,27 @@
                  android:paddingRight="30dp"
                 >
                    <ImageView 
-                    android:id="@+id/ivw_last_song"
+                    android:id="@+id/ivw_music_last"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/last_song"
+                    android:src="@drawable/music_last"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                    
                     />
                 <ImageView 
-                    android:id="@+id/ivw_play"
+                    android:id="@+id/ivw_music_play"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/stop"
+                    android:src="@drawable/music_stop"
                     android:layout_centerInParent="true"
                     android:layout_marginBottom="20dp"
                     />
                 <ImageView 
-                    android:id="@+id/ivw_next_song"
+                    android:id="@+id/ivw_music_next"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/next_song"
+                    android:src="@drawable/music_next"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     />

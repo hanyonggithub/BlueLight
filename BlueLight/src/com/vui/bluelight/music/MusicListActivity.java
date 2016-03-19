@@ -6,15 +6,19 @@ import java.util.concurrent.TimeUnit;
 import com.vui.bluelight.R;
 import com.vui.bluelight.base.view.TopBarView;
 import com.vui.bluelight.music.entity.MusicInfo;
+import com.vui.bluelight.utils.LogUtils;
 import com.vui.bluelight.utils.TimeUtils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -84,6 +88,18 @@ public class MusicListActivity extends Activity {
 			};
 
 		}.start();
+		
+		lvw_music_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent=new Intent(MusicListActivity.this,MusicPlayActivity.class);
+				intent.putExtra("url", musicList.get(position).getUrl());
+				LogUtils.e("url="+musicList.get(position).getUrl());
+				startActivity(intent);
+				
+			}
+		});
 	}
 
 	static class Holder {
