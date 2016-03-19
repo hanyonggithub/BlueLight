@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#1BA4CB" >
 
     <FrameLayout
@@ -14,8 +14,6 @@
             android:layout_height="wrap_content"
             layout="@layout/v_topbar" />
     </FrameLayout>
-
-    <!-- 底部的滚轮 -->
 
     <LinearLayout
         android:id="@+id/llt_wheel_content"
@@ -35,13 +33,11 @@
             android:layout_width="40dp"
             android:layout_height="80dp" />
     </LinearLayout>
-    
-    <!-- 中间的彩盘 -->
 
-    <RelativeLayout
+   <RelativeLayout
         android:id="@+id/rlt_color_selector"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@id/llt_wheel_content"
         android:layout_below="@id/fl_content"
         android:layout_margin="15dp" >
@@ -57,9 +53,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="22dp"
-            android:src="@drawable/timer_rgb_multicolor_ring" />
+            android:contentDescription="circle"
+            android:src="@drawable/timer_rgb_multicolor_white" />
+        
 
-        <LinearLayout
+           <LinearLayout
             android:id="@+id/llt_wheel_content2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

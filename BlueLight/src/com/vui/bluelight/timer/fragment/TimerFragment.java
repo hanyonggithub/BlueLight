@@ -89,6 +89,7 @@ public class TimerFragment extends Fragment{
 			@Override
 			public void onClick(View v) {
 				 TimerRGBFragment timerRGBFragment = new TimerRGBFragment();
+				//ChooseRGBFragment chooseRGBFragment = new ChooseRGBFragment();
 				TimerActivity.switchFragment(TimerFragment.this,timerRGBFragment,(TimerActivity) getActivity());
 			}
 		});

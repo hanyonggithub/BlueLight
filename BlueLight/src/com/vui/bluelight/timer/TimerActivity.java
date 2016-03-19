@@ -77,12 +77,12 @@ public class TimerActivity extends Activity{
 		});
 	}
 
-	@Override    
+/*	@Override    
 	public boolean onKeyDown(int keyCode, KeyEvent event) {  
 		if(keyCode == KeyEvent.KEYCODE_BACK){      
 			return  true;
 		}  
 		return  super.onKeyDown(keyCode, event);     
 
-	} 
+	} */
 }
