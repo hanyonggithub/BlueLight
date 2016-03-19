@@ -1,4 +1,4 @@
-package com.vui.bluelight.timer;
+package com.vui.bluelight.timer.fragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +24,7 @@ import com.vui.bluelight.R;
 import com.vui.bluelight.R.id;
 import com.vui.bluelight.customview.SwipeAdapter;
 import com.vui.bluelight.customview.WheelView;
+import com.vui.bluelight.timer.TimerActivity;
 import com.vui.bluelight.timer.entity.TimerEntity;
 import com.vui.bluelight.timer.entity.TimerEntity.Data;
 import com.vui.bluelight.utils.LogUtils;
@@ -89,7 +90,7 @@ public class TimerRGBFragment extends Fragment{
 
 	private void backTimerFragment() {
 		TimerFragment timerFragment = new TimerFragment();
-		TimerActivity.switchFragment(timerFragment, getActivity());
+		TimerActivity.switchFragment(TimerRGBFragment.this,timerFragment, (TimerActivity) getActivity());
 		
 	}
 	private void initTypeChooseView(View view) {
@@ -100,12 +101,24 @@ public class TimerRGBFragment extends Fragment{
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if(checkedId==R.id.rb_rgb){
 					bt_choose.setText("choose RGB color");
+					bt_choose.setTag(TimerEntity.TIMERTYPE_RGB);
+					rb_on.setText("lights on");
+					rb_off.setText("lights off");
 				}else if(checkedId==R.id.rb_white){
 					bt_choose.setText("choose white color");
+					bt_choose.setTag(TimerEntity.TIMERTYPE_WHITE);
+					rb_on.setText("lights on");
+					rb_off.setText("lights off");
 				}else if(checkedId==R.id.rb_music){
 					bt_choose.setText("choose music");
+					bt_choose.setTag(TimerEntity.TIMERTYPE_MUSIC);
+					rb_on.setText("music on");
+					rb_off.setText("music off");
 				}else if(checkedId==R.id.rb_flicker){
 					bt_choose.setText("choose flicker style");
+					bt_choose.setTag(TimerEntity.TIMERTYPE_FLICKER);
+					rb_on.setText("flicker on");
+					rb_off.setText("flicker off");
 				}
 
 			}
@@ -115,10 +128,30 @@ public class TimerRGBFragment extends Fragment{
 
 	private void initChooseView(View view) {
 		bt_choose = (Button) view. findViewById(R.id.bt_choose);
+		//设置默认关联
+		bt_choose.setTag(TimerEntity.TIMERTYPE_RGB);
 		bt_choose.setOnClickListener(new OnClickListener() {		
 			@Override
 			public void onClick(View v) {	
-				Toast.makeText(getActivity(), "开发中。。。", 0).show();
+			
+				int tag = (Integer) v.getTag();
+				switch (tag) {
+				case TimerEntity.TIMERTYPE_RGB:
+					ChooseRGBFragment chooseRGBFragment = new ChooseRGBFragment();
+					TimerActivity.switchFragment(TimerRGBFragment.this,chooseRGBFragment, (TimerActivity) getActivity());
+					break;
+				case TimerEntity.TIMERTYPE_WHITE:
+					Toast.makeText(getActivity(), "开发中。。。", 0).show();
+					break;
+				case TimerEntity.TIMERTYPE_MUSIC:
+					Toast.makeText(getActivity(), "开发中。。。", 0).show();
+					break;
+				case TimerEntity.TIMERTYPE_FLICKER:
+					Toast.makeText(getActivity(), "开发中。。。", 0).show();
+					break;
+				default:
+					break;
+				}
 			}
 		});
 	}
@@ -191,6 +224,8 @@ public class TimerRGBFragment extends Fragment{
 
 	private void initOnOffView(View view) {
 		RadioGroup rg_onoff = (RadioGroup) view.findViewById(R.id.rg_onoff);
+		rb_on = (RadioButton) view.findViewById(R.id.rb_on);
+		rb_off = (RadioButton) view.findViewById(R.id.rb_off);
 		rg_onoff.setOnCheckedChangeListener(new OnCheckedChangeListener(
 				) {		
 			@Override
@@ -212,6 +247,8 @@ public class TimerRGBFragment extends Fragment{
 	private int[] tipDistanceTime=new int[2];
 	private TextView tv_tip_time;
 	private Button bt_choose;
+	private RadioButton rb_on;
+	private RadioButton rb_off;
 	private void initWheelView(View view) {
 		final WheelView wva_hour = (WheelView) view. findViewById(R.id.main_wv);
 		final WheelView wva_minute = (WheelView) view. findViewById(R.id.main_wv2);
@@ -254,7 +291,7 @@ public class TimerRGBFragment extends Fragment{
 			tv_tip_time.setText("lights off "+tipDistanceTime[0]+" hours and "+
 					tipDistanceTime[1]+" minutes later");
 		}
-		newTimer.time=selectedHour+":"+selectedMinute;
+		newTimer.time= String.format("%02d",selectedHour)+":"+ String.format("%02d",selectedMinute);
 	}
 	/**
 	 * 返回最近的时间差

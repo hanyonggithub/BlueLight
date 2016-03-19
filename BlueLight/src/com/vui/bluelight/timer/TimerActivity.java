@@ -1,6 +1,7 @@
 package com.vui.bluelight.timer;
 
 import com.vui.bluelight.R;
+import com.vui.bluelight.timer.fragment.TimerFragment;
 import com.vui.bluelight.utils.LogUtils;
 
 
@@ -10,6 +11,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
@@ -32,12 +34,21 @@ public class TimerActivity extends Activity{
 		transacction.replace(R.id.id_content, timerFragment).commit();
 	}
 
-	public static  void switchFragment(Fragment fragment,Activity timerActivity){
+	public static  void switchFragment(Fragment startFragment,Fragment targetFragment,TimerActivity timerActivity){
 		FragmentManager fm=timerActivity.getFragmentManager();
 		FragmentTransaction transacction = fm.beginTransaction();
-		transacction.replace(R.id.id_content, fragment).commit();
+		transacction.replace(R.id.id_content, targetFragment).commit();
+		timerActivity.setLastFragment(startFragment);
 	}
-	
+
+	Fragment lastFragment;
+	public  Fragment getLastFragment() {
+		return lastFragment;
+	}
+	private  void setLastFragment(Fragment fragment) {
+		lastFragment=fragment;
+	}
+
 	private void initView() {
 		View llt_home = findViewById(R.id.llt_home);
 		View llt_switcher = findViewById(R.id.llt_switcher);
@@ -66,4 +77,12 @@ public class TimerActivity extends Activity{
 		});
 	}
 
+	@Override    
+	public boolean onKeyDown(int keyCode, KeyEvent event) {  
+		if(keyCode == KeyEvent.KEYCODE_BACK){      
+			return  true;
+		}  
+		return  super.onKeyDown(keyCode, event);     
+
+	} 
 }
