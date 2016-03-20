@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1BA4CB" >
+        <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/v_topbar" />
+    </FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fl_content"
+        android:layout_margin="15dp" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="circle"
+            android:src="@drawable/timer_rgb_bigcir" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:contentDescription="circle"
+            android:src="@drawable/timer_rgb_multicolor_ring" />
+        
+<!--         <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:layout_width="145dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="55dp"
+                android:contentDescription="circle"
+                android:src="@drawable/timer_rgb_half_cir_left" />
+
+        </RelativeLayout> -->
+    </RelativeLayout>
+
+</RelativeLayout>

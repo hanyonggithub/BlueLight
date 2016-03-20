@@ -4,6 +4,7 @@ import com.vui.bluelight.base.view.VisualizerView;
 import com.vui.bluelight.group.GroupActivity;
 import com.vui.bluelight.music.MusicPlayActivity;
 import com.vui.bluelight.music.MusicPlayerService2;
+import com.vui.bluelight.timer.TimerActivity;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -140,7 +141,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			
 			break;
 		case R.id.llt_timer:
-			
+			intent = new Intent(MainActivity.this, TimerActivity.class);
+			MainActivity.this.startActivity(intent);
 			break;
 		case R.id.llt_group:
 			intent = new Intent(MainActivity.this, GroupActivity.class);

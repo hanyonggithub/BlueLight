@@ -1,8 +1,9 @@
-package com.vui.bluelight.timer;
+package com.vui.bluelight.timer.fragment;
 import java.util.List;
 import com.vui.bluelight.R;
 import com.vui.bluelight.customview.SwipeAdapter;
 import com.vui.bluelight.customview.SwipeListView;
+import com.vui.bluelight.timer.TimerActivity;
 import com.vui.bluelight.timer.entity.TimerEntity;
 import com.vui.bluelight.timer.entity.TimerEntity.Data;
 import com.vui.bluelight.utils.LogUtils;
@@ -69,7 +70,7 @@ public class TimerFragment extends Fragment{
 		back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getActivity(), "开发中。。。", 0).show();
+				getActivity().finish();
 			}
 		});
 		right_btn.setOnClickListener(new OnClickListener() {
@@ -88,7 +89,7 @@ public class TimerFragment extends Fragment{
 			@Override
 			public void onClick(View v) {
 				 TimerRGBFragment timerRGBFragment = new TimerRGBFragment();
-				TimerActivity.switchFragment(timerRGBFragment,getActivity());
+				TimerActivity.switchFragment(TimerFragment.this,timerRGBFragment,(TimerActivity) getActivity());
 			}
 		});
 		mListView.addHeaderView(headView);
