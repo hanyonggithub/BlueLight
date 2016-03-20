@@ -40,15 +40,17 @@
             
         </activity>
         <activity android:name="com.vui.bluelight.music.MusicListActivity">
-            
         </activity>
-         <activity  android:name="com.vui.bluelight.timer.TimerActivity"
-             android:theme="@android:style/Theme.Light.NoTitleBar">
-               <intent-filter>
+        <activity  android:name="com.vui.bluelight.mod.ModeShakingActivity"
+            android:theme="@android:style/Theme.NoTitleBar">
+                 <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+         <activity  android:name="com.vui.bluelight.timer.TimerActivity"
+             android:theme="@android:style/Theme.Light.NoTitleBar">
          </activity> 
     </application>
 
