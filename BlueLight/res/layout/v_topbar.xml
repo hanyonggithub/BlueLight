@@ -33,7 +33,4 @@
          android:layout_centerVertical="true"
          android:textSize="20sp"
          />
-     
-    
-
 </RelativeLayout>

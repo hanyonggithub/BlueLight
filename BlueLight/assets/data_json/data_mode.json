@@ -1,0 +1,51 @@
+{
+  "items": [
+    {
+      "text": "001",
+      "color":"#C65AFF"
+    },
+      {
+      "text": "002",
+      "color":"#71009B"
+    },
+      {
+      "text": "003",
+      "color":"#3A0136"
+    },
+      {
+      "text": "004",
+      "color":"#FFE878"
+    },
+      {
+      "text": "005",
+      "color":"#FC581F"
+    },
+      {
+      "text": "006",
+      "color":"#A03900"
+    },
+      {
+      "text": "007",
+      "color":"#6F6CFF"
+    },
+      {
+      "text": "008",
+      "color":"#3C3CEF"
+    },
+      {
+      "text": "009",
+      "color":"#000CA3"
+    },
+      {
+      "text": "010",
+      "color":"#68FC6F"
+    },
+      {
+      "text": "011",
+      "color":"#0DF90D"
+    },
+      {
+      "text": "012",
+      "color":"#0B7003"
+    }]
+}
