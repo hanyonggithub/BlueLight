@@ -74,6 +74,8 @@
             android:layout_alignParentRight="true"
             android:text="ON"
             android:button="@null"
+            android:padding="8dp"
+            android:background="@drawable/bg_mode_selector"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 

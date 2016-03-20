@@ -43,15 +43,21 @@
         </activity>
         <activity  android:name="com.vui.bluelight.mod.ModeShakingActivity"
             android:theme="@android:style/Theme.NoTitleBar">
-                 <intent-filter>
+        </activity>
+         <activity  android:name="com.vui.bluelight.timer.TimerActivity"
+             android:theme="@android:style/Theme.Light.NoTitleBar">
+         </activity>
+
+        <activity
+            android:name="com.vui.bluelight.rgb.RGBMainActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity  android:name="com.vui.bluelight.timer.TimerActivity"
-             android:theme="@android:style/Theme.Light.NoTitleBar">
-         </activity> 
+
     </application>
 
 </manifest>

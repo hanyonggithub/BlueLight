@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1BA4CB"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/in_head_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_bg"
+        android:padding="10dp" >
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-17dp"
+            android:padding="11dp"
+            android:src="@drawable/back_arr" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="mode"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/right_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="OK"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <!-- 中间的彩盘 -->
+
+    <FrameLayout
+        android:id="@+id/id_content"
+        android:layout_width="400dp"
+        android:layout_height="340dp"
+        android:layout_gravity="center" />
+
+    <!-- 下面两部分的rongq -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:id="@+id/inc_foot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            layout="@layout/bottom_switcher_bar" />
+
+        <RadioGroup
+            android:id="@+id/rg_type_select_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/inc_foot"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rb_rgb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/timer_type_left"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="RGB"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/rb_ring"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/timer_type_center"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="RGB Ring"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/rb_dim"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/timer_type_right"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Dimming"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </RadioGroup>
+    </RelativeLayout>
+
+</LinearLayout>
