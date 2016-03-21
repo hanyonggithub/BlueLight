@@ -6,6 +6,7 @@ import com.vui.bluelight.mod.ModeShakingActivity;
 import com.vui.bluelight.music.MusicPlayActivity;
 import com.vui.bluelight.music.MusicPlayerService2;
 import com.vui.bluelight.music.MusicPlayerService3;
+import com.vui.bluelight.rgb.RGBMainActivity;
 import com.vui.bluelight.timer.TimerActivity;
 
 import android.app.Activity;
@@ -141,7 +142,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			setMusicName();
 			break;
 		case R.id.llt_rgbw:
-			
+			intent = new Intent(MainActivity.this, RGBMainActivity.class);
+			MainActivity.this.startActivity(intent);
 			break;
 		case R.id.llt_mode:
 			intent = new Intent(MainActivity.this, ModeShakingActivity.class);
@@ -155,7 +157,6 @@ public class MainActivity extends Activity implements OnClickListener {
 			intent = new Intent(MainActivity.this, GroupActivity.class);
 			MainActivity.this.startActivity(intent);
 			break;
-
 		default:
 			break;
 		}

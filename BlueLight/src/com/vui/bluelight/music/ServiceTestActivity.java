@@ -21,8 +21,6 @@ TextView tvw_play;
 			
 			@Override
 			public void onClick(View v) {
-				
-				Intent intent=new Intent(ServiceTestActivity.this,)
 			}
 		});
 		
