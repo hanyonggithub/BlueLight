@@ -64,7 +64,7 @@
         <com.vui.bluelight.base.view.VisualizerView
             android:id="@+id/visualview"
             android:layout_width="match_parent"
-            android:layout_height="400dp" >
+            android:layout_height="200dp" >
         </com.vui.bluelight.base.view.VisualizerView>
 
         <RelativeLayout

@@ -1,11 +1,14 @@
 package com.vui.bluelight.base.view;
 
 
+import com.vui.bluelight.utils.LogUtils;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.audiofx.Visualizer;
+import android.media.audiofx.Visualizer.MeasurementPeakRms;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -14,7 +17,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 	
 	
 
-	private static final int DN_W = 470;//view宽度与单个音频块占比 - 正常480 需微调
+	private static final int DN_W = 470;//view宽度与单个音频块占比 
     private static final int DN_H = 180;//view高度与单个音频块占比
     private static final int DN_SL = 25;//单个音频块宽度
     private static final int DN_SW = 5;//单个音频块高度
@@ -24,6 +27,9 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
     private int levelStep = 0;
     private float strokeWidth = 0;
     private float strokeLength = 0;
+    
+    int i=0;
+    int total;
 
     protected final static int MAX_LEVEL = 15;//音量柱·音频块 - 最大个数
 
@@ -121,7 +127,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
                 visualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[0]);
             }
             levelStep = 128 / MAX_LEVEL;
-            visualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, false, true);
+            visualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, true, true);
 
         } else {
 
@@ -133,7 +139,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
         mVisualizer = visualizer;
     }
 
-    //这个回调应该采集的是快速傅里叶变换有关的数据
+
     @Override
     public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
         byte[] model = new byte[fft.length / 2 + 1];
@@ -165,9 +171,10 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
         postInvalidate();//刷新界面
     }
 
-    //这个回调应该采集的是波形数据
+   
     @Override
     public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int samplingRate) {
-        // Do nothing...
+    	
     }
+    
 }

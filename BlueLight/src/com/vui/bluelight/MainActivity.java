@@ -2,8 +2,10 @@ package com.vui.bluelight;
 
 import com.vui.bluelight.base.view.VisualizerView;
 import com.vui.bluelight.group.GroupActivity;
+import com.vui.bluelight.mod.ModeShakingActivity;
 import com.vui.bluelight.music.MusicPlayActivity;
 import com.vui.bluelight.music.MusicPlayerService2;
+import com.vui.bluelight.music.MusicPlayerService3;
 import com.vui.bluelight.timer.TimerActivity;
 
 import android.app.Activity;
@@ -68,7 +70,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		));
 		// 将频谱View添加到布局
 		mLayout.addView(mBaseVisualizerView);
-		Intent intent = new Intent(MainActivity.this, MusicPlayerService2.class);
+		Intent intent=new Intent(MainActivity.this,MusicPlayerService3.class);
+		startService(intent);
+		
+		/*Intent intent = new Intent(MainActivity.this, MusicPlayerService2.class);
+	
 		bindService(intent, new ServiceConnection() {
 
 			@Override
@@ -81,7 +87,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				mMusicPlayService = ((MusicPlayerService2.MsgBinder) service).getService();
 				startMusic();
 			}
-		}, Context.BIND_AUTO_CREATE);
+		}, Context.BIND_AUTO_CREATE);*/
 
 	}
 
@@ -138,7 +144,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			
 			break;
 		case R.id.llt_mode:
-			
+			intent = new Intent(MainActivity.this, ModeShakingActivity.class);
+			MainActivity.this.startActivity(intent);
 			break;
 		case R.id.llt_timer:
 			intent = new Intent(MainActivity.this, TimerActivity.class);
@@ -167,6 +174,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		llt_mode.setOnClickListener(this);
 		llt_timer.setOnClickListener(this);
 		llt_group.setOnClickListener(this);
+		
 	}
 
 	@Override

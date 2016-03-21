@@ -20,14 +20,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ChooseRGBFragment extends Fragment{
+public class ChooseWhiteFragment extends Fragment{
 
 	private ImageView iv_roll_cir;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.frag_choose_rgb, null);
+		return inflater.inflate(R.layout.frag_choose_white, null);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ private void initTitleBar(View view) {
 private void backLastFragment() {
 	TimerActivity activity = (TimerActivity) getActivity();
 	Fragment lastFragment = activity.getLastFragment();
-	TimerActivity.switchFragment(ChooseRGBFragment.this, lastFragment, (TimerActivity) getActivity());
+	TimerActivity.switchFragment(ChooseWhiteFragment.this, lastFragment, (TimerActivity) getActivity());
 }
 private void initWheelView(View view) {
 	final WheelView wva = (WheelView) view. findViewById(R.id.main_wv);

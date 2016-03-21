@@ -40,6 +40,8 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	private ImageView ivw_music_play;
 	private ImageView ivw_music_next;
 	private ImageView ivw_music_recycle;
+	private Intent intent;
+	private ServiceConnection conn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,21 +54,19 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		tbv.setRightText("online music");
 		mBaseVisualizerView = (VisualizerView) findViewById(R.id.visualview);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);// 设置音频流 -
-		
-		Intent intent = new Intent(MusicPlayActivity.this, MusicPlayerService2.class);
-		bindService(intent, new ServiceConnection() {
-
+		intent = new Intent(MusicPlayActivity.this, MusicPlayerService2.class);
+		conn=new ServiceConnection() {
 			@Override
 			public void onServiceDisconnected(ComponentName name) {
 
 			}
-
 			@Override
 			public void onServiceConnected(ComponentName name, IBinder service) {
 				mMusicPlayService = ((MusicPlayerService2.MsgBinder) service).getService();
 				startMusic();
 			}
-		}, Context.BIND_AUTO_CREATE);
+		};
+		bindService(intent, conn, Context.BIND_AUTO_CREATE);
 		
 	}
 	
@@ -78,8 +78,6 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		ivw_music_play=(ImageView) findViewById(R.id.ivw_music_play);
 		ivw_music_next=(ImageView) findViewById(R.id.ivw_music_next);
 		ivw_music_recycle=(ImageView) findViewById(R.id.ivw_music_recyle);
-		
-		
 	}
 	
 	public void setListener(){
@@ -138,14 +136,12 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 
 		mEqualizer = new Equalizer(0, mMediaPlayer.getAudioSessionId());
 		mEqualizer.setEnabled(true);// 启用均衡器
-
 	}
 
 	/**
 	 * 生成一个VisualizerView对象，使音频频谱的波段能够反映到 VisualizerView上
 	 */
 	private void setupVisualizerFxAndUi() {
-
 		// 实例化Visualizer，参数SessionId可以通过MediaPlayer的对象获得
 //		mVisualizer = new Visualizer(mMediaPlayer.getAudioSessionId());
 		// 采样 - 参数内必须是2的位数 - 如64,128,256,512,1024
@@ -156,22 +152,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		mVisualizer.setEnabled(true);// false 则不显示
 	}
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-	
-		
-	}
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		if (isFinishing() && mMediaPlayer != null) {
-			mVisualizer.release();
-			mMediaPlayer.release();
-			mMediaPlayer = null;
-		}
-	}
+
 	public void setMusicName(){
 		tvw_music_name.setText(mMusicPlayService.getCurrentMusic().getTitle());
 	}
@@ -205,5 +186,23 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 			break;
 		}
 		
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+	
+		
+	}
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (isFinishing() && mMediaPlayer != null) {
+			mVisualizer.release();
+			mMediaPlayer.release();
+			mMediaPlayer = null;
+		}
+		unbindService(conn);
+	
 	}
 }

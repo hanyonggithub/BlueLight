@@ -1,6 +1,5 @@
 package com.vui.bluelight.customview;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,8 +18,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.vui.bluelight.utils.ScreenUtils;
 
 public class WheelView extends ScrollView {
     public static final String TAG = WheelView.class.getSimpleName();
@@ -37,19 +33,16 @@ public class WheelView extends ScrollView {
 
     public WheelView(Context context) {
         super(context);
+       // LogUtils.e("llpp:-=============一个参数=======================context==+"+context);
         init(context);
+    
     }
 
     public WheelView(Context context, AttributeSet attrs) {
         super(context, attrs);
+      //  LogUtils.e("llpp:-=============2个参数=======================context==null"+context);
         init(context);
     }
-
-    public WheelView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(context);
-    }
-
 	List<String> items;
 
 
@@ -88,6 +81,7 @@ public class WheelView extends ScrollView {
 
 
     private void init(Context context) {
+    	this.setOverScrollMode(View.OVER_SCROLL_NEVER);
         this.context = context;
 
 //        scrollView = ((ScrollView)this.getParent());
@@ -172,26 +166,30 @@ public class WheelView extends ScrollView {
 
     int itemHeight = 0;
 
+    int textSizeNormal=15;
+    int textSizeSelected=18;
     private TextView createView(String item) {
         TextView tv = new TextView(context);
         tv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tv.setSingleLine(true);
-        tv.setTextSize(15);
+        tv.setTextSize(textSizeNormal);
         tv.setText(item);
         tv.setGravity(Gravity.CENTER);
         int padding = dip2px(5);
-        tv.setPadding(padding, padding, padding, padding);
+        tv.setPadding(padding, padding, dip2px(9), dip2px(3));
         if (0 == itemHeight) {
             itemHeight = getViewMeasuredHeight(tv);
-            Log.d(TAG, "itemHeight: " + itemHeight);
-            llt_content.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemHeight * displayItemCount));
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) this.getLayoutParams();
-            int screenWidth = ScreenUtils.getScreenWidth(context);
-            this.setLayoutParams(new LinearLayout.LayoutParams(screenWidth/2, itemHeight * displayItemCount));
+           // Log.d(TAG, "itemHeight: " + itemHeight);
+            llt_content.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemHeight * displayItemCount));          
+            this.setLayoutParams(new LinearLayout.LayoutParams(Customwidth, itemHeight * displayItemCount));
         }
         return tv;
     }
 
+    private  int Customwidth;
+    public void setCustomWidth(int width){
+    	Customwidth=width;
+    }
 
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
@@ -239,31 +237,6 @@ public class WheelView extends ScrollView {
             if (remainder > itemHeight / 2) {
                 position = divided + offset + 1;
             }
-
-//            if(remainder > itemHeight / 2){
-//                if(scrollDirection == SCROLL_DIRECTION_DOWN){
-//                    position = divided + offset;
-//                    Log.d(TAG, ">down...position: " + position);
-//                }else if(scrollDirection == SCROLL_DIRECTION_UP){
-//                    position = divided + offset + 1;
-//                    Log.d(TAG, ">up...position: " + position);
-//                }
-//            }else{
-////                position = y / itemHeight + offset;
-//                if(scrollDirection == SCROLL_DIRECTION_DOWN){
-//                    position = divided + offset;
-//                    Log.d(TAG, "<down...position: " + position);
-//                }else if(scrollDirection == SCROLL_DIRECTION_UP){
-//                    position = divided + offset + 1;
-//                    Log.d(TAG, "<up...position: " + position);
-//                }
-//            }
-//        }
-
-//        if(scrollDirection == SCROLL_DIRECTION_DOWN){
-//            position = divided + offset;
-//        }else if(scrollDirection == SCROLL_DIRECTION_UP){
-//            position = divided + offset + 1;
         }
 
         int childSize = llt_content.getChildCount();
@@ -274,8 +247,10 @@ public class WheelView extends ScrollView {
             }
             if (position == i) {
                 itemView.setTextColor(Color.parseColor("#ffffff"));
+                itemView.setTextSize(textSizeSelected);
             } else {
                 itemView.setTextColor(Color.parseColor("#99ffffff"));
+                itemView.setTextSize(textSizeNormal);
             }
         }
     }
@@ -301,15 +276,12 @@ public class WheelView extends ScrollView {
 
     Paint paint;
     int viewWidth;
-
+    boolean isDrawLine=true;
+   public void setIsDrawLine(boolean isDrawLine){
+	   this. isDrawLine= isDrawLine;
+   }
     @Override
     public void setBackgroundDrawable(Drawable background) {
-
-        if (viewWidth == 0) {
-            viewWidth = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
-            Log.d(TAG, "viewWidth: " + viewWidth);
-        }
-
         if (null == paint) {
             paint = new Paint();
             paint.setColor(Color.parseColor("#ffffff"));
@@ -319,8 +291,10 @@ public class WheelView extends ScrollView {
         background = new Drawable() {
             @Override
             public void draw(Canvas canvas) {
+            	if(isDrawLine){
                 canvas.drawLine(viewWidth * 1 / 25, obtainSelectedAreaBorder()[0], viewWidth * 24 / 25, obtainSelectedAreaBorder()[0], paint);
                 canvas.drawLine(viewWidth * 1 / 25, obtainSelectedAreaBorder()[1], viewWidth * 24 / 25, obtainSelectedAreaBorder()[1], paint);
+            	}
             }
 
             @Override
@@ -347,7 +321,7 @@ public class WheelView extends ScrollView {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        Log.d(TAG, "w: " + w + ", h: " + h + ", oldw: " + oldw + ", oldh: " + oldh);
+       // Log.d(TAG, "w: " + w + ", h: " + h + ", oldw: " + oldw + ", oldh: " + oldh);
         viewWidth = w;
         setBackgroundDrawable(null);
     }
@@ -362,7 +336,11 @@ public class WheelView extends ScrollView {
 
     }
 
-    public void setSeletion(int position) {
+    /**
+     * 设置选择的位置
+     * @param position
+     */
+    public void setCurrentPosition(int position) {
         final int p = position;
         selectedIndex = p + offset;
         this.post(new Runnable() {
@@ -374,6 +352,10 @@ public class WheelView extends ScrollView {
 
     }
 
+    /**
+     * 获取选择的item
+     * @return
+     */
     public String getSeletedItem() {
         return items.get(selectedIndex);
     }
@@ -408,6 +390,9 @@ public class WheelView extends ScrollView {
     }
 
     private int dip2px(float dpValue) {
+    	if(context==null){
+    		//LogUtils.e("llpp:-=============dip2px=======================context==null");
+    	}
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }

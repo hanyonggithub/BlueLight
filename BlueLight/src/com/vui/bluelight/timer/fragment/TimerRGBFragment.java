@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.view.LayoutInflater;
@@ -24,10 +25,12 @@ import com.vui.bluelight.R;
 import com.vui.bluelight.R.id;
 import com.vui.bluelight.customview.SwipeAdapter;
 import com.vui.bluelight.customview.WheelView;
+import com.vui.bluelight.music.MusicListActivity;
 import com.vui.bluelight.timer.TimerActivity;
 import com.vui.bluelight.timer.entity.TimerEntity;
 import com.vui.bluelight.timer.entity.TimerEntity.Data;
 import com.vui.bluelight.utils.LogUtils;
+import com.vui.bluelight.utils.ScreenUtils;
 
 public class TimerRGBFragment extends Fragment{
 	private TimerEntity timerEntity;
@@ -141,10 +144,12 @@ public class TimerRGBFragment extends Fragment{
 					TimerActivity.switchFragment(TimerRGBFragment.this,chooseRGBFragment, (TimerActivity) getActivity());
 					break;
 				case TimerEntity.TIMERTYPE_WHITE:
-					Toast.makeText(getActivity(), "开发中。。。", 0).show();
+					ChooseWhiteFragment chooseWhiteFragment = new ChooseWhiteFragment();
+					TimerActivity.switchFragment(TimerRGBFragment.this,chooseWhiteFragment, (TimerActivity) getActivity());
 					break;
 				case TimerEntity.TIMERTYPE_MUSIC:
-					Toast.makeText(getActivity(), "开发中。。。", 0).show();
+					Intent intent=new Intent(getActivity(), MusicListActivity.class);
+					startActivity(intent);
 					break;
 				case TimerEntity.TIMERTYPE_FLICKER:
 					Toast.makeText(getActivity(), "开发中。。。", 0).show();
@@ -256,6 +261,7 @@ public class TimerRGBFragment extends Fragment{
 		//初始化时默认选择0时0分
 		tipDistanceTime = handSelectedTime(tipDistanceTime[0],tipDistanceTime[1]);
 		updateTipData();
+		wva_hour.setCustomWidth(ScreenUtils.getScreenWidth(getActivity())/2);
 		wva_hour.setOffset(2);
 		wva_hour.setItems(getSetTime(24));
 		wva_hour.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
@@ -269,6 +275,8 @@ public class TimerRGBFragment extends Fragment{
 			}
 
 		});
+		
+		wva_minute.setCustomWidth(ScreenUtils.getScreenWidth(getActivity())/2);
 		wva_minute.setOffset(2);
 		wva_minute.setItems(getSetTime(60));
 		wva_minute.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
