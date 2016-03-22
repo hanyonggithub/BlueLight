@@ -128,10 +128,4 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
- <include
-        android:id="@+id/inc_foot"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        layout="@layout/bottom_switcher_bar" />
 </LinearLayout>

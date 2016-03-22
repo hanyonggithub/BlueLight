@@ -33,7 +33,7 @@ public class MusicListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.aty_music_list);
+		setContentView(R.layout.frag_music_list);
 		tbv = (TopBarView) findViewById(R.id.topbar);
 		tbv.setTitleText("localmusic");
 		tbv.setRightText("online music");
@@ -107,5 +107,7 @@ public class MusicListActivity extends Activity {
 		TextView tvw_music_author;
 		TextView tvw_music_time;
 	}
+	
+
 
 }

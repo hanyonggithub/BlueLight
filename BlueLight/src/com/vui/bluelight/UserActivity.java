@@ -13,7 +13,7 @@ protected void onCreate(Bundle savedInstanceState) {
 	// TODO Auto-generated method stub
 	super.onCreate(savedInstanceState);
 	requestWindowFeature(Window.FEATURE_NO_TITLE);
-	setContentView(R.layout.aty_user);
+	setContentView(R.layout.frag_user);
 	tbv=(TopBarView) findViewById(R.id.topbar);
 	tbv.setTitleText("User");
 }

@@ -5,19 +5,15 @@
     android:orientation="vertical"
     tools:context="com.vui.bluelight.MainActivity" >
 
-    <RelativeLayout
-        android:id="@+id/rlt_content"
+    <FrameLayout
+        android:id="@+id/flt_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@android:color/white"
         >
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/home_frg" 
-            />
-    </RelativeLayout>
+
+    </FrameLayout>
 
     <include
         android:id="@+id/inc_foot"
