@@ -14,7 +14,6 @@ import android.view.View;
 
 public class TimerHalfRingView extends View {
 
-	private int measuredWidth;
 	private Paint paint;
 	private RectF oval;
 	public TimerHalfRingView(Context context, AttributeSet attrs) {
@@ -42,10 +41,11 @@ public class TimerHalfRingView extends View {
 		paint.setColor(Color.parseColor("#ffffff"));
 		paint.setStrokeWidth(DensityUtils.dp2px(context, 1));
 		paint.setAntiAlias(true);  //消除锯齿   
-		
+
 	}
-    int radius;
-    int cy;
+	int radius;
+	int cy;
+	private int dotColor=Color.parseColor("#FF8400");
 	@Override
 	protected void onDraw(Canvas canvas) {
 		int left=0;
@@ -67,22 +67,26 @@ public class TimerHalfRingView extends View {
 			bottom=top+diameter;
 			oval = new RectF(left, top, right, bottom);
 		}
-		
-		
-	if(canvas!=null){
-			LogUtils.i("开始画圆：===========："+getWidth()+":"+getHeight());
+
+		if(canvas!=null){
+		//	LogUtils.i("开始画圆：===========："+getWidth()+":"+getHeight());
 			paint.setColor(Color.parseColor("#ffffff"));
 			paint.setStyle(Style.STROKE);
 			canvas.drawArc(oval,180, 84, false, paint);
 			canvas.drawArc(oval,-84, 80, false, paint);
-			paint.setColor(Color.parseColor("#FF8400"));
+			//paint.setColor(Color.parseColor(dotColor));
+			paint.setColor(dotColor);
 			paint.setStyle(Style.FILL);
 			canvas.drawCircle(getWidth()/2, cy, radius, paint);
 		}
-		
+
 		super.onDraw(canvas);
 	}
-	
+
+	public void setDotColor(int color){
+		this .dotColor=color;
+		postInvalidate();
+	}
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);

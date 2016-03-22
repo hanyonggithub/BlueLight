@@ -3,6 +3,8 @@ package com.vui.bluelight.rgb;
 import java.util.ArrayList;
 
 import com.vui.bluelight.R;
+import com.vui.bluelight.customview.RotateView;
+import com.vui.bluelight.customview.TimerHalfRingView;
 import com.vui.bluelight.customview.WheelView;
 import com.vui.bluelight.utils.LogUtils;
 import com.vui.bluelight.utils.ScreenUtils;
@@ -39,7 +41,10 @@ public void onViewCreated(View view, Bundle savedInstanceState) {
 	private void initWheelView(View view ) {
 		final WheelView wva2 = (WheelView) view.findViewById(R.id.main_wv2);
 		final ImageView iv_roll_cir = (ImageView) view.findViewById(R.id.iv_roll_cir);
-		final View cus_view_halring = (View)view.findViewById(R.id.cus_view_halring);
+		final TimerHalfRingView cus_view_halring = (TimerHalfRingView)view.findViewById(R.id.cus_view_halring);
+		final RotateView timer_ring = (RotateView) view.findViewById(R.id.timer_ring);
+		timer_ring.setColorFollowChanceView(cus_view_halring);
+		
 		wva2.setCustomWidth(ScreenUtils.getScreenWidth(getActivity())/8);
 		wva2.setIsDrawLine(false);
 		wva2.setOffset(1);
@@ -49,8 +54,9 @@ public void onViewCreated(View view, Bundle savedInstanceState) {
 			public void onSelected(int selectedIndex, String item) {
 				LogUtils.i( "llpp======selectedIndex: " + selectedIndex + ", item: " + 
 						item+"displayItemCount:"+wva2.displayItemCount);	
-				iv_roll_cir.setRotation(Integer.parseInt(item)*360/100);
-				cus_view_halring.setRotation(Integer.parseInt(item)*360/100);
+				//iv_roll_cir.setRotation(Integer.parseInt(item)*360/100);
+				//cus_view_halring.setRotation(Integer.parseInt(item)*360/100);
+				//timer_ring.setRotation(Integer.parseInt(item)*360/100);
 			}
 
 		});
