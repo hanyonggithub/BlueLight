@@ -30,7 +30,7 @@ public class SettingActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.aty_setting);
+		setContentView(R.layout.frag_setting);
 		tbv=(TopBarView) findViewById(R.id.topbar);
 		tbv.setTitleText("setting");
 		lvw_setting=(ListView) findViewById(R.id.lvw_setting);

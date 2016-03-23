@@ -93,7 +93,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
         for (int i = 0; i < value; i++) { //每个能量柱绘制value个能量块
 //            float y = (getHeight()/2 - i * vgap - vgap);//计算y轴坐标
-        	float y=i*vgap;
+        	float y=(i+0.5f)*vgap;
             //绘制频谱块
             mPaint.setColor(Color.WHITE);//画笔颜色
             canvas.drawLine(x, getHeight()/2-y, (x + strokeLength), getHeight()/2-y, mPaint);//绘制频谱块
@@ -109,7 +109,9 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     @Override
     public void onDraw(Canvas canvas) {
+    	mPaint.setStrokeWidth(2);
     	canvas.drawLine(0, getHeight()/2, getWidth(), getHeight()/2, mPaint);
+    	mPaint.setStrokeWidth(strokeWidth);
         for (int i = 0; i < CYLINDER_NUM; i++) { //绘制25个能量柱
             drawCylinder(canvas, strokeWidth / 2 + hgap + i * (hgap + strokeLength), mData[i]);
         }
