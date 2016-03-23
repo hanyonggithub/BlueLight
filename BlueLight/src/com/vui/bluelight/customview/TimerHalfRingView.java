@@ -45,7 +45,11 @@ public class TimerHalfRingView extends View {
 	}
 	int radius;
 	int cy;
-	private int dotColor=Color.parseColor("#FF8400");
+	private  int dotColor=Color.parseColor("#FF8400");
+	
+	public int getDotColor(){
+		return dotColor;
+	}
 	@Override
 	protected void onDraw(Canvas canvas) {
 		int left=0;

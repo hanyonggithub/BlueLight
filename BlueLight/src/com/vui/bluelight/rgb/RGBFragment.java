@@ -44,7 +44,7 @@ public void onViewCreated(View view, Bundle savedInstanceState) {
 		final TimerHalfRingView cus_view_halring = (TimerHalfRingView)view.findViewById(R.id.cus_view_halring);
 		final RotateView timer_ring = (RotateView) view.findViewById(R.id.timer_ring);
 		final ImageView timer_ring_color = (ImageView) view.findViewById(R.id.timer_ring_color);
-		timer_ring.setColorFollowChanceView(cus_view_halring,timer_ring_color);	
+		timer_ring.setViews(cus_view_halring,iv_roll_cir,timer_ring_color);	
 		wva2.setCustomWidth(ScreenUtils.getScreenWidth(getActivity())/8);
 		wva2.setIsDrawLine(false);
 		wva2.setOffset(1);
@@ -59,7 +59,7 @@ public void onViewCreated(View view, Bundle savedInstanceState) {
 				int item_i = Integer.parseInt(item);
 				if(item_i>lastPosition){//向上滑动
 					timer_ring.updateUI(0.10,false);
-				}else{	//向下
+				}else if(item_i<lastPosition){	//向下
 					timer_ring.updateUI(0.05,true);
 				}
 				lastPosition=item_i;
