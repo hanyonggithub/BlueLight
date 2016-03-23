@@ -1,39 +1,38 @@
 package com.vui.bluelight.rgb;
 
-import java.util.ArrayList;
-
 import com.vui.bluelight.R;
-import com.vui.bluelight.customview.WheelView;
-import com.vui.bluelight.utils.LogUtils;
-import com.vui.bluelight.utils.ScreenUtils;
-
-import android.app.Activity;
+import com.vui.bluelight.customview.ColorPickerView;
+import com.vui.bluelight.customview.ColorPickerView.OnGetColorListener;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.RadioGroup;
-import android.widget.Toast;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class RGBARingFragment extends Fragment{
-	
-	  @Override
-	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	  		Bundle savedInstanceState) {
-	  	
-	  	return inflater.inflate(R.layout.aty_rgb_ring, null);
-	  }
-	    
-	    @Override
-	  public void onViewCreated(View view, Bundle savedInstanceState) {
-	  	super.onViewCreated(view, savedInstanceState);
-	 
-	 
-	  	
-	  }
+	private View view;
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		if(view==null){
+			view = inflater.inflate(R.layout.aty_rgb_ring, null);
+			initView(view);
+		}
+		return view;
+	}
+
+	private void initView(View view) {
+		final View view_colorpreview = view.findViewById(R.id.view_colorpreview);
+		ColorPickerView iv_roll_cir = (ColorPickerView) view.findViewById(R.id.iv_roll_cir);
+		View move_view =  view.findViewById(R.id.move_view);
+		iv_roll_cir.setMoveView(move_view);
+		iv_roll_cir.setOnGetColorListener(new OnGetColorListener() {		
+			@Override
+			public void onGetColor(int color) {
+				view_colorpreview.setBackgroundColor(color);
+				//谁最后设置 选定的颜色就是谁
+				((RGBMainActivity)getActivity()).setSelectedColor(color);
+			}
+		});
+	}
 }

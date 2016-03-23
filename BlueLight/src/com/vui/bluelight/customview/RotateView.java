@@ -102,7 +102,7 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 		}
 
 		float  rotatedDegrees=(float) rotation%360;
-		LogUtils.i("llpp:方向："+direction+" 角度："+rotatedDegrees);
+		//LogUtils.i("llpp:方向："+direction+" 角度："+rotatedDegrees);
 		//顺时针方向为正值，是在原先值的基础上进行加或者减来进行旋转、
 		rotatedView.setRotation(rotatedDegrees);
 		int colorFromColorRing = getColorFromColorRing(timer_ring_color,180-rotatedDegrees);
@@ -139,7 +139,6 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 				return false;
 			}	
 		}
-
 
 		return true;
 	}

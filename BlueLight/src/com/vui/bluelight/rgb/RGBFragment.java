@@ -23,20 +23,18 @@ import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class RGBFragment extends Fragment{
-  @Override
-public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		Bundle savedInstanceState) {
-	
-	return inflater.inflate(R.layout.aty_rgb, null);
-}
-  
-  @Override
-public void onViewCreated(View view, Bundle savedInstanceState) {
-	super.onViewCreated(view, savedInstanceState);
-	initWheelView(view);
-	
-}
-  
+	private View view;
+
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		if(view==null){
+			view = inflater.inflate(R.layout.aty_rgb, null);
+			initWheelView(view);
+		}
+		return view;
+	}
 
 	private void initWheelView(View view ) {
 		final WheelView wva2 = (WheelView) view.findViewById(R.id.main_wv2);
@@ -68,8 +66,8 @@ public void onViewCreated(View view, Bundle savedInstanceState) {
 		});
 
 	}
-	
-	
+
+
 	private ArrayList<String> getSetTime(int minValue,int maxValue) {
 		ArrayList<String> arrayList = new ArrayList<String>();
 		for (int i = minValue; i < maxValue+1; i++) {
