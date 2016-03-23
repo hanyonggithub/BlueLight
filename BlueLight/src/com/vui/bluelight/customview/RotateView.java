@@ -90,17 +90,16 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 			AY = BY;
 			float  rotatedDegrees=(float) rotation%360;
 			timer_ring_color.setRotation(rotatedDegrees);
-			int colorFromColorRing = getColorFromColorRing(timer_ring_color,-rotatedDegrees);
+			int colorFromColorRing = getColorFromColorRing(timer_ring_color,rotatedDegrees);
 			cus_view_halring.setDotColor(colorFromColorRing);
 		}
 		return true;
 	}
 
 	private boolean geDirection(float BX, float BY) {
-
 		if(Math.abs(BX-AX)>Math.abs(BY-AY)){ //如果横向移动大于纵向移动
 			if(BX>AX&&BY<=CY){// 在上半部分 向右滑动 顺时针：BX>AX 
-				LogUtils.i("上半部分 向右滑动 ");
+				//LogUtils.i("上半部分 向右滑动 ");
 				return true;
 			}else if(BX<AX&&BY<=CY){
 				return false;
@@ -108,7 +107,7 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 
 
 			else if(BX<AX&&BY>=CY) { //在下半部分 向左滑动 顺时针： BX<AX 
-				LogUtils.i("下半部分 向左滑动 ");
+			//	LogUtils.i("下半部分 向左滑动 ");
 				return	true;
 			}else if(BX>AX&&BY>=CY){
 				return	false;
@@ -161,11 +160,15 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 
 	/**
 	 * 获取圆旋转后的点的坐标
+	 * 该方法degrees 默认逆时针 0度为最右边
 	 * @return
 	 */
 	private Point getRotatedPoint(Point center,double radius,float degrees){
-		degrees=degrees-90;
-		return new Point((int) (center.x+radius*Math.cos(degrees)),(int) (center.y+radius*Math.sin(degrees)));
+		//degrees=degrees;		
+		int x=(int) (center.x+radius*Math.sin(2*Math.PI/360*degrees));
+		int y=(int) (center.y+radius*Math.cos(2*Math.PI/360*degrees));
+		LogUtils.i("llpp:旋转"+degrees+"度的坐标是："+x+":"+y+"中心点坐标："+center.x+":"+center.y+" 半径："+(int)radius);
+		return new Point(x,y);
 	}
 	/**
 	 * 从彩盘获取颜色
@@ -178,16 +181,15 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 		Bitmap bitmap = background.getBitmap();
 		int width = bitmap.getWidth();
 		int height = bitmap.getHeight();
+		//以左上角为原点建立坐标系，坐标系中圆的中心点是
 		Point center = new Point(width/2,height/2);
-		Point rotatedPoint = getRotatedPoint(center, width/2-width/100, degrees);
+		//半径是
+		double radius = width/2;
+		Point rotatedPoint = getRotatedPoint(center, radius, degrees+180);
 		int pixel = bitmap.getPixel(rotatedPoint.x, rotatedPoint.y);
-		int alpha = Color.alpha(pixel);
-		int red = Color.red(pixel);
-		int blue = Color.blue(pixel);
-		int green = Color.green(pixel);
-		int argb = Color.argb(alpha, red, green, blue);
-		//LogUtils.i("llpp:==========旋转后的点的坐标是："+" 颜色：pixel："+argb+" degrees: "+degrees);
-		return argb;
+		//int argb = Color.argb(alpha, red, green, blue);
+		//LogUtils.i("llpp:==========旋转后的点的坐标是："+" 颜色：pixel："+pixel+" degrees: "+degrees);
+		return pixel;
 	}
 
 }
