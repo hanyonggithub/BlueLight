@@ -43,20 +43,26 @@ public void onViewCreated(View view, Bundle savedInstanceState) {
 		final ImageView iv_roll_cir = (ImageView) view.findViewById(R.id.iv_roll_cir);
 		final TimerHalfRingView cus_view_halring = (TimerHalfRingView)view.findViewById(R.id.cus_view_halring);
 		final RotateView timer_ring = (RotateView) view.findViewById(R.id.timer_ring);
-		timer_ring.setColorFollowChanceView(cus_view_halring);
-		
+		final ImageView timer_ring_color = (ImageView) view.findViewById(R.id.timer_ring_color);
+		timer_ring.setColorFollowChanceView(cus_view_halring,timer_ring_color);	
 		wva2.setCustomWidth(ScreenUtils.getScreenWidth(getActivity())/8);
 		wva2.setIsDrawLine(false);
 		wva2.setOffset(1);
-		wva2.setItems(getSetTime(101));
+		wva2.setItems(getSetTime(-50,50));
+		wva2.setCurrentPosition(50);
 		wva2.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+			int lastPosition=0;
 			@Override
 			public void onSelected(int selectedIndex, String item) {
 				LogUtils.i( "llpp======selectedIndex: " + selectedIndex + ", item: " + 
-						item+"displayItemCount:"+wva2.displayItemCount);	
-				//iv_roll_cir.setRotation(Integer.parseInt(item)*360/100);
-				//cus_view_halring.setRotation(Integer.parseInt(item)*360/100);
-				//timer_ring.setRotation(Integer.parseInt(item)*360/100);
+						item+"   displayItemCount:"+wva2.displayItemCount);	
+				int item_i = Integer.parseInt(item);
+				if(item_i>lastPosition){//向上滑动
+					timer_ring.updateUI(0.10,false);
+				}else{	//向下
+					timer_ring.updateUI(0.05,true);
+				}
+				lastPosition=item_i;
 			}
 
 		});
@@ -64,10 +70,10 @@ public void onViewCreated(View view, Bundle savedInstanceState) {
 	}
 	
 	
-	private ArrayList<String> getSetTime(int maxTime) {
+	private ArrayList<String> getSetTime(int minValue,int maxValue) {
 		ArrayList<String> arrayList = new ArrayList<String>();
-		for (int i = 0; i < maxTime; i++) {
-			arrayList.add(i<10? "0"+i:i+"");
+		for (int i = minValue; i < maxValue+1; i++) {
+			arrayList.add(i+"");
 		}
 		return arrayList;
 	}

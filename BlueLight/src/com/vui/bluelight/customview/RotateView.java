@@ -56,7 +56,6 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 		if(CX==0){
 			CX = this.getWidth()/2;
 			CY = this.getHeight()/2;
-			timer_ring_color = (ImageView) view.findViewById(R.id.timer_ring_color);
 		}
 		switch (event.getAction()){
 		case MotionEvent.ACTION_DOWN:
@@ -76,24 +75,37 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 			double a= getdistance(BX,BY,CX,CY);
 			//计算C的余弦值
 			double cosa= getCosValue(a,b,c);
-			//获取角C的弧度
+			//非常小
 			double al =  Math.acos(cosa);
 			//判断方向
 			boolean direction=false;
 			direction = geDirection(BX, BY);
-			if(direction){
-				rotation+= al*180/Math.PI*2;
-			}else{
-				rotation-= al*180/Math.PI*2;
-			}
+			updateUI(al, direction);
 			AX = BX;
 			AY = BY;
-			float  rotatedDegrees=(float) rotation%360;
-			timer_ring_color.setRotation(rotatedDegrees);
-			int colorFromColorRing = getColorFromColorRing(timer_ring_color,rotatedDegrees);
-			cus_view_halring.setDotColor(colorFromColorRing);
 		}
 		return true;
+	}
+
+	/**
+	 * 
+	 * @param radian 本次要改变的角度，会被放大50-100倍 只能为正值
+	 * @param direction 改变的方向 true为顺时针方向
+	 */
+	public void updateUI(double radian, boolean direction) {
+		if(direction){
+			rotation+=radian*50*2; //radianToDegrees(radian);//radian*180/Math.PI*2;
+		
+		}else{
+			rotation-= radian*50*1;;//radianToDegrees(radian);//
+		}
+	
+		float  rotatedDegrees=(float) rotation%360;
+		LogUtils.i("llpp:方向："+direction+" 角度："+rotatedDegrees);
+		//顺时针方向为正值，是在原先值的基础上进行加或者减来进行旋转、
+		timer_ring_color.setRotation(rotatedDegrees);
+		int colorFromColorRing = getColorFromColorRing(timer_ring_color,rotatedDegrees);
+		cus_view_halring.setDotColor(colorFromColorRing);
 	}
 
 	private boolean geDirection(float BX, float BY) {
@@ -132,8 +144,9 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 		return true;
 	}
 
-	public void setColorFollowChanceView(TimerHalfRingView view){
+	public void setColorFollowChanceView(TimerHalfRingView view,ImageView timer_ring_color){
 		cus_view_halring=view;
+		this.timer_ring_color=timer_ring_color;
 	}
 
 	/**
@@ -158,18 +171,24 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 
 	}
 
-	/**
-	 * 获取圆旋转后的点的坐标
-	 * 该方法degrees 默认逆时针 0度为最右边
-	 * @return
-	 */
-	private Point getRotatedPoint(Point center,double radius,float degrees){
+
+	private Point getRotatedPoint(Point center,double radius,float radian){
 		//degrees=degrees;		
-		int x=(int) (center.x+radius*Math.sin(2*Math.PI/360*degrees));
-		int y=(int) (center.y+radius*Math.cos(2*Math.PI/360*degrees));
-		LogUtils.i("llpp:旋转"+degrees+"度的坐标是："+x+":"+y+"中心点坐标："+center.x+":"+center.y+" 半径："+(int)radius);
+		int x=(int) (center.x+radius*Math.sin(radianToDegrees(radian)));
+		int y=(int) (center.y+radius*Math.cos(radianToDegrees(radian)));
+		//LogUtils.i("llpp:旋转"+radianToDegrees(radian)+"度的坐标是："+x+":"+y+"中心点坐标："+center.x+":"+center.y+" 半径："+(int)radius);
 		return new Point(x,y);
 	}
+	
+	/**
+	 * 弧度转换为角度
+	 * @param radian
+	 * @return
+	 */
+	private double radianToDegrees(double radian){
+		return (2*Math.PI/360)*radian;//0.017*radian
+	}
+	
 	/**
 	 * 从彩盘获取颜色
 	 * @param x
@@ -181,14 +200,15 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 		Bitmap bitmap = background.getBitmap();
 		int width = bitmap.getWidth();
 		int height = bitmap.getHeight();
-		//以左上角为原点建立坐标系，坐标系中圆的中心点是
 		Point center = new Point(width/2,height/2);
-		//半径是
-		double radius = width/2;
+		double radius = width/2-width/50;
 		Point rotatedPoint = getRotatedPoint(center, radius, degrees+180);
 		int pixel = bitmap.getPixel(rotatedPoint.x, rotatedPoint.y);
-		//int argb = Color.argb(alpha, red, green, blue);
-		//LogUtils.i("llpp:==========旋转后的点的坐标是："+" 颜色：pixel："+pixel+" degrees: "+degrees);
+	/*	int alpha = Color.alpha(pixel);
+		int red = Color.red(pixel);
+		int green = Color.green(pixel);
+		int blue = Color.blue(pixel);
+		int argb = Color.argb(alpha, red, green, blue);*/
 		return pixel;
 	}
 
