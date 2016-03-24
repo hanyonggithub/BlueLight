@@ -31,6 +31,8 @@ public class ShakeListenerUtils implements SensorEventListener
 		this.onShakedListener =onShakedListener;
 	}
 
+	long lastShakeTime;
+	int range=11;
 	@Override
 	public void onSensorChanged(SensorEvent event){
 		int sensorType = event.sensor.getType();
@@ -39,15 +41,21 @@ public class ShakeListenerUtils implements SensorEventListener
 		float[] values = event.values;
 		if (sensorType == Sensor.TYPE_ACCELEROMETER)
 		{
-			int range=16;
-			if ((Math.abs(values[0]) >=range || Math.abs(values[1]) >= range || Math
+			if ((Math.abs(values[0]) >=range || Math.abs(values[1]) >= range|| Math
 					.abs(values[2]) >= range))
 			{
 				if(!activity.isOpenShaking){
 						LogUtils.i("llpp: 摇一摇功能已经被关闭：");
 						return;
 				}
-				vibrator.vibrate(150);
+				long currentTimeMillis = System.currentTimeMillis();
+				long dtime=currentTimeMillis-lastShakeTime;
+				if(dtime<1500){
+					//LogUtils.i("llpp==========连续摇动，被终止");
+					return;
+				}
+				lastShakeTime=currentTimeMillis;
+				vibrator.vibrate(350);
 				Random random =new Random();
 				int nextInt = random.nextInt(number);
 				LogUtils.i("llpp:传感器改变=nSensorChanged +sensorType:"+sensorType+"值："+(int)values[0]+":"+(int)values[1]+":"+(int)values[2]+"nextInt: "+nextInt);
