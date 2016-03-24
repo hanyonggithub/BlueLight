@@ -54,7 +54,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:padding="5dp"
-        android:text="lights on 2hrs and 55 munites later"
+        android:text="lights on 0hrs and 0 munites later"
         android:textColor="#ffffff"
         android:textSize="14sp" />
 

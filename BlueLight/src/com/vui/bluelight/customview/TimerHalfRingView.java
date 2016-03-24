@@ -1,6 +1,7 @@
 package com.vui.bluelight.customview;
 
 import com.vui.bluelight.rgb.RGBMainActivity;
+import com.vui.bluelight.timer.TimerActivity;
 import com.vui.bluelight.utils.DensityUtils;
 import com.vui.bluelight.utils.LogUtils;
 
@@ -89,7 +90,10 @@ public class TimerHalfRingView extends View {
 	public void setDotColor(int color){
 		this .dotColor=color;
 		//谁最后设置 选定的颜色就是谁
-		((RGBMainActivity)context).setSelectedColor(color);
+		if(context instanceof RGBMainActivity){
+			((RGBMainActivity)context).setSelectedColor(color);
+		}
+		
 		postInvalidate();
 	}
 	public int getDotColor(){

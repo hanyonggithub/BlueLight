@@ -69,6 +69,7 @@ public class ModeShakingActivity extends Activity{
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
+					
 					buttonView.setText("ON");
 					isOpenShaking=true;
 				}else{

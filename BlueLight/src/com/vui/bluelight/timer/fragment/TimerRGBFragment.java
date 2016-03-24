@@ -1,7 +1,9 @@
 package com.vui.bluelight.timer.fragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.List;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -31,6 +33,7 @@ import com.vui.bluelight.timer.entity.TimerEntity;
 import com.vui.bluelight.timer.entity.TimerEntity.Data;
 import com.vui.bluelight.utils.LogUtils;
 import com.vui.bluelight.utils.ScreenUtils;
+import com.vui.bluelight.utils.TimeUtils;
 
 public class TimerRGBFragment extends Fragment{
 	private TimerEntity timerEntity;
@@ -40,20 +43,19 @@ public class TimerRGBFragment extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View inflate = View.inflate(getActivity(),R.layout.frag_timerrgb, null);
-		return inflate;
-	}
+		if(view==null){
+			view = View.inflate(getActivity(),R.layout.frag_timerrgb, null);
+			initData();		
+			initTitleBar(view);
+			initOnOffView(view);
+			initWheelView(view);
+			initWeekView(view);
+			initChooseView(view);
+			initTypeChooseView(view);
+		}
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		initData();		
-		initTitleBar(view);
-		initOnOffView(view);
-		initWheelView(view);
-		initWeekView(view);
-		initChooseView(view);
-		initTypeChooseView(view);
+
+		return view;
 	}
 
 	private void initTitleBar(View view) {
@@ -77,7 +79,7 @@ public class TimerRGBFragment extends Fragment{
 				}else{
 					Toast.makeText(getActivity(), "please choose days of the week", Toast.LENGTH_SHORT).show();
 				}
-				
+
 			}
 		});
 	}
@@ -85,7 +87,7 @@ public class TimerRGBFragment extends Fragment{
 		int size = newTimer.week.size();
 		for (int i = 0; i < size; i++) {
 			if(newTimer.week.get(i)==1)//只要选择一个就可以通过
-			return true;
+				return true;
 		}
 		//一个都没有选择
 		return false;
@@ -94,7 +96,7 @@ public class TimerRGBFragment extends Fragment{
 	private void backTimerFragment() {
 		TimerFragment timerFragment = new TimerFragment();
 		TimerActivity.switchFragment(TimerRGBFragment.this,timerFragment, (TimerActivity) getActivity());
-		
+
 	}
 	private void initTypeChooseView(View view) {
 		RadioGroup rg_type_select_content = (RadioGroup) view. findViewById(R.id.rg_type_select_content);
@@ -129,22 +131,32 @@ public class TimerRGBFragment extends Fragment{
 
 	}
 
+	public void setChooseViewColor(int color){
+		bt_choose.setTextColor(color);
+	}
+	private ChooseRGBFragment chooseRGBFragment;
 	private void initChooseView(View view) {
 		bt_choose = (Button) view. findViewById(R.id.bt_choose);
 		//设置默认关联
 		bt_choose.setTag(TimerEntity.TIMERTYPE_RGB);
 		bt_choose.setOnClickListener(new OnClickListener() {		
+			private ChooseWhiteFragment chooseWhiteFragment;
+
 			@Override
 			public void onClick(View v) {	
-			
+
 				int tag = (Integer) v.getTag();
 				switch (tag) {
 				case TimerEntity.TIMERTYPE_RGB:
-					ChooseRGBFragment chooseRGBFragment = new ChooseRGBFragment();
+					if(chooseRGBFragment==null){
+						chooseRGBFragment = new ChooseRGBFragment();
+					}				
 					TimerActivity.switchFragment(TimerRGBFragment.this,chooseRGBFragment, (TimerActivity) getActivity());
 					break;
 				case TimerEntity.TIMERTYPE_WHITE:
-					ChooseWhiteFragment chooseWhiteFragment = new ChooseWhiteFragment();
+					if(chooseWhiteFragment==null){
+						chooseWhiteFragment = new ChooseWhiteFragment();
+					}
 					TimerActivity.switchFragment(TimerRGBFragment.this,chooseWhiteFragment, (TimerActivity) getActivity());
 					break;
 				case TimerEntity.TIMERTYPE_MUSIC:
@@ -152,7 +164,7 @@ public class TimerRGBFragment extends Fragment{
 					startActivity(intent);
 					break;
 				case TimerEntity.TIMERTYPE_FLICKER:
-					Toast.makeText(getActivity(), "开发中。。。", 0).show();
+					Toast.makeText(getActivity(), "开发中。。。", Toast.LENGTH_SHORT).show();
 					break;
 				default:
 					break;
@@ -161,53 +173,67 @@ public class TimerRGBFragment extends Fragment{
 		});
 	}
 
+	/**
+	 * 选择的是星期几 默认为0表示没有选择
+	 */
+	int selected_week=0;
 	private void initWeekView(View view) {
 		final LinearLayout llt_week_content = (LinearLayout) view. findViewById(R.id.llt_week_content);
 		int childCount = llt_week_content.getChildCount();
 		for (int i = 0; i <childCount; i++) {
 			CheckBox checkBox = (android.widget.CheckBox) llt_week_content.getChildAt(i);
 			checkBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
-
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					switch (buttonView.getId()) {
+					//
 					case R.id.cb_1:
 						newTimer.week.remove(0);
 						newTimer.week.add(0, isChecked? 1:0);
+						selected_week=1;
 						break;
 					case R.id.cb_2:
 						newTimer.week.remove(1);
 						newTimer.week.add(1, isChecked? 1:0);
+						selected_week=2;
 						break;
 					case R.id.cb_3:
 						newTimer.week.remove(2);
 						newTimer.week.add(2, isChecked? 1:0);
+						selected_week=3;
 						break;
 					case R.id.cb_4:
 						newTimer.week.remove(3);
 						newTimer.week.add(3, isChecked? 1:0);
+						selected_week=4;
 						break;
 					case R.id.cb_5:
 						newTimer.week.remove(4);
 						newTimer.week.add(4, isChecked? 1:0);
+						selected_week=5;
 						break;
 					case R.id.cb_6:
 						newTimer.week.remove(5);
 						newTimer.week.add(5, isChecked? 1:0);
+						selected_week=6;
 						break;
 					case R.id.cb_7:
 						newTimer.week.remove(6);
 						newTimer.week.add(6, isChecked? 1:0);
+						selected_week=7;
 						break;
 					default:
 						break;
 					}
 					LogUtils.i(newTimer.week.toString());
+					handSelectedTimes = handSelectedTime(selectedHour, selectedMinute);
+					updateTipData(handSelectedTimes);
+					//LogUtils.i(newTimer.week.toString());
 				}
 			});
 		}
 	}
-
+	private int[] handSelectedTimes;
 	private void initData() {
 		timerEntity = SwipeAdapter.getTimerEntity(getActivity());
 		//第一次是没有数据的
@@ -240,7 +266,7 @@ public class TimerRGBFragment extends Fragment{
 				}else{
 					newTimer.type=0;
 				}
-				updateTipData();
+				updateTipData(handSelectedTimes);
 			}
 		});
 	}
@@ -249,18 +275,18 @@ public class TimerRGBFragment extends Fragment{
 	 */
 	int selectedHour;
 	int selectedMinute;
-	private int[] tipDistanceTime=new int[2];
 	private TextView tv_tip_time;
 	private Button bt_choose;
 	private RadioButton rb_on;
 	private RadioButton rb_off;
+	private View view;
 	private void initWheelView(View view) {
 		final WheelView wva_hour = (WheelView) view. findViewById(R.id.main_wv);
 		final WheelView wva_minute = (WheelView) view. findViewById(R.id.main_wv2);
 		tv_tip_time = (TextView) view.findViewById(R.id.tv_tip_time);
 		//初始化时默认选择0时0分
-		tipDistanceTime = handSelectedTime(tipDistanceTime[0],tipDistanceTime[1]);
-		updateTipData();
+		//tipDistanceTime = handSelectedTime(tipDistanceTime[0],tipDistanceTime[1]);
+		//updateTipData();
 		wva_hour.setCustomWidth(ScreenUtils.getScreenWidth(getActivity())/2);
 		wva_hour.setOffset(2);
 		wva_hour.setItems(getSetTime(24));
@@ -270,12 +296,12 @@ public class TimerRGBFragment extends Fragment{
 				LogUtils.i( "llpp======selectedIndex: " + selectedIndex + ", item: " + 
 						item+"displayItemCount:"+wva_hour.displayItemCount);
 				selectedHour=Integer.parseInt(item);
-				tipDistanceTime = handSelectedTime(Integer.parseInt(item),selectedMinute);
-				updateTipData();		
+				//tipDistanceTime = handSelectedTime(Integer.parseInt(item),selectedMinute);
+				//updateTipData();		
 			}
 
 		});
-		
+
 		wva_minute.setCustomWidth(ScreenUtils.getScreenWidth(getActivity())/2);
 		wva_minute.setOffset(2);
 		wva_minute.setItems(getSetTime(60));
@@ -285,13 +311,14 @@ public class TimerRGBFragment extends Fragment{
 				LogUtils.i( "llpp======selectedIndex: " + selectedIndex + ", item: " + 
 						item+"displayItemCount:"+wva_minute.displayItemCount);
 				selectedMinute=Integer.parseInt(item);
-				tipDistanceTime = handSelectedTime(selectedHour,Integer.parseInt(item));
-				updateTipData();
+				//	tipDistanceTime = handSelectedTime(selectedHour,Integer.parseInt(item));
+				//	updateTipData();
 			}
 		});
 	}
 
-	private void updateTipData() {
+
+	private void updateTipData( int[] tipDistanceTime) {
 		if(newTimer.state==1){//如果选则的是 lights on
 			tv_tip_time.setText("lights on "+tipDistanceTime[0]+" hours and "+
 					tipDistanceTime[1]+" minutes later");
@@ -308,13 +335,34 @@ public class TimerRGBFragment extends Fragment{
 	 * @return
 	 */
 	private int[] handSelectedTime(int hour,int minute) {
+		//获取最近一天是星期几
+		int closesDay = getClosesDay(hour,minute);
+		if(closesDay==-1){//没有选择
+			LogUtils.i("用户没有选择==========");
+			return new int[2];
+		}
+		//获取系统是星期几
+		int currentDay = TimeUtils.getDayOfWeek();
+		//计算相隔多少天
+		int timeInterval =closesDay-currentDay;
+		if(timeInterval<0){
+			timeInterval=7+timeInterval;
+		}else if(timeInterval==0){
+			if(hour*60+minute>getSystemTime()){
+				timeInterval=0;
+				
+			}else{
+				timeInterval=7;
+			}
+		}
+		LogUtils.i("llpp:用户选择中,距离现在最近的是星期："+closesDay+"相隔:"+timeInterval+"天");
 		int systemTime = getSystemTime();
-		int totalSeletedTime = hour*60+minute;
+		int totalSeletedTime = hour*60+minute+timeInterval*24*60;
 		int timeDis;
 		if(totalSeletedTime>systemTime){//选择的时间大于系统时间
 			timeDis=totalSeletedTime-systemTime;
-		}else{//选择的时间小于系统时间 ，算作第二天
-			//今天的剩余系统时间加上第二天的选择时间
+		}else{//选择的时间小于系统时间 ，下一周的时间
+			//今天的剩余系统时间加上相隔时间
 			timeDis=24*60-systemTime+totalSeletedTime;
 		}
 		//时间差
@@ -325,6 +373,47 @@ public class TimerRGBFragment extends Fragment{
 	}
 
 	/**
+	 * 从用户选择的所有时间中获取和现在相隔最近的一个时间:星期几
+	 * @param dayOfWeek
+	 */
+	private int getClosesDay(int selectedHour,int selectedMinute) {
+		//是否小于系统时间
+		boolean isLessSystemTime=false;
+		boolean isToday=false;
+		//从今天开始找，今天有分两种情况，即选择大于当前时间和小于当前时间
+		int selectedTotal=selectedHour*60+selectedMinute;
+		if(selectedTotal<getSystemTime()){
+			isLessSystemTime=true;
+		}	
+		//获取系统是星期几
+		int dayOfWeek = TimeUtils.getDayOfWeek();
+		LogUtils.i("系统现在是星期："+dayOfWeek);
+		List<Integer> week = newTimer.week;
+		//遍历找到距离现在最近的一天
+		for (int i = dayOfWeek; i < dayOfWeek+7; i++) {
+			if(i<=7){
+				Integer integer = week.get(i-1);
+				if(integer!=0){//找到了
+					if(isLessSystemTime){//找到了并且小于系统时间
+						if(i==dayOfWeek){//如果最近时间是今天
+							isToday=true;
+							continue;//继续，如果后面已经没有才返回这一天
+						}
+					}
+					return i;
+				}
+			}else{//i>7
+				int position=i%7-1;
+				Integer integer = week.get(position);
+				if(integer!=0){
+					return i%7;
+				}
+			}
+		}
+		return isToday? dayOfWeek:-1;
+	}
+
+	/**
 	 * 
 	 * @return hour*60+minute
 	 */
@@ -332,7 +421,6 @@ public class TimerRGBFragment extends Fragment{
 		Time t=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。  		
 		t.setToNow(); // 取得系统时间。  
 		int time=t.hour*60+t.minute; // 0-23  
-		LogUtils.i("llpp:当前的系统时间是(hour*60+minute)："+time);
 		return time;
 	}
 
