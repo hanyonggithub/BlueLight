@@ -27,6 +27,7 @@ public class ShakeListenerUtils implements SensorEventListener
 	private Vibrator vibrator;
 	int number;
 	boolean isLoaded=false;
+	@SuppressWarnings("deprecation")
 	public ShakeListenerUtils(ModeShakingActivity context,int number,OnShakedListener onShakedListener){
 		super();
 		this.number=number;
@@ -34,7 +35,7 @@ public class ShakeListenerUtils implements SensorEventListener
 		this.activity=context;
 		mAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 		//初始化声音
-		soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 5);
+		soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 		shake_id = soundPool.load(context, R.raw.shake, 1);
 		soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {			
 			@Override
@@ -51,35 +52,35 @@ public class ShakeListenerUtils implements SensorEventListener
 	private int shake_id;
 	private AudioManager mAudioManager;
 	private int lastShakedValue=-1;
+
+	// 速度阈值，当摇晃速度达到这值后产生作用  
+	private static final int SPEED_SHRESHOLD = 2000; 
 	@Override
 	public void onSensorChanged(SensorEvent event){
 		int sensorType = event.sensor.getType();
 		//values[0]:X轴，values[1]：Y轴，values[2]：Z轴  :
 		//其中Z轴为重力加速度  
 		float[] values = event.values;
-		if (sensorType == Sensor.TYPE_ACCELEROMETER)
+		if ((Math.abs(values[0]) >=range || Math.abs(values[1]) >= range|| Math
+				.abs(values[2]) >= 14))
 		{
-			if ((Math.abs(values[0]) >=range || Math.abs(values[1]) >= range|| Math
-					.abs(values[2]) >= 14))
-			{
-				if(!activity.isOpenShaking){
-					LogUtils.i("llpp: 摇一摇功能已经被关闭：");
-					return;
-				}
-				//设计时间间隔
-				long currentTimeMillis = System.currentTimeMillis();
-				long dtime=currentTimeMillis-lastShakeTime;
-				if(dtime<1500){
-					return;
-				}
-				lastShakeTime=currentTimeMillis;
-				//播放伴随声音
-				playFolowSound();
-				//获取随机值
-				int nextInt = getRandomValue();				
-				onShakedListener.OnShaked(nextInt);
-				LogUtils.i("llpp:传感器改变=nSensorChanged +sensorType:"+sensorType+"值："+(int)values[0]+":"+(int)values[1]+":"+(int)values[2]+"  nextInt: "+nextInt);
+			if(!activity.isOpenShaking){
+				LogUtils.i("llpp: 摇一摇功能已经被关闭：");
+				return;
 			}
+			//设计时间间隔
+			long currentTimeMillis = System.currentTimeMillis();
+			long dtime=currentTimeMillis-lastShakeTime;
+			if(dtime<1500){
+				return;
+			}
+			lastShakeTime=currentTimeMillis;
+			//播放伴随声音
+			playFolowSound();
+			//获取随机值
+			int nextInt = getRandomValue();				
+			onShakedListener.OnShaked(nextInt);
+			LogUtils.i("llpp:传感器改变=nSensorChanged +sensorType:"+sensorType+"值："+(int)values[0]+":"+(int)values[1]+":"+(int)values[2]+"  nextInt: "+nextInt);
 		}
 	}
 
@@ -88,7 +89,7 @@ public class ShakeListenerUtils implements SensorEventListener
 		LogUtils.i("llpp:系统的音量是==========："+streamVolume);
 		if(streamVolume>0){
 			if(isLoaded){
-				soundPool.play(shake_id, 1, 1, 1, 0, 1);
+				soundPool.play(shake_id, 0.4f, 0.4f, 1, 0, 1);
 			}
 		}else{
 			vibrator.vibrate(350);	
