@@ -296,8 +296,8 @@ public class TimerRGBFragment extends Fragment{
 				LogUtils.i( "llpp======selectedIndex: " + selectedIndex + ", item: " + 
 						item+"displayItemCount:"+wva_hour.displayItemCount);
 				selectedHour=Integer.parseInt(item);
-				//tipDistanceTime = handSelectedTime(Integer.parseInt(item),selectedMinute);
-				//updateTipData();		
+				handSelectedTimes = handSelectedTime(selectedHour, selectedMinute);
+				updateTipData(handSelectedTimes);		
 			}
 
 		});
@@ -311,8 +311,8 @@ public class TimerRGBFragment extends Fragment{
 				LogUtils.i( "llpp======selectedIndex: " + selectedIndex + ", item: " + 
 						item+"displayItemCount:"+wva_minute.displayItemCount);
 				selectedMinute=Integer.parseInt(item);
-				//	tipDistanceTime = handSelectedTime(selectedHour,Integer.parseInt(item));
-				//	updateTipData();
+				handSelectedTimes = handSelectedTime(selectedHour, selectedMinute);
+				updateTipData(handSelectedTimes);
 			}
 		});
 	}
