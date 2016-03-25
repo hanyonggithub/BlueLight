@@ -1,9 +1,12 @@
 package com.vui.bluelight.main;
 
+import java.math.RoundingMode;
+
 import com.vui.bluelight.MainActivity;
 import com.vui.bluelight.R;
 import com.vui.bluelight.SettingActivity;
 import com.vui.bluelight.UserActivity;
+import com.vui.bluelight.base.view.RoundImageView;
 import com.vui.bluelight.base.view.VisualizerView;
 import com.vui.bluelight.group.GroupActivity;
 import com.vui.bluelight.mod.ModeShakingActivity;
@@ -38,7 +41,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private VisualizerView mVisualizerView;
 
 	private ImageView setting;
-	private RelativeLayout rlt_user_image;
+	private RoundImageView rivw_user_image;
 
 	private LinearLayout llt_music_play;
 	private LinearLayout llt_rgbw;
@@ -70,7 +73,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setting = (ImageView) view.findViewById(R.id.setting);
-		rlt_user_image = (RelativeLayout) view.findViewById(R.id.rlt_user_image);
+		rivw_user_image = (RoundImageView) view.findViewById(R.id.rivw_user_image);
 
 		ivw_music_last = (ImageView) view.findViewById(R.id.ivw_music_last);
 		ivw_music_play = (ImageView) view.findViewById(R.id.ivw_music_play);
@@ -86,7 +89,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		tvw_music_name = (TextView) view.findViewById(R.id.tvw_music_name);
 
 		setting.setOnClickListener(this);
-		rlt_user_image.setOnClickListener(this);
+		rivw_user_image.setOnClickListener(this);
 		llt_music_play.setOnClickListener(this);
 		ivw_music_last.setOnClickListener(this);
 		ivw_music_play.setOnClickListener(this);
@@ -130,15 +133,15 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.setting:
 			SettingFragment settingfragment = new SettingFragment();
-			((MainActivity) getActivity()).replaceFrg(settingfragment);
+			((MainActivity) getActivity()).replaceFrg(settingfragment,"settingFrg");
 			break;
-		case R.id.rlt_user_image:
+		case R.id.rivw_user_image:
 			UserFragment muserfragment = new UserFragment();
-			((MainActivity) getActivity()).replaceFrg(muserfragment);
+			((MainActivity) getActivity()).replaceFrg(muserfragment,"userFrg");
 			break;
 		case R.id.llt_music_play:
 			MusicPlayFragment musicPlayfragment = new MusicPlayFragment();
-			((MainActivity) getActivity()).replaceFrg(musicPlayfragment);
+			((MainActivity) getActivity()).replaceFrg(musicPlayfragment,"musicPlayFrg");
 			break;
 		case R.id.ivw_music_last:
 			mService.last();

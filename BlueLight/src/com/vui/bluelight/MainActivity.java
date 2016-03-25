@@ -3,6 +3,7 @@ package com.vui.bluelight;
 import com.vui.bluelight.base.view.VisualizerView;
 import com.vui.bluelight.group.GroupActivity;
 import com.vui.bluelight.main.HomeFragment;
+import com.vui.bluelight.main.UserFragment;
 import com.vui.bluelight.mod.ModeShakingActivity;
 import com.vui.bluelight.music.MusicPlayActivity;
 import com.vui.bluelight.music.MusicPlayFragment;
@@ -40,8 +41,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	private static final float VISUALIZER_HEIGHT_DIP = 200f;// 频谱View高度
 
 	private Visualizer mVisualizer;// 频谱器
-	private MusicService mService;//音乐服务
-	private Intent intent;//音乐播放服务对应的intent
+	private MusicService mService;// 音乐服务
+	private Intent intent;// 音乐播放服务对应的intent
 
 	private VisualizerView mVisualizerView;
 
@@ -57,9 +58,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	private ImageView ivw_music_last;
 	private ImageView ivw_music_play;
 	private ImageView ivw_music_next;
-	
-	FragmentManager fm;
 
+	FragmentManager fm;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,39 +67,40 @@ public class MainActivity extends Activity implements OnClickListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 
-		intent=new Intent(MainActivity.this,MusicService.class);
+		intent = new Intent(MainActivity.this, MusicService.class);
 		startService(intent);
-		fm=getFragmentManager();
-		
-		HomeFragment homeFragment=new HomeFragment();
-		fm.beginTransaction().replace(R.id.flt_content, homeFragment).commit();
+		fm = getFragmentManager();
+
+		HomeFragment homeFragment = new HomeFragment();
+		fm.beginTransaction().replace(R.id.flt_content, homeFragment, "homeFrg").commit();
 	}
 
-	public void replaceFrg(Fragment frg){
-		fm.beginTransaction().replace(R.id.flt_content, frg).addToBackStack(null).commit();
+	public void replaceFrg(Fragment frg, String tag) {
+		fm.beginTransaction().replace(R.id.flt_content, frg, tag).addToBackStack(null).commit();
 	}
-	public void addFrg(Fragment frg){
+
+	public void addFrg(Fragment frg) {
 		fm.beginTransaction().add(R.id.flt_content, frg).addToBackStack(null).commit();
 	}
 
-	
 	@Override
 	public void onClick(View v) {
 		Intent intent;
 		switch (v.getId()) {
-		
+
 		default:
 			break;
 		}
 
 	}
+
 	public void setListener() {
-		
+
 	}
-	
-	public View getBottom(){
+
+	public View getBottom() {
 		return findViewById(R.id.inc_foot);
-		
+
 	}
 
 	@Override
@@ -108,19 +109,18 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	}
 
-
 	@Override
 	protected void onPause() {
 		super.onPause();
-	
+
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		
+
 	}
-	
+
 	ServiceConnection conn = new ServiceConnection() {
 
 		@Override
@@ -137,6 +137,16 @@ public class MainActivity extends Activity implements OnClickListener {
 			mVisualizerView.setVisualizer(mVisualizer);
 			mVisualizer.setEnabled(true);
 			// false 则不显示
+		}
+	};
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 1) {
+			UserFragment userfrg = (UserFragment) fm.findFragmentByTag("userFrg");
+			if (userfrg != null) {
+				userfrg.onActivityResult(requestCode, resultCode, data);
+			}
 		}
 	};
 
