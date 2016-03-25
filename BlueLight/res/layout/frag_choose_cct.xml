@@ -11,10 +11,9 @@
         layout="@layout/v_topbar" />
 
     <!-- 中间的彩盘 -->
-
     <RelativeLayout
         android:id="@+id/rlt_color_selector"
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp" >
@@ -22,28 +21,31 @@
         <ImageView
             android:id="@+id/iv_roll_cir"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:src="@drawable/timer_rgb_bigcir" />
+            android:background="@drawable/timer_rgb_bigcir" />
 
-        <ImageView
+        <com.vui.bluelight.customview.RotateView
+            android:id="@+id/timer_ring"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="75dp"
-            android:layout_marginRight="75dp"
-            android:src="@drawable/timer_rgb_multicolor_cct" />
+            android:layout_height="match_parent" >
 
-         <com.vui.bluelight.customview.TimerHalfRingView
-             android:id="@+id/cus_view_halring"
+            <ImageView
+                android:id="@+id/timer_ring_color"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="22dp"
+                android:background="@drawable/timer_rgb_multicolor_cct" />
+        </com.vui.bluelight.customview.RotateView>
+
+        <com.vui.bluelight.customview.TimerHalfRingView
+            android:id="@+id/cus_view_halring"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp" />
-         
+
         <LinearLayout
             android:id="@+id/llt_wheel_content2"
             android:layout_width="wrap_content"

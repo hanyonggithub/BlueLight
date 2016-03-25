@@ -1,5 +1,7 @@
 package com.vui.bluelight.customview;
 
+import com.vui.bluelight.rgb.RGBMainActivity;
+import com.vui.bluelight.timer.TimerActivity;
 import com.vui.bluelight.utils.DensityUtils;
 import com.vui.bluelight.utils.LogUtils;
 
@@ -35,8 +37,9 @@ public class TimerHalfRingView extends View {
 	}
 
 
-
+	Context context;
 	private void init(Context context) {
+		this.context= context;
 		paint = new Paint();
 		paint.setColor(Color.parseColor("#ffffff"));
 		paint.setStrokeWidth(DensityUtils.dp2px(context, 1));
@@ -45,7 +48,8 @@ public class TimerHalfRingView extends View {
 	}
 	int radius;
 	int cy;
-	private int dotColor=Color.parseColor("#FF8400");
+	private  int dotColor=Color.parseColor("#FF8400");
+	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		int left=0;
@@ -85,7 +89,15 @@ public class TimerHalfRingView extends View {
 
 	public void setDotColor(int color){
 		this .dotColor=color;
+		//谁最后设置 选定的颜色就是谁
+		if(context instanceof RGBMainActivity){
+			((RGBMainActivity)context).setSelectedColor(color);
+		}
+		
 		postInvalidate();
+	}
+	public int getDotColor(){
+		return dotColor;
 	}
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {

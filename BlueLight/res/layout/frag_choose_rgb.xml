@@ -5,16 +5,48 @@
     android:background="#1BA4CB"
     android:orientation="vertical" >
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/v_topbar" />
+   <RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_bg"
+    android:padding="10dp"
+     >
+     <ImageView 
+         android:id="@+id/back"
+         android:layout_width="55dp"
+         android:layout_height="35dp"
+         android:padding="11dp"
+         android:layout_marginLeft="-17dp"
+         android:src="@drawable/back_arr"
+         android:layout_centerVertical="true"
+         />
+     
+     <TextView 
+         android:id="@+id/title"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="living room"
+         android:layout_centerInParent="true"
+         android:textSize="20sp"
+         />
+     
+     <TextView 
+         android:id="@+id/right_btn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="OK"
+         android:layout_alignParentRight="true"
+         android:layout_centerVertical="true"
+         android:textSize="20sp"
+         />
+</RelativeLayout>
 
+    
     <!-- 中间的彩盘 -->
 
     <RelativeLayout
         android:id="@+id/rlt_color_selector"
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp" >
@@ -22,28 +54,31 @@
         <ImageView
             android:id="@+id/iv_roll_cir"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:src="@drawable/timer_rgb_bigcir" />
+            android:background="@drawable/timer_rgb_bigcir" />
 
-        <ImageView
+        <com.vui.bluelight.customview.RotateView
+            android:id="@+id/timer_ring"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="75dp"
-            android:layout_marginRight="75dp"
-            android:src="@drawable/timer_rgb_multicolor_ring" />
+            android:layout_height="match_parent" >
 
-         <com.vui.bluelight.customview.TimerHalfRingView
-             android:id="@+id/cus_view_halring"
+            <ImageView
+                android:id="@+id/timer_ring_color"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="22dp"
+                android:background="@drawable/timer_rgb_multicolor_ring" />
+        </com.vui.bluelight.customview.RotateView>
+
+        <com.vui.bluelight.customview.TimerHalfRingView
+            android:id="@+id/cus_view_halring"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp" />
-         
+
         <LinearLayout
             android:id="@+id/llt_wheel_content2"
             android:layout_width="wrap_content"
@@ -57,6 +92,7 @@
                 android:layout_height="80dp" />
         </LinearLayout>
     </RelativeLayout>
+
 <!-- 底部的滚轮的容器 -->
     <RelativeLayout
         android:layout_width="match_parent"
@@ -69,6 +105,7 @@
             android:layout_width="40dp"
             android:layout_height="92dp"
             android:layout_centerInParent="true"
+            android:paddingTop="5dp"
             android:background="@drawable/bg_wheel_rec_cir"
             android:orientation="horizontal" >
 

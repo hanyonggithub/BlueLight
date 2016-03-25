@@ -4,27 +4,40 @@
     android:layout_height="match_parent"
     android:background="#1BA4CB"
     android:orientation="vertical" >
-    
-    <!-- 中间的彩盘 -->
 
     <RelativeLayout
-        android:id="@+id/rlt_color_selector"
-        android:layout_width="400dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp" >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
-        <ImageView
-            android:id="@+id/iv_roll_cir"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/flt"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:src="@drawable/mod_rgb_ring" />
+            android:layout_centerHorizontal="true" >
 
+            <com.vui.bluelight.customview.ColorPickerView
+                android:id="@+id/iv_roll_cir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/mod_rgb_ring" />
+
+            <View
+                 android:id="@+id/move_view"
+                android:layout_width="@dimen/rgb_ring_movedot_size"
+                android:layout_height="@dimen/rgb_ring_movedot_size"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_colorpicker" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_colorpreview"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/flt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:background="#ffcccc" />
     </RelativeLayout>
-
-    <!-- 下面两部分的rongq -->
 
 </LinearLayout>

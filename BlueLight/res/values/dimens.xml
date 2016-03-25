@@ -10,5 +10,7 @@
     <dimen name="timer_week_cir_margin">10dp</dimen>
     <dimen name="timer_week_cir_size">28dp</dimen>
     <dimen name="timer_week_cir_textsize">8sp</dimen>
+    
+     <dimen name="rgb_ring_movedot_size">15dp</dimen>
 
 </resources>

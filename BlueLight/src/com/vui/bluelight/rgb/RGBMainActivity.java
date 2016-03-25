@@ -5,15 +5,19 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class RGBMainActivity extends Activity{
 	Context context=this;
+	
+	private int selectedColor= Color.parseColor("#ffffff");
 	private RGBFragment rgbFragment;
 	private RGBARingFragment rgbaRingFragment;
 	private RGBADimmingFragment rgbaDimmingFragment;
@@ -72,7 +76,7 @@ public class RGBMainActivity extends Activity{
 
 	private void initTitleBar() {
 		View back = findViewById(R.id.back);
-		View right_btn = findViewById(R.id.right_btn);
+		final TextView right_btn = (TextView) findViewById(R.id.right_btn);
 		back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -83,9 +87,13 @@ public class RGBMainActivity extends Activity{
 		right_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(context, "开发中", Toast.LENGTH_SHORT).show();
+				right_btn.setTextColor(selectedColor);
+				//Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
-
+	
+	public void setSelectedColor(int color){
+		selectedColor=color;
+	}
 }
