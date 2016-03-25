@@ -139,12 +139,13 @@ public class SwipeAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	public static void saveToLocal(TimerEntity  timerEntity,Context context) {
+	public static boolean saveToLocal(TimerEntity  timerEntity,Context context) {
 		Gson gson = new Gson();
 		String json = gson.toJson(timerEntity);
 		SharedPreferences sp =context.getSharedPreferences(SwipeAdapter.sp_timer_light_list,
 				Context.MODE_PRIVATE);
-		sp.edit().putString(SwipeAdapter.key_timer_light_list,json).commit();
+		boolean commit = sp.edit().putString(SwipeAdapter.key_timer_light_list,json).commit();
+		return commit;
 	}
 	
 	private void initWeekDot(LinearLayout llt_week,int position) {

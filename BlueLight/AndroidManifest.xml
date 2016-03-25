@@ -66,6 +66,8 @@
             android:name="com.vui.bluelight.rgb.RGBMainActivity"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+        
+        <receiver  android:name="com.vui.bluelight.timer.AlarmReceiver"></receiver>
     </application>
 
 </manifest>

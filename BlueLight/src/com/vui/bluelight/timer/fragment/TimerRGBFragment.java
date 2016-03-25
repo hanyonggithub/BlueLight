@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +33,7 @@ import com.vui.bluelight.R.id;
 import com.vui.bluelight.customview.SwipeAdapter;
 import com.vui.bluelight.customview.WheelView;
 import com.vui.bluelight.music.MusicListActivity;
+import com.vui.bluelight.timer.AlarmReceiver;
 import com.vui.bluelight.timer.TimerActivity;
 import com.vui.bluelight.timer.entity.TimerEntity;
 import com.vui.bluelight.timer.entity.TimerEntity.Data;
@@ -74,7 +80,11 @@ public class TimerRGBFragment extends Fragment{
 				boolean checkCanCommit = checkCanCommit();
 				if(checkCanCommit){
 					timerEntity.items.add(newTimer);
-					SwipeAdapter.saveToLocal(timerEntity, getActivity());
+					boolean saveToLocal = SwipeAdapter.saveToLocal(timerEntity, getActivity());
+					LogUtils.i("创建的定时任务保存到本地是否成功："+saveToLocal);
+					if(saveToLocal){//开始定时启动该任务
+						startSetAlarmClock();
+					}
 					backTimerFragment();
 				}else{
 					Toast.makeText(getActivity(), "please choose days of the week", Toast.LENGTH_SHORT).show();
@@ -82,6 +92,52 @@ public class TimerRGBFragment extends Fragment{
 
 			}
 		});
+	}
+	 static final long INTERVALMILLIS = 7*24*60*60*1000;
+	private void startSetAlarmClock() {
+		Intent intent = new Intent(getActivity(), AlarmReceiver.class);
+		PendingIntent sender = PendingIntent.getBroadcast(getActivity(), 110, intent,112);
+
+	//	long firstTime = SystemClock.elapsedRealtime();	// 开机之后到现在的运行时间(包括睡眠时间)
+		long systemTime = System.currentTimeMillis();
+
+		Calendar calendar = Calendar.getInstance();
+		//先设置成系统时间
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		// 这里时区需要设置一下，不然会有8个小时的时间差
+		calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));	
+		calendar.set(Calendar.HOUR_OF_DAY, 10);
+		calendar.set(Calendar.MINUTE, 40);
+		calendar.set(Calendar.SECOND, 0);
+		//calendar.set(Calendar.MILLISECOND, 0);
+		// 选择的定时时间
+		long selectTime = calendar.getTimeInMillis();
+		// 如果当前时间大于等于设置的时间，那么就从第二天的设定时间开始
+		if(systemTime >= selectTime) {
+		Toast.makeText(getActivity(),"设置的时间小于当前时间", Toast.LENGTH_SHORT).show();
+		//如果选则的时间必须在小,跳到这个时间的七天后
+		calendar.add(Calendar.DAY_OF_MONTH, 7);
+		selectTime = calendar.getTimeInMillis();
+		}
+		// 计算现在时间到设定时间的时间差
+		//long time = selectTime - systemTime;
+		//firstTime += time;
+		// 进行闹铃注册
+		AlarmManager manager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+		manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+				calendar.getTimeInMillis(), INTERVALMILLIS, sender);
+		/*Log.i(TAG,"time ==== " + time +", selectTime ===== "
+		+ selectTime + ", systemTime ==== " + systemTime +", firstTime === " + firstTime);
+		Toast.makeText(MainActivity.this,"设置重复闹铃成功! ", Toast.LENGTH_LONG).show();*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	protected boolean checkCanCommit() {
 		int size = newTimer.week.size();
@@ -233,7 +289,7 @@ public class TimerRGBFragment extends Fragment{
 			});
 		}
 	}
-	private int[] handSelectedTimes;
+	private int[] handSelectedTimes = new int[2];
 	private void initData() {
 		timerEntity = SwipeAdapter.getTimerEntity(getActivity());
 		//第一次是没有数据的
@@ -319,7 +375,7 @@ public class TimerRGBFragment extends Fragment{
 
 
 	private void updateTipData( int[] tipDistanceTime) {
-		if(newTimer.state==1){//如果选则的是 lights on
+		if(newTimer.type==1){//如果选则的是 lights on
 			tv_tip_time.setText("lights on "+tipDistanceTime[0]+" hours and "+
 					tipDistanceTime[1]+" minutes later");
 		}else{//如果选则的是 lights off
