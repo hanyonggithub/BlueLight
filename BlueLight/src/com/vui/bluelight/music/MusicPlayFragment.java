@@ -145,7 +145,7 @@ public class MusicPlayFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.ivw_music_list:
 			MusicListFragment musicListfragment = new MusicListFragment();
-			((MainActivity) getActivity()).replaceFrg(musicListfragment);
+			((MainActivity) getActivity()).replaceFrg(musicListfragment,"musicListFrg");
 			break;
 		case R.id.ivw_music_last:
 			if (mService != null) {

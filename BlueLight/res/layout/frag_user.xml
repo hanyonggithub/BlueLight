@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llt_user_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <com.vui.bluelight.base.view.TopBarView
         android:id="@+id/topbar"
@@ -10,22 +11,18 @@
         android:layout_height="wrap_content" />
 
     <RelativeLayout
+        android:id="@+id/rlt_add_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
         android:background="@color/theme_blue" >
 
-        <TextView
-            android:layout_width="20dp"
-            android:layout_height="2dp"
+        <com.vui.bluelight.base.view.RoundImageView
+            android:id="@+id/ivw_user_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
-            android:background="@android:color/white" />
-
-        <TextView
-            android:layout_width="2dp"
-            android:layout_height="20dp"
-            android:layout_centerInParent="true"
-            android:background="@android:color/white" />
+            android:src="@drawable/cross_white" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,8 +31,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
             android:text="add image"
-            android:textSize="20sp"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -48,14 +45,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:background="@drawable/round_rect_gray" >
+            android:background="@drawable/round_rect_gray"
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
                 <TextView
                     android:id="@+id/tvw_name"
@@ -66,24 +63,25 @@
                     android:text="name:" />
 
                 <EditText
-                     android:layout_width="0dp"
+                    android:id="@+id/ett_name"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="5"
                     android:background="@null"
-                    android:layout_marginLeft="10dp"
                     android:text="Nina" />
             </LinearLayout>
-        
-            <View 
+
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#88000000"
-                />
-             <LinearLayout
+                android:background="#88000000" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -93,23 +91,25 @@
                     android:text="Password:" />
 
                 <EditText
-                     android:layout_width="0dp"
+                    android:id="@+id/ett_psw"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="5"
-                       android:background="@null"
-                       android:layout_marginLeft="10dp"
+                    android:background="@null"
                     android:text="12345678" />
             </LinearLayout>
-              <View 
+
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#88000000"
-                />
-                   <LinearLayout
+                android:background="#88000000" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -119,13 +119,15 @@
                     android:text="occupation:" />
 
                 <EditText
-                     android:layout_width="0dp"
+                    android:id="@+id/ett_job"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="5"
-                       android:background="@null"
-                       android:layout_marginLeft="10dp"
+                    android:background="@null"
                     android:text="VUI CEO" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+
 </LinearLayout>

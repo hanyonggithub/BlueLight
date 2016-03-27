@@ -59,7 +59,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 				switch (position) {
 				case 0:
 					UserFragment muserfragment = new UserFragment();
-					((MainActivity) getActivity()).replaceFrg(muserfragment);
+					((MainActivity) getActivity()).replaceFrg(muserfragment,"userFrg");
 					break;
 
 				default:

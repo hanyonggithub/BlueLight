@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -85,25 +86,15 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
-                <RelativeLayout
-                    android:id="@+id/rlt_user_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <com.vui.bluelight.base.view.RoundImageView
+                    android:id="@+id/rivw_user_image"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
                     android:layout_margin="20dp"
-                    android:background="@drawable/blue_circle" >
-
-                    <TextView
-                        android:layout_width="10dp"
-                        android:layout_height="2dp"
-                        android:layout_centerInParent="true"
-                        android:background="@color/theme_blue" />
-
-                    <TextView
-                        android:layout_width="2dp"
-                        android:layout_height="10dp"
-                        android:layout_centerInParent="true"
-                        android:background="@color/theme_blue" />
-                </RelativeLayout>
+                    imagecontrol:border_outside_color="@color/theme_blue"
+                    android:src="@drawable/cross_blue"
+                    imagecontrol:border_thickness="2dp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"

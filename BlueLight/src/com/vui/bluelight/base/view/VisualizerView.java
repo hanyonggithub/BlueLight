@@ -14,9 +14,6 @@ import android.view.View;
 
 public class VisualizerView extends View implements Visualizer.OnDataCaptureListener {
 
-	
-	
-
 	private static final int DN_W = 470;//view宽度与单个音频块占比 
     private static final int DN_H = 180;//view高度与单个音频块占比
     private static final int DN_SL = 25;//单个音频块宽度

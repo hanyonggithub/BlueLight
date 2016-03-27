@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name="com.vui.bluelight.MyApplication"
@@ -22,12 +24,18 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.vui.bluelight.MainActivity"
-            android:label="@string/app_name" >
-            
-                        <intent-filter>
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden|adjustPan" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.vui.bluelight.main.SelectPhotoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DialogStyleBottom" >
         </activity>
         <activity android:name="com.vui.bluelight.SettingActivity" >
         </activity>
@@ -48,9 +56,9 @@
 
         <!-- test -->
         <activity android:name="com.vui.bluelight.music.ServiceTestActivity" >
-
         </activity>
-        <activity android:name="com.vui.bluelight.music.ServiceTestActivity2"></activity>
+        <activity android:name="com.vui.bluelight.music.ServiceTestActivity2" >
+        </activity>
 
         <service android:name="com.vui.bluelight.music.MusicService" >
         </service>
