@@ -3,6 +3,7 @@ package com.vui.bluelight.customview;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.vui.bluelight.R;
+import com.vui.bluelight.timer.AlarmUtil;
 import com.vui.bluelight.timer.entity.TimerEntity;
 import com.vui.bluelight.utils.LogUtils;
 
@@ -54,7 +55,7 @@ public class SwipeAdapter extends BaseAdapter {
 				Gson gson = new Gson();
 				timerEntity= gson.fromJson(timer_light, TimerEntity.class);				
 			}else{
-				LogUtils.e("llpp:================:timer_light==null");
+				LogUtils.i("llpp:================:timer_light==null");
 			}
 			return timerEntity;
 		} catch (JsonSyntaxException e) {
@@ -108,7 +109,7 @@ public class SwipeAdapter extends BaseAdapter {
 		item.item_right.setLayoutParams(lp2);
 		item.tv_time.setText(timerEntity.items.get(position).time);
 		item.tv_switcher.setText(timerEntity.items.get(thisPosition).state==0? "OFF":"ON");
-		LogUtils.i("llpp:==================item.tv_lights_type:"+item.tv_lights_type);
+		//LogUtils.i("llpp:==================item.tv_lights_type:"+item.tv_lights_type);
 		
 		item.tv_lights_type.setText(timerEntity.items.get(thisPosition).type==0? "lights off":"lights on");
 		LinearLayout llt_week = item.llt_week;
@@ -121,9 +122,14 @@ public class SwipeAdapter extends BaseAdapter {
 				if(state==0){
 					timerEntity.items.get(thisPosition).state=1;
 					item.tv_switcher.setText("ON");
+					if(timerEntity.items.get(thisPosition).state==1){
+						AlarmUtil.setAlarm(mContext, timerEntity.items.get(thisPosition).alarmTimes);
+					}
+					
 				}else if(state==1){
 					timerEntity.items.get(thisPosition).state=0;
 					item.tv_switcher.setText("OFF");
+					AlarmUtil.cancelAlarm(mContext, timerEntity.items.get(thisPosition).alarmTimes);
 				}
 				saveToLocal(timerEntity,mContext);
 			}

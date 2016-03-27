@@ -3,6 +3,7 @@ import java.util.List;
 import com.vui.bluelight.R;
 import com.vui.bluelight.customview.SwipeAdapter;
 import com.vui.bluelight.customview.SwipeListView;
+import com.vui.bluelight.timer.AlarmUtil;
 import com.vui.bluelight.timer.TimerActivity;
 import com.vui.bluelight.timer.entity.TimerEntity;
 import com.vui.bluelight.timer.entity.TimerEntity.Data;
@@ -117,8 +118,9 @@ public class TimerFragment extends Fragment{
 			if(timerEntity!=null){
 				List<Data> items = timerEntity.items;
 				if(items!=null){
+					AlarmUtil.cancelAlarm(getActivity(), timerEntity.items.get(position).alarmTimes);
 					items.remove(position);
-					SwipeAdapter.saveToLocal(swipeAdapter.timerEntity,getActivity());
+					SwipeAdapter.saveToLocal(swipeAdapter.timerEntity,getActivity());				
 					swipeAdapter.notifyDataSetChanged();
 				}else{
 					LogUtils.e("llpp==============items==null");
