@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1BA4CB"
+    android:orientation="vertical" >
+
+
+    <RelativeLayout
+        android:id="@+id/rlt_shake_onff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topbar"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="20dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shaking"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/cb_onoff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_mode_selector"
+            android:button="@null"
+            android:checked="true"
+            android:padding="8dp"
+            android:text="ON"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/cb_onoff"
+            android:layout_marginTop="10dp"
+            android:background="#ffffff"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+   
+    <FrameLayout
+        android:id="@+id/flt_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rg_type_select_content"
+        android:layout_below="@id/rlt_shake_onff" >
+        <GridView
+            android:id="@+id/grirv_mode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="@drawable/bg_mode_selector"
+            android:numColumns="3" />
+    </FrameLayout>
+
+</RelativeLayout>

@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class TimerActivity extends Activity{
@@ -22,9 +23,14 @@ public class TimerActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.aty_timer);
 		initFragment();
 		initView();
+		TextView title=(TextView) findViewById(R.id.title);
+		if(title!=null){
+			title.setText("livingroom");
+		}
 
 	}
 

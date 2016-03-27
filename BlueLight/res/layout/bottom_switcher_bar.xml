@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/home"
-            android:textColor="@color/theme_blue"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -50,14 +49,13 @@
             android:background="@drawable/sw"
             android:contentDescription="@string/switcher"
             android:gravity="center_horizontal"
-            android:textColor="@color/theme_blue" />
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/switcher"
-            android:textColor="@color/theme_blue"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -85,7 +83,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/brightness"
-            android:textColor="@color/theme_blue"
             android:textSize="12sp" />
     </LinearLayout>
 

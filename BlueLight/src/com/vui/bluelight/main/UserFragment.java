@@ -25,6 +25,7 @@ import android.hardware.GeomagneticField;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
-
 public class UserFragment extends Fragment implements OnClickListener {
 	private LinearLayout llt_user_root;
 	private TopBarView tbv;
@@ -49,20 +49,18 @@ public class UserFragment extends Fragment implements OnClickListener {
 	private EditText ett_name;
 	private EditText ett_psw;
 	private EditText ett_job;
-	
+
 	private ObjectAnimator anim;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if(Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)){
-			String path=Environment.getExternalStorageDirectory()+File.separator+"user_image";
-			bitmap=BitmapUtils.getBitmapFromFile(path);
-			LogUtils.e("获取用户图像了，bitmap==null:"+(bitmap==null));
-		
-		
+		if (Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+			String path = Environment.getExternalStorageDirectory() + File.separator + "user_image";
+			bitmap = BitmapUtils.getBitmapFromFile(path);
+			LogUtils.e("获取用户图像了，bitmap==null:" + (bitmap == null));
 		}
-	
+
 	}
 
 	@Override
@@ -79,42 +77,40 @@ public class UserFragment extends Fragment implements OnClickListener {
 		super.onViewCreated(view, savedInstanceState);
 		tbv = (TopBarView) view.findViewById(R.id.topbar);
 		tbv.setTitleText("user");
-		
 
-		llt_user_root=(LinearLayout) view.findViewById(R.id.llt_user_root);
+		llt_user_root = (LinearLayout) view.findViewById(R.id.llt_user_root);
 		llt_add_image = (RelativeLayout) view.findViewById(R.id.rlt_add_image);
 		ivw_user_image = (RoundImageView) view.findViewById(R.id.ivw_user_image);
-		
-		ett_name=(EditText) view.findViewById(R.id.ett_name);
-		ett_psw=(EditText) view.findViewById(R.id.ett_psw);
-		ett_job=(EditText) view.findViewById(R.id.ett_job);
-		
-		ett_name.setText((String)(SharepreferenceUtils.get(getActivity(), Constants.UseMsg.NAME, "")));
-		ett_psw.setText((String)(SharepreferenceUtils.get(getActivity(), Constants.UseMsg.PSW, "")));
-		ett_job.setText((String)(SharepreferenceUtils.get(getActivity(), Constants.UseMsg.JOB, "")));
+
+		ett_name = (EditText) view.findViewById(R.id.ett_name);
+		ett_psw = (EditText) view.findViewById(R.id.ett_psw);
+		ett_job = (EditText) view.findViewById(R.id.ett_job);
+
+		ett_name.setText((String) SharepreferenceUtils.get(getActivity(), Constants.UseMsg.NAME, ""));
+		ett_psw.setText((String) (SharepreferenceUtils.get(getActivity(), Constants.UseMsg.PSW, "")));
+		ett_job.setText((String) (SharepreferenceUtils.get(getActivity(), Constants.UseMsg.JOB, "")));
 
 		tbv.getLeftBtn().setOnClickListener(this);
 		tbv.getRightBtn().setOnClickListener(this);
 		llt_add_image.setOnClickListener(this);
 		ivw_user_image.setOnClickListener(this);
-		
 
-		
-		if(bitmap!=null){
+		if (bitmap != null) {
 			ivw_user_image.setImageBitmap(bitmap);
 		}
-		
+
 		SoftKeyBoardUtils.observeSoftKeyboard(getActivity(), new OnSoftKeyboardChangeListener() {
 			@Override
 			public void onSoftKeyBoardChange(int softKeybardHeight, boolean visible) {
-				Log.e("userFrg", "softKeyheight=" + softKeybardHeight+",visible"+visible);
-				if(visible){
-					/*anim= ObjectAnimator.ofFloat(llt_user_root,  
-			                "y", 0f,  0-softKeybardHeight);  
-					anim.setDuration(100);
-					anim.start();*/
-				}else{
-					
+				Log.e("userFrg", "softKeyheight=" + softKeybardHeight + ",visible" + visible);
+				if (visible) {
+					/*
+					 * anim= ObjectAnimator.ofFloat(llt_user_root, "y", 0f,
+					 * 0-softKeybardHeight); anim.setDuration(100);
+					 * anim.start();
+					 */
+				} else {
+
 				}
 			}
 		});
@@ -130,7 +126,7 @@ public class UserFragment extends Fragment implements OnClickListener {
 			getActivity().startActivityForResult(new Intent(getActivity(), SelectPhotoActivity.class), 1);
 			break;
 		case R.id.ivw_user_image:
-
+			getActivity().startActivityForResult(new Intent(getActivity(), SelectPhotoActivity.class), 1);
 			break;
 		case R.id.right_btn:
 			if (bitmap != null) {
@@ -138,7 +134,7 @@ public class UserFragment extends Fragment implements OnClickListener {
 					String path = Environment.getExternalStorageDirectory().getAbsolutePath();
 					BitmapUtils.saveBitmap(bitmap, path, "user_image");
 					Log.e("userFrg", "保存用户图像成功");
-				}else{
+				} else {
 					Toast.makeText(getActivity(), "未检测到SD卡，用户图像保存失败", Toast.LENGTH_SHORT).show();
 				}
 			}

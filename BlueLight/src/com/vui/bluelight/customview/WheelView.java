@@ -30,17 +30,17 @@ public class WheelView extends ScrollView {
 
     private Context context;
     private LinearLayout llt_content;
+    private String textColorSelected="#ffffff";
+    private String textColorNormal="#99ffffff";
 
     public WheelView(Context context) {
         super(context);
-       // LogUtils.e("llpp:-=============一个参数=======================context==+"+context);
         init(context);
     
     }
 
     public WheelView(Context context, AttributeSet attrs) {
         super(context, attrs);
-      //  LogUtils.e("llpp:-=============2个参数=======================context==null"+context);
         init(context);
     }
 	List<String> items;
@@ -168,6 +168,7 @@ public class WheelView extends ScrollView {
 
     int textSizeNormal=15;
     int textSizeSelected=18;
+    
     private TextView createView(String item) {
         TextView tv = new TextView(context);
         tv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -246,10 +247,10 @@ public class WheelView extends ScrollView {
                 return;
             }
             if (position == i) {
-                itemView.setTextColor(Color.parseColor("#ffffff"));
+                itemView.setTextColor(Color.parseColor(textColorSelected));
                 itemView.setTextSize(textSizeSelected);
             } else {
-                itemView.setTextColor(Color.parseColor("#99ffffff"));
+                itemView.setTextColor(Color.parseColor(textColorNormal));
                 itemView.setTextSize(textSizeNormal);
             }
         }
@@ -402,6 +403,27 @@ public class WheelView extends ScrollView {
         int expandSpec = View.MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, View.MeasureSpec.AT_MOST);
         view.measure(width, expandSpec);
         return view.getMeasuredHeight();
+    }
+    
+    public View getItem(int position){
+    	if(llt_content!=null){
+    		return llt_content.getChildAt(position);
+    	}
+    	return null;
+    }
+    
+    public void setTextColorNormal(String colorStr){
+    	this.textColorNormal=colorStr;
+    }
+    public void setTextColorSelected(String colorStr){
+    	this.textColorSelected=colorStr;
+    }
+    
+    public void setTextSizeNormal(int size){
+    	this.textSizeNormal=size;
+    }
+    public void setTextSizeSelected(int size){
+    	this.textSizeSelected=size;
     }
 
 }

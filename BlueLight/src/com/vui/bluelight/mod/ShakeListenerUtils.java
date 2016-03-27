@@ -18,8 +18,7 @@ import android.os.Vibrator;
 
 public class ShakeListenerUtils implements SensorEventListener
 {
-
-	ModeShakingActivity activity;
+	private Context context;
 	public interface OnShakedListener{
 		void OnShaked(int generalNumber);
 	}
@@ -27,12 +26,13 @@ public class ShakeListenerUtils implements SensorEventListener
 	private Vibrator vibrator;
 	int number;
 	boolean isLoaded=false;
+	boolean enabled=false;
 	@SuppressWarnings("deprecation")
-	public ShakeListenerUtils(ModeShakingActivity context,int number,OnShakedListener onShakedListener){
+	public ShakeListenerUtils(Activity context,int number,OnShakedListener onShakedListener){
 		super();
 		this.number=number;
 		vibrator = (Vibrator)context.getSystemService(Service.VIBRATOR_SERVICE); 
-		this.activity=context;
+		this.context=context;
 		mAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 		//初始化声音
 		soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
@@ -64,7 +64,7 @@ public class ShakeListenerUtils implements SensorEventListener
 		if ((Math.abs(values[0]) >=range || Math.abs(values[1]) >= range|| Math
 				.abs(values[2]) >= 14))
 		{
-			if(!activity.isOpenShaking){
+			if(!enabled){
 				LogUtils.i("llpp: 摇一摇功能已经被关闭：");
 				return;
 			}
@@ -108,6 +108,13 @@ public class ShakeListenerUtils implements SensorEventListener
 		//记录本次获取的值
 		lastShakedValue=nextInt;
 		return nextInt;
+	}
+	
+	public void setEnabled(boolean enabled){
+		this.enabled=enabled;
+	}
+	public boolean getEnabled(){
+		return enabled;
 	}
 
 	@Override

@@ -81,6 +81,7 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 			//判断方向
 			boolean direction=false;
 			direction = geDirection(BX, BY);
+			LogUtils.e("direction="+direction+",al="+al);
 			updateUI(al, direction);
 			AX = BX;
 			AY = BY;
@@ -102,12 +103,22 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 		}
 
 		float  rotatedDegrees=(float) rotation%360;
-		//LogUtils.i("llpp:方向："+direction+" 角度："+rotatedDegrees);
-		//顺时针方向为正值，是在原先值的基础上进行加或者减来进行旋转、
+
+		//顺时针方向为正值，是在原先值的基础上进行加或者减来进行旋转
 		rotatedView.setRotation(rotatedDegrees);
 		int colorFromColorRing = getColorFromColorRing(timer_ring_color,180-rotatedDegrees);
 		cus_view_halring.setDotColor(colorFromColorRing);
+		if(mOnColorChangeListener!=null){
+			mOnColorChangeListener.onColorChange(colorFromColorRing, rotatedDegrees);
+		}
 	}
+	
+	public void setRotation(float radius){
+		rotatedView.setRotation(radius);
+		int colorFromColorRing = getColorFromColorRing(timer_ring_color,180-radius);
+		cus_view_halring.setDotColor(colorFromColorRing);
+	}
+	
 	private boolean geDirection(float BX, float BY) {
 		if(Math.abs(BX-AX)>Math.abs(BY-AY)){ //如果横向移动大于纵向移动
 			if(BX>AX&&BY<=CY){// 在上半部分 向右滑动 顺时针：BX>AX 
@@ -116,7 +127,6 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 			}else if(BX<AX&&BY<=CY){
 				return false;
 			}
-
 
 			else if(BX<AX&&BY>=CY) { //在下半部分 向左滑动 顺时针： BX<AX 
 				//	LogUtils.i("下半部分 向左滑动 ");
@@ -210,6 +220,15 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 		int blue = Color.blue(pixel);
 		int argb = Color.argb(alpha, red, green, blue);*/
 		return pixel;
+	}
+	
+	public OnColorChangeListener mOnColorChangeListener;
+	public void setOnColorChangeListener(OnColorChangeListener listener){
+		this.mOnColorChangeListener=listener;
+	}
+	
+	public interface OnColorChangeListener{
+		public void onColorChange(int color,double roation);
 	}
 
 }

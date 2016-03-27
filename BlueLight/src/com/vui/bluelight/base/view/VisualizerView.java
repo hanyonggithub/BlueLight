@@ -54,7 +54,6 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
 	public VisualizerView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		// TODO Auto-generated constructor stub
 		init();
 	}
 	
@@ -86,7 +85,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     //绘制频谱块和倒影
     protected void drawCylinder(Canvas canvas, float x, byte value) {
-        if (value <= 0) value = 1;//最少有一个频谱块
+        if (value <= 0) value = 0;//最少有一个频谱块
 
         for (int i = 0; i < value; i++) { //每个能量柱绘制value个能量块
 //            float y = (getHeight()/2 - i * vgap - vgap);//计算y轴坐标

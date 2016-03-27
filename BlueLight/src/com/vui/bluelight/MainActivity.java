@@ -1,44 +1,25 @@
 package com.vui.bluelight;
 
 import com.vui.bluelight.base.view.VisualizerView;
-import com.vui.bluelight.group.GroupActivity;
+import com.vui.bluelight.ble.BleUtils;
 import com.vui.bluelight.main.HomeFragment;
 import com.vui.bluelight.main.UserFragment;
-import com.vui.bluelight.mod.ModeShakingActivity;
-import com.vui.bluelight.music.MusicPlayActivity;
-import com.vui.bluelight.music.MusicPlayFragment;
-import com.vui.bluelight.music.MusicPlayerService2;
 import com.vui.bluelight.music.MusicService;
-import com.vui.bluelight.rgb.RGBMainActivity;
-import com.vui.bluelight.timer.TimerActivity;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.audiofx.Equalizer;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.accessibility.AccessibilityNodeInfo;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnClickListener {
-
-	private static final float VISUALIZER_HEIGHT_DIP = 200f;// 频谱View高度
 
 	private Visualizer mVisualizer;// 频谱器
 	private MusicService mService;// 音乐服务
@@ -46,18 +27,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private VisualizerView mVisualizerView;
 
-	private ImageView setting;
-	private RelativeLayout rlt_user_image;
-
-	private LinearLayout llt_rgbw;
-	private LinearLayout llt_mode;
-	private LinearLayout llt_timer;
-	private LinearLayout llt_group;
-
-	private TextView tvw_music_name;
-	private ImageView ivw_music_last;
-	private ImageView ivw_music_play;
-	private ImageView ivw_music_next;
 
 	FragmentManager fm;
 
@@ -73,6 +42,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		HomeFragment homeFragment = new HomeFragment();
 		fm.beginTransaction().replace(R.id.flt_content, homeFragment, "homeFrg").commit();
+		
+		BleUtils.getInstance().initBt(this);
 	}
 
 	public void replaceFrg(Fragment frg, String tag) {
@@ -103,23 +74,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-
-	}
 
 	ServiceConnection conn = new ServiceConnection() {
 
@@ -150,4 +104,22 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 	};
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		BleUtils.getInstance().destroyBt();
+
+	}
 }

@@ -1,28 +1,35 @@
 package com.vui.bluelight.main;
 
-import java.math.RoundingMode;
+import java.io.File;
 
+import com.vui.bluelight.Constants;
 import com.vui.bluelight.MainActivity;
 import com.vui.bluelight.R;
-import com.vui.bluelight.SettingActivity;
-import com.vui.bluelight.UserActivity;
 import com.vui.bluelight.base.view.RoundImageView;
 import com.vui.bluelight.base.view.VisualizerView;
-import com.vui.bluelight.group.GroupActivity;
+import com.vui.bluelight.group.GroupFragment;
+import com.vui.bluelight.mod.ModeFragment;
 import com.vui.bluelight.mod.ModeShakingActivity;
+import com.vui.bluelight.mod.ModeShakingFragment;
 import com.vui.bluelight.music.MusicPlayFragment;
 import com.vui.bluelight.music.MusicService;
 import com.vui.bluelight.rgb.RGBMainActivity;
 import com.vui.bluelight.timer.TimerActivity;
+import com.vui.bluelight.utils.BitmapUtils;
+import com.vui.bluelight.utils.LogUtils;
+import com.vui.bluelight.utils.SharepreferenceUtils;
 
 import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +37,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class HomeFragment extends Fragment implements OnClickListener {
@@ -42,6 +48,12 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 	private ImageView setting;
 	private RoundImageView rivw_user_image;
+	
+	private TextView tvw_user_name;
+	private TextView tvw_lefttime_light;
+	private TextView tvw_user_job;
+	private TextView tvw_lefttime_music;
+	
 
 	private LinearLayout llt_music_play;
 	private LinearLayout llt_rgbw;
@@ -53,11 +65,18 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private ImageView ivw_music_last;
 	private ImageView ivw_music_play;
 	private ImageView ivw_music_next;
+	
+	private Bitmap bitmap;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		intent = new Intent(getActivity(), MusicService.class);
+		if(Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)){
+			String path=Environment.getExternalStorageDirectory()+File.separator+"user_image";
+			bitmap=BitmapUtils.getBitmapFromFile(path);
+			LogUtils.e("获取用户图像了，bitmap==null:"+(bitmap==null));
+		}
 	}
 
 	@Override
@@ -74,6 +93,13 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		super.onViewCreated(view, savedInstanceState);
 		setting = (ImageView) view.findViewById(R.id.setting);
 		rivw_user_image = (RoundImageView) view.findViewById(R.id.rivw_user_image);
+		
+		tvw_user_name=(TextView) view.findViewById(R.id.tvw_user_name);
+		tvw_user_job=(TextView) view.findViewById(R.id.tvw_user_job);
+		tvw_lefttime_light=(TextView) view.findViewById(R.id.tvw_lefttime_light);
+		tvw_lefttime_music=(TextView) view.findViewById(R.id.tvw_lefttime_music);
+		
+		
 
 		ivw_music_last = (ImageView) view.findViewById(R.id.ivw_music_last);
 		ivw_music_play = (ImageView) view.findViewById(R.id.ivw_music_play);
@@ -100,6 +126,18 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		llt_timer.setOnClickListener(this);
 		llt_group.setOnClickListener(this);
 		getActivity().bindService(intent, conn, Context.BIND_AUTO_CREATE);
+		
+		if(bitmap!=null){
+			rivw_user_image.setImageBitmap(bitmap);
+		}
+		String name=(String)SharepreferenceUtils.get(getActivity(), Constants.UseMsg.NAME,"");
+		if(!TextUtils.isEmpty(name)){
+			tvw_user_name.setText(name);
+			tvw_user_job.setText((String)SharepreferenceUtils.get(getActivity(), Constants.UseMsg.JOB,""));
+		}
+		
+		
+		
 		Log.e("homeFrag", "onviewcreate  bindservice");
 	}
 
@@ -156,28 +194,22 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			tvw_music_name.setText(mService.getCurMusicName());
 			break;
 		case R.id.llt_rgbw:
-			
 			 intent = new Intent(getActivity(), RGBMainActivity.class);
 			 getActivity().startActivity(intent);
 			
 			break;
 		case R.id.llt_mode:
-			
-			  intent = new Intent(getActivity(),ModeShakingActivity.class);
-			  getActivity().startActivity(intent);
-			 
+			ModeFragment modeFrg = new ModeFragment();
+			((MainActivity) getActivity()).replaceFrg(modeFrg,"modeFrg");
 			break;
 		case R.id.llt_timer:
-			
 			 intent = new Intent(getActivity(), TimerActivity.class);
 			 getActivity().startActivity(intent);
 			 
 			break;
 		case R.id.llt_group:
-			
-			 intent = new Intent(getActivity(), GroupActivity.class);
-			  getActivity().startActivity(intent);
-			 
+			GroupFragment groupFrg = new GroupFragment();
+			((MainActivity) getActivity()).replaceFrg(groupFrg,"groupFrg");
 			break;
 		default:
 			break;

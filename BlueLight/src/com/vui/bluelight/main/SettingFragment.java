@@ -7,21 +7,18 @@ import java.util.Map;
 
 import com.vui.bluelight.MainActivity;
 import com.vui.bluelight.R;
-import com.vui.bluelight.SettingActivity;
-import com.vui.bluelight.UserActivity;
 import com.vui.bluelight.base.view.TopBarView;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class SettingFragment extends Fragment implements OnClickListener{
 	private TopBarView tbv;

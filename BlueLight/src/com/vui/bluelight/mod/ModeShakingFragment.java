@@ -1,8 +1,12 @@
 package com.vui.bluelight.mod;
 
-import android.app.Activity;
+import com.vui.bluelight.R;
+import com.vui.bluelight.mod.ShakeListenerUtils.OnShakedListener;
+import com.vui.bluelight.utils.GsonUtils;
+import com.vui.bluelight.utils.LogUtils;
+
+import android.app.Fragment;
 import android.app.Service;
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,9 +17,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -26,54 +31,56 @@ import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.Toast;
 
-import com.vui.bluelight.R;
-import com.vui.bluelight.customview.SwipeAdapter;
-import com.vui.bluelight.mod.ShakeListenerUtils.OnShakedListener;
-import com.vui.bluelight.timer.entity.TimerEntity;
-import com.vui.bluelight.utils.GsonUtils;
-import com.vui.bluelight.utils.LogUtils;
-
-public class ModeShakingActivity extends Activity{
-
-	ModeShakingActivity context = this;
+public class ModeShakingFragment extends Fragment implements OnClickListener{
 	private GridView grirdView;
 	int gridViewHeight;
 	private ShakeListenerUtils shakeUtils;
 	private SensorManager mSensorManager;
 	private ModeShakingEntity modeShakingEntity;
 	private BaseAdapter adapter;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.frag_mode_shaking);
-		modeShakingEntity = GsonUtils.getGson(context, "data_json/data_mode.json", ModeShakingEntity.class);
-		initTitleBar();
-		initOnOff();
-		initTypeChooseView();
-		initSetGridView();
-		setShakdUpdateUI();
-	}
+	
 
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		
+		View view = inflater.inflate(R.layout.frag_mode_shaking, null);
+		if (view != null && view.getParent() != null) {
+			((ViewGroup) view.getParent()).removeView(view);
+		}
+		return view;
+	}
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		modeShakingEntity = GsonUtils.getGson(getActivity(), "data_json/data_mode.json", ModeShakingEntity.class);
+		initSetGridView(view);
+		setShakdUpdateUI();
+		initOnOff(view);
+	}
+	
+	
+	
 	/**
 	 * 注意默认为true
 	 */
-	public boolean isOpenShaking=true;
-	private void initOnOff() {
-		CheckBox cb_onoff = (CheckBox) findViewById(R.id.cb_onoff);
+	
+	private void initOnOff(View root) {
+		if(shakeUtils!=null){
+			shakeUtils.setEnabled(true);
+		}
+		CheckBox cb_onoff = (CheckBox) root.findViewById(R.id.cb_onoff);
 		cb_onoff.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {		
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
 					buttonView.setText("ON");
-					isOpenShaking=true;
+					shakeUtils.setEnabled(true);
 				}else{
 					buttonView.setText("OFF");
-					isOpenShaking=false;
+					shakeUtils.setEnabled(false);
 					final int size = modeShakingEntity.items.size();
 					for (int i = 0; i < size; i++) {
 						modeShakingEntity.items.get(i).isShaked=false;
@@ -86,26 +93,10 @@ public class ModeShakingActivity extends Activity{
 		});
 	}
 
-	private void initTitleBar() {
-		View back = findViewById(R.id.back);
-		View right_btn = findViewById(R.id.right_btn);
-		back.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-
-		});
-		right_btn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(context, "开发中", Toast.LENGTH_SHORT).show();
-			}
-		});
-	}
+	
 	private void setShakdUpdateUI() {
 		final int size = modeShakingEntity.items.size();
-		shakeUtils = new ShakeListenerUtils(context, size, new OnShakedListener() {	
+		shakeUtils = new ShakeListenerUtils(getActivity(), size, new OnShakedListener() {	
 			@Override
 			public void OnShaked(int generalNumber) {				
 				LogUtils.i("llpp: ===摇到的值是："+generalNumber+" 数据集的大小是："+size);
@@ -126,8 +117,8 @@ public class ModeShakingActivity extends Activity{
 		}) ;
 	}
 
-	private void initSetGridView() {
-		grirdView = (GridView) findViewById(R.id.grirv_mode);
+	private void initSetGridView(View root) {
+		grirdView = (GridView) root.findViewById(R.id.grirv_mode);
 		ViewTreeObserver viewTreeObserver = grirdView.getViewTreeObserver();
 		viewTreeObserver.addOnGlobalLayoutListener(new OnGlobalLayoutListener(
 				) {
@@ -143,39 +134,22 @@ public class ModeShakingActivity extends Activity{
 		});
 	}
 
-	private void initTypeChooseView() {
-		RadioGroup rg_type_select_content =  (RadioGroup) findViewById(R.id.rg_type_select_content);
-		rg_type_select_content.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if(checkedId==R.id.rb_rgb){
-					Toast.makeText(context, "开发中", Toast.LENGTH_SHORT).show();
-				}else if(checkedId==R.id.rb_scene){
-					Toast.makeText(context, "开发中", Toast.LENGTH_SHORT).show();
-				}else if(checkedId==R.id.rb_flicker){
-					Toast.makeText(context, "开发中", Toast.LENGTH_SHORT).show();
-				}
-
-			}
-		});
-
-	}
-
 	private void initGridView() {
 		adapter = new MyAdapter(modeShakingEntity);
 		grirdView.setAdapter(adapter);
 
 
 	}
+	
+	
 
 	@Override
-	protected void onResume()
+	public void onResume()
 	{
 		super.onResume();
 
 		//获取传感器管理服务 
-		mSensorManager = (SensorManager) this
+		mSensorManager = (SensorManager) getActivity()
 				.getSystemService(Service.SENSOR_SERVICE);
 		//加速度传感器  
 		mSensorManager.registerListener(shakeUtils,
@@ -186,13 +160,12 @@ public class ModeShakingActivity extends Activity{
 	}
 
 	@Override
-	protected void onPause()
-	{
-		mSensorManager.unregisterListener(shakeUtils);
-		//this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);//回退时闪一下
+	public void onPause() {
+		// TODO Auto-generated method stub
 		super.onPause();
+		mSensorManager.unregisterListener(shakeUtils);
+		
 	}
-
 
 
 	class MyAdapter extends BaseAdapter implements ListAdapter {
@@ -215,7 +188,7 @@ public class ModeShakingActivity extends Activity{
 
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			LinearLayout llt = new LinearLayout(context);
+			LinearLayout llt = new LinearLayout(getActivity());
 			llt.setOrientation(LinearLayout.VERTICAL);
 			int itemHeight=gridViewHeight/4;
 			AbsListView.LayoutParams layoutParams = 
@@ -224,7 +197,7 @@ public class ModeShakingActivity extends Activity{
 			int tv_height=itemHeight/3;
 			LinearLayout.LayoutParams layoutParams_tv = 
 					new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,tv_height);
-			TextView textView = new TextView(context);
+			TextView textView = new TextView(getActivity());
 			textView.setText(modeShakingEntity.items.get(position).text);
 			textView.setGravity(Gravity.CENTER);
 			textView.setTextColor(Color.parseColor("#ffffff"));
@@ -249,7 +222,7 @@ public class ModeShakingActivity extends Activity{
 				}
 			};
 			Drawable drawable=new ShapeDrawable(s);
-			TextView tv_color = new TextView(context);
+			TextView tv_color = new TextView(getActivity());
 			tv_color.setLayoutParams(layoutParams_color);
 			tv_color.setBackgroundDrawable(drawable);
 			if(modeShakingEntity.items.get(position).isShaked){
@@ -266,4 +239,22 @@ public class ModeShakingActivity extends Activity{
 			return llt;
 		}
 	}
+
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.back:
+			getFragmentManager().popBackStack();
+			break;
+		case R.id.right_btn:
+			getFragmentManager().popBackStack();
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	
 }

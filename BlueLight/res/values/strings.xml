@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="brightness">brightness</string>
     <string name="home">home</string>
-    <string name="switcher">home</string>
+    <string name="switcher">switch</string>
     <string name="state_on">ON</string>
 
 </resources>

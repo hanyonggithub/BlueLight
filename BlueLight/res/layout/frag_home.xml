@@ -101,53 +101,53 @@
                     android:layout_height="wrap_content" >
 
                     <TextView
-                        android:id="@+id/user_name"
+                        android:id="@+id/tvw_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nina"
+                        android:text="Name"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <ImageView
-                        android:id="@+id/light"
+                        android:id="@+id/ivw_light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dp"
-                        android:layout_toRightOf="@id/user_name"
+                        android:layout_toRightOf="@id/tvw_user_name"
                         android:src="@drawable/light_on" />
 
                     <TextView
-                        android:id="@+id/lefttime_light"
+                        android:id="@+id/tvw_lefttime_light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@id/light"
+                        android:layout_toRightOf="@id/ivw_light"
                         android:text="2 hrs 55 munites" />
 
                     <TextView
-                        android:id="@+id/user_job"
+                        android:id="@+id/tvw_user_job"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/user_name"
-                        android:text="Designer"
+                        android:layout_below="@id/tvw_user_name"
+                        android:text="Occupation"
                         android:textSize="15sp" />
 
                     <ImageView
-                        android:id="@+id/music"
+                        android:id="@+id/ivw_music"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@id/light"
-                        android:layout_below="@id/user_name"
-                        android:layout_toRightOf="@id/user_job"
+                        android:layout_alignLeft="@id/ivw_light"
+                        android:layout_below="@id/tvw_user_name"
+                        android:layout_toRightOf="@id/tvw_user_job"
                         android:src="@drawable/music_on" />
 
                     <TextView
-                        android:id="@+id/lefttime_music"
+                        android:id="@+id/tvw_lefttime_music"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@id/lefttime_light"
-                        android:layout_below="@id/user_name"
-                        android:layout_toRightOf="@id/music"
+                        android:layout_alignLeft="@id/tvw_lefttime_light"
+                        android:layout_below="@id/tvw_user_name"
+                        android:layout_toRightOf="@id/ivw_music"
                         android:text="2 hrs 55 munites" />
                 </RelativeLayout>
             </LinearLayout>

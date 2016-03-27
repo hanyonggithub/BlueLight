@@ -1,12 +1,18 @@
 package com.vui.bluelight.timer.fragment;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 
+import com.vui.bluelight.R;
+import com.vui.bluelight.customview.SwipeAdapter;
+import com.vui.bluelight.customview.WheelView;
+import com.vui.bluelight.timer.TimerActivity;
+import com.vui.bluelight.timer.entity.TimerEntity;
+import com.vui.bluelight.utils.LogUtils;
+import com.vui.bluelight.utils.ScreenUtils;
+import com.vui.bluelight.utils.TimeUtils;
+
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.view.LayoutInflater;
@@ -19,21 +25,9 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
-
-import com.vui.bluelight.R;
-import com.vui.bluelight.R.id;
-import com.vui.bluelight.customview.SwipeAdapter;
-import com.vui.bluelight.customview.WheelView;
-import com.vui.bluelight.music.MusicListActivity;
-import com.vui.bluelight.timer.TimerActivity;
-import com.vui.bluelight.timer.entity.TimerEntity;
-import com.vui.bluelight.timer.entity.TimerEntity.Data;
-import com.vui.bluelight.utils.LogUtils;
-import com.vui.bluelight.utils.ScreenUtils;
-import com.vui.bluelight.utils.TimeUtils;
+import android.widget.Toast;
 
 public class TimerRGBFragment extends Fragment{
 	private TimerEntity timerEntity;
@@ -160,8 +154,8 @@ public class TimerRGBFragment extends Fragment{
 					TimerActivity.switchFragment(TimerRGBFragment.this,chooseWhiteFragment, (TimerActivity) getActivity());
 					break;
 				case TimerEntity.TIMERTYPE_MUSIC:
-					Intent intent=new Intent(getActivity(), MusicListActivity.class);
-					startActivity(intent);
+				/*	Intent intent=new Intent(getActivity(), MusicListActivity.class);
+					startActivity(intent);*/
 					break;
 				case TimerEntity.TIMERTYPE_FLICKER:
 					Toast.makeText(getActivity(), "开发中。。。", Toast.LENGTH_SHORT).show();

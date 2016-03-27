@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="10dip"
+    android:background="@android:color/transparent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_round_rect_white"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" >
+
+        <TextView
+            android:id="@+id/tvw_connect_device"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="连接"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+      <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5px"
+            android:background="#828282" />
+        <TextView
+            android:id="@+id/tvw_add_to"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="添加到"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5px"
+            android:background="#828282" />
+
+        <ListView
+            android:id="@+id/lvw_group"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@android:color/white" >
+        </ListView>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5px"
+            android:background="#828282" />
+
+        <TextView
+            android:id="@+id/tvw_rename_device"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="0dip"
+            android:gravity="center"
+            android:text="重命名"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/bg_round_rect_white"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="取消"
+        android:textColor="#ffff0000"
+        android:textStyle="bold" />
+
+</LinearLayout>

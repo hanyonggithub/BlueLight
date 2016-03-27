@@ -18,8 +18,8 @@ public class RGBMainActivity extends Activity{
 	Context context=this;
 	
 	private int selectedColor= Color.parseColor("#ffffff");
-	private RGBFragment rgbFragment;
 	private RGBARingFragment rgbaRingFragment;
+	private RGBPieFragment rgbPieFragment;
 	private RGBADimmingFragment rgbaDimmingFragment;
 	private FragmentManager fm;
 	@Override
@@ -39,10 +39,10 @@ public class RGBMainActivity extends Activity{
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch (checkedId) {
 				case R.id.rb_rgb:
-					switchFragment(rgbFragment);
+					switchFragment(rgbaRingFragment);
 					break;
 				case R.id.rb_ring:
-					switchFragment(rgbaRingFragment);
+					switchFragment(rgbPieFragment);
 					break;
 				case R.id.rb_dim:
 					switchFragment(rgbaDimmingFragment);
@@ -58,10 +58,10 @@ public class RGBMainActivity extends Activity{
 	private void initFragment() {
 		FragmentManager fm=getFragmentManager();
 		FragmentTransaction transacction = fm.beginTransaction();
-		rgbFragment = new  RGBFragment();
-		rgbaRingFragment = new RGBARingFragment();
+		rgbaRingFragment = new  RGBARingFragment();
+		rgbPieFragment = new RGBPieFragment();
 		rgbaDimmingFragment = new RGBADimmingFragment();
-		transacction.replace(R.id.id_content, rgbFragment).commit();
+		transacction.replace(R.id.id_content, rgbaRingFragment).commit();
 	}
 
 	private   void switchFragment(Fragment targetFragment){
@@ -73,16 +73,20 @@ public class RGBMainActivity extends Activity{
 		transacction.replace(R.id.id_content, targetFragment).commit();
 	}
 
-
 	private void initTitleBar() {
 		View back = findViewById(R.id.back);
+		TextView title=(TextView) findViewById(R.id.title);
+		if(title!=null){
+			title.setText("livingroom");
+		}
+		TextView right=(TextView) findViewById(R.id.right_btn);
+		
 		final TextView right_btn = (TextView) findViewById(R.id.right_btn);
 		back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
 			}
-
 		});
 		right_btn.setOnClickListener(new OnClickListener() {
 			@Override

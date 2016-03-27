@@ -38,7 +38,7 @@ public class MusicService extends Service {
 
 	@Override
 	public void onCreate() {
-		Toast.makeText(this, "My Service created", Toast.LENGTH_LONG).show();
+//		Toast.makeText(this, "My Service created", Toast.LENGTH_LONG).show();
 		Log.i(TAG, "onCreate");
 		// 获取手机音乐集合
 		musicList = MusicLoader.instance(getContentResolver()).getMusicList();
@@ -89,8 +89,6 @@ public class MusicService extends Service {
 
 	@Override
 	public void onStart(Intent intent, int startid) {
-		Toast.makeText(this, "My Service Start", Toast.LENGTH_LONG).show();
-		Log.i(TAG, "onStart");
 		player.start();
 	}
 	public void play(){
@@ -119,7 +117,7 @@ public class MusicService extends Service {
 		player.start();
 	}
 	public void next(){
-		if(position==musicList.size()){
+		if(position==musicList.size()-1){
 			position=0;
 		}else{
 			position+=1;
@@ -142,7 +140,7 @@ public class MusicService extends Service {
 	}
 	public void last(){
 		if(position==0){
-			position=musicList.size();
+			position=musicList.size()-1;
 		}else{
 			position-=1;
 		}
