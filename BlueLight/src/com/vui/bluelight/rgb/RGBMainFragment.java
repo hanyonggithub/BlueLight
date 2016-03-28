@@ -1,38 +1,60 @@
 package com.vui.bluelight.rgb;
+
 import com.vui.bluelight.R;
-import android.app.Activity;
+import com.vui.bluelight.base.view.TopBarView;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
-public class RGBMainActivity extends Activity{
-	Context context=this;
+public class RGBMainFragment extends Fragment implements OnClickListener{
+	
+	private TopBarView tbv;
+	private RadioGroup rg_type_select_content;
 	
 	private int selectedColor= Color.parseColor("#ffffff");
 	private RGBARingFragment rgbaRingFragment;
 	private RGBPieFragment rgbPieFragment;
 	private RGBADimmingFragment rgbaDimmingFragment;
 	private FragmentManager fm;
+
+
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.frag_rgb_main);
-		initTitleBar();
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.frag_rgb_main, null);
+		if (view != null && view.getParent() != null) {
+			((ViewGroup) view.getParent()).removeView(view);
+		}
+		return view;
+	}
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		tbv = (TopBarView) view.findViewById(R.id.topbar);
+		tbv.setTitleText("livingroom");
+		tbv.getLeftBtn().setOnClickListener(this);
+		tbv.getRightBtn().setOnClickListener(this);
+		
+		rg_type_select_content = (RadioGroup) view.findViewById(R.id.rg_type_select_content);
+		
 		initFragment();
 		initChooseView();
 	}
+	
 
 	private void initChooseView() {
-		RadioGroup rg_type_select_content = (RadioGroup) findViewById(R.id.rg_type_select_content);
+		
 		rg_type_select_content.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -56,47 +78,40 @@ public class RGBMainActivity extends Activity{
 	}
 
 	private void initFragment() {
-		FragmentManager fm=getFragmentManager();
-		FragmentTransaction transacction = fm.beginTransaction();
 		rgbaRingFragment = new  RGBARingFragment();
 		rgbPieFragment = new RGBPieFragment();
 		rgbaDimmingFragment = new RGBADimmingFragment();
-		transacction.replace(R.id.id_content, rgbaRingFragment).commit();
+		switchFragment(rgbaRingFragment);
 	}
 
 	private   void switchFragment(Fragment targetFragment){
 		if(fm==null)
 		{
-			fm = this. getFragmentManager();
+			fm=this.getChildFragmentManager();
 		}
 		FragmentTransaction transacction = fm.beginTransaction();
 		transacction.replace(R.id.id_content, targetFragment).commit();
 	}
 
-	private void initTitleBar() {
-		View back = findViewById(R.id.back);
-		TextView title=(TextView) findViewById(R.id.title);
-		if(title!=null){
-			title.setText("livingroom");
-		}
-		TextView right=(TextView) findViewById(R.id.right_btn);
-		
-		final TextView right_btn = (TextView) findViewById(R.id.right_btn);
-		back.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-		right_btn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				right_btn.setTextColor(selectedColor);
-			}
-		});
-	}
-	
 	public void setSelectedColor(int color){
 		selectedColor=color;
 	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.back:
+			getFragmentManager().popBackStack();
+			break;
+		case R.id.right_btn:
+			getFragmentManager().popBackStack();
+			break;
+	
+		default:
+			break;
+		}
+	}
+
+	
+	
 }

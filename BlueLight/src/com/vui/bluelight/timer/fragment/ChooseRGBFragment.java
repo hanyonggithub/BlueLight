@@ -7,7 +7,6 @@ import com.vui.bluelight.customview.RotateView;
 import com.vui.bluelight.customview.RotateView.OnColorChangeListener;
 import com.vui.bluelight.customview.TimerHalfRingView;
 import com.vui.bluelight.customview.WheelView;
-import com.vui.bluelight.timer.TimerActivity;
 import com.vui.bluelight.utils.LogUtils;
 import com.vui.bluelight.utils.ScreenUtils;
 
@@ -56,15 +55,16 @@ public class ChooseRGBFragment extends Fragment implements OnColorChangeListener
 	}
 
 	private void backLastFragment(boolean isOk) {
-		TimerActivity activity = (TimerActivity) getActivity();
-		Fragment lastFragment = activity.getLastFragment();
-		if(isOk){
-		int dotColor = cus_view_halring.getDotColor();
-		if(lastFragment instanceof TimerRGBFragment){
-			((TimerRGBFragment)lastFragment).setChooseViewColor(dotColor);
+		if (isOk) {
+			int dotColor = cus_view_halring.getDotColor();
+			Fragment timerRGBFrg=getFragmentManager().findFragmentByTag("timerRGBFrg");
+			
+			if (timerRGBFrg!=null&&timerRGBFrg instanceof TimerRGBFragment) {
+				
+				((TimerRGBFragment)timerRGBFrg).setChooseViewColor(dotColor);
+			}
 		}
-		}
-		TimerActivity.switchFragment(ChooseRGBFragment.this, lastFragment, (TimerActivity) getActivity());
+		getFragmentManager().popBackStack();
 	}
 
 	private void initWheelView(View view ) {

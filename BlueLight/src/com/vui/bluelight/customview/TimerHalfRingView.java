@@ -1,9 +1,7 @@
 package com.vui.bluelight.customview;
 
 import com.vui.bluelight.rgb.RGBMainActivity;
-import com.vui.bluelight.timer.TimerActivity;
 import com.vui.bluelight.utils.DensityUtils;
-import com.vui.bluelight.utils.LogUtils;
 
 import android.content.Context;
 import android.graphics.Canvas;

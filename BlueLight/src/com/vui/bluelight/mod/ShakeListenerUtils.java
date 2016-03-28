@@ -47,27 +47,44 @@ public class ShakeListenerUtils implements SensorEventListener
 	}
 
 	long lastShakeTime;
-	int range=9;
+	float range=12.0f;
 	private SoundPool soundPool;
 	private int shake_id;
 	private AudioManager mAudioManager;
 	private int lastShakedValue=-1;
-
-	// 速度阈值，当摇晃速度达到这值后产生作用  
-	private static final int SPEED_SHRESHOLD = 2000; 
+	private float x_last;
+	private float y_last;
+	private float z_last; 
+	boolean isFirst;
 	@Override
 	public void onSensorChanged(SensorEvent event){
-		int sensorType = event.sensor.getType();
-		//values[0]:X轴，values[1]：Y轴，values[2]：Z轴  :
-		//其中Z轴为重力加速度  
+		if(enabled){
+		//	LogUtils.i("llpp: 摇一摇功能已经被关闭：");
+			return;
+		}
 		float[] values = event.values;
-		if ((Math.abs(values[0]) >=range || Math.abs(values[1]) >= range|| Math
-				.abs(values[2]) >= 14))
-		{
-			if(!enabled){
-				LogUtils.i("llpp: 摇一摇功能已经被关闭：");
-				return;
-			}
+		if(isFirst){
+			x_last = values[0];
+			y_last = values[1];
+			z_last = values[2];
+			isFirst=false;
+			return ;
+		}
+		float dx = Math.abs(x_last-values[0]);
+		float dy = Math.abs(y_last-values[1]);
+		float dz = Math.abs(z_last-values[2]);
+		x_last = values[0];
+		y_last = values[1];
+		z_last = values[2];
+	//	LogUtils.i("=====dx:dy:dz"+(int)dx+":"+(int)dy+":"+(int)dz);
+		if(dx>range||dy>range||dz>range){
+			
+	//	}
+		
+		
+	//	if ((Math.abs(values[0]) >=range || Math.abs(values[1]) >= range|| Math
+	//			.abs(values[2]) >= 14))
+	//	{
 			//设计时间间隔
 			long currentTimeMillis = System.currentTimeMillis();
 			long dtime=currentTimeMillis-lastShakeTime;
@@ -80,7 +97,6 @@ public class ShakeListenerUtils implements SensorEventListener
 			//获取随机值
 			int nextInt = getRandomValue();				
 			onShakedListener.OnShaked(nextInt);
-			LogUtils.i("llpp:传感器改变=nSensorChanged +sensorType:"+sensorType+"值："+(int)values[0]+":"+(int)values[1]+":"+(int)values[2]+"  nextInt: "+nextInt);
 		}
 	}
 

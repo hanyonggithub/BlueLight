@@ -1,12 +1,14 @@
 package com.vui.bluelight.timer.fragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import com.vui.bluelight.MainActivity;
 import com.vui.bluelight.R;
 import com.vui.bluelight.customview.SwipeAdapter;
 import com.vui.bluelight.customview.WheelView;
-import com.vui.bluelight.timer.TimerActivity;
+import com.vui.bluelight.timer.AlarmUtil;
 import com.vui.bluelight.timer.entity.TimerEntity;
 import com.vui.bluelight.utils.LogUtils;
 import com.vui.bluelight.utils.ScreenUtils;
@@ -67,8 +69,16 @@ public class TimerRGBFragment extends Fragment{
 			public void onClick(View v) {
 				boolean checkCanCommit = checkCanCommit();
 				if(checkCanCommit){
+					getAlarmTime();
 					timerEntity.items.add(newTimer);
-					SwipeAdapter.saveToLocal(timerEntity, getActivity());
+					boolean saveToLocal = SwipeAdapter.saveToLocal(timerEntity, getActivity());
+					LogUtils.i("创建的定时任务保存到本地是否成功："+saveToLocal);
+					if(saveToLocal){//开始定时启动该任务
+						if(newTimer.state==1){
+							AlarmUtil.setAlarm(getActivity(), newTimer.alarmTimes);
+						}
+						
+					}
 					backTimerFragment();
 				}else{
 					Toast.makeText(getActivity(), "please choose days of the week", Toast.LENGTH_SHORT).show();
@@ -77,20 +87,68 @@ public class TimerRGBFragment extends Fragment{
 			}
 		});
 	}
+	
+	/**
+	 * 获取每个闹钟最近一次的执行时间
+	 */
+	protected void getAlarmTime() {
+		LogUtils.i("newTimer.week:"+newTimer.week);
+		for (int i = 0; i < 7; i++) {//从周一到周日
+			if(newTimer.week.get(i)==1){
+			//设置的最多七个时间点都会大于当前的时间
+				//获取时间点的星期，小时，分钟
+				//i=0时,表示星期一，以此类推
+				//得到现在是星期几
+				int dayOfWeek = TimeUtils.getDayOfWeek();
+				//选择的星期几减去现在的星期几，获取相隔几天
+				int day_interval=0;
+				if((i+1)>dayOfWeek){
+					 day_interval=(i+1)-dayOfWeek;
+				}else if((i+1)<dayOfWeek){
+					 day_interval=7+((i+1)-dayOfWeek);
+				}else{//如果星期几相等，则分为是否大于现在的时间，小于现在相隔7天，大于现在，则相隔24小时以内
+					int selectedTotal=selectedHour*60+selectedMinute;
+					if(selectedTotal<=getSystemTime()){
+						day_interval=7;
+					}else{
+						day_interval=0;
+					}
+				}
+				
+				Calendar instance = Calendar.getInstance();
+				instance.add(Calendar.DAY_OF_WEEK, day_interval);
+				instance.set(Calendar.HOUR_OF_DAY, selectedHour);
+				instance.set(Calendar.MINUTE, selectedMinute);
+				instance.set(Calendar.SECOND, 30);
+				long timeInMillis = instance.getTimeInMillis();
+				newTimer.alarmTimes.remove(i);
+				newTimer.alarmTimes.add(i, timeInMillis);
+				String formedDate = TimeUtils.getFormedDate(timeInMillis);
+				LogUtils.i("闹钟的执行时间是："+formedDate);
+			}else{
+				LogUtils.i(i+"对应的数字不等于1");
+			}
+		}
+		LogUtils.i("llpp:保存的闹钟时间是："+newTimer.alarmTimes);
+	}
+
 	protected boolean checkCanCommit() {
 		int size = newTimer.week.size();
 		for (int i = 0; i < size; i++) {
-			if(newTimer.week.get(i)==1)//只要选择一个就可以通过
+			if(newTimer.week.get(i)==1){//只要选择一个就可以通过
 				return true;
+			}
 		}
 		//一个都没有选择
 		return false;
 	}
 
 	private void backTimerFragment() {
-		TimerFragment timerFragment = new TimerFragment();
-		TimerActivity.switchFragment(TimerRGBFragment.this,timerFragment, (TimerActivity) getActivity());
-
+		getFragmentManager().popBackStack();
+	}
+	
+	private void switchFragment(Fragment frg){
+		((MainActivity)getActivity()).addFrg(frg);;
 	}
 	private void initTypeChooseView(View view) {
 		RadioGroup rg_type_select_content = (RadioGroup) view. findViewById(R.id.rg_type_select_content);
@@ -127,6 +185,8 @@ public class TimerRGBFragment extends Fragment{
 
 	public void setChooseViewColor(int color){
 		bt_choose.setTextColor(color);
+		newTimer.color=color;
+		LogUtils.i("llpp:设置的颜色是："+color);
 	}
 	private ChooseRGBFragment chooseRGBFragment;
 	private void initChooseView(View view) {
@@ -145,20 +205,20 @@ public class TimerRGBFragment extends Fragment{
 					if(chooseRGBFragment==null){
 						chooseRGBFragment = new ChooseRGBFragment();
 					}				
-					TimerActivity.switchFragment(TimerRGBFragment.this,chooseRGBFragment, (TimerActivity) getActivity());
+					switchFragment(chooseRGBFragment);
 					break;
 				case TimerEntity.TIMERTYPE_WHITE:
 					if(chooseWhiteFragment==null){
 						chooseWhiteFragment = new ChooseWhiteFragment();
 					}
-					TimerActivity.switchFragment(TimerRGBFragment.this,chooseWhiteFragment, (TimerActivity) getActivity());
+					switchFragment(chooseWhiteFragment);
 					break;
 				case TimerEntity.TIMERTYPE_MUSIC:
 				/*	Intent intent=new Intent(getActivity(), MusicListActivity.class);
 					startActivity(intent);*/
 					break;
 				case TimerEntity.TIMERTYPE_FLICKER:
-					Toast.makeText(getActivity(), "开发中。。。", Toast.LENGTH_SHORT).show();
+					
 					break;
 				default:
 					break;
@@ -170,7 +230,7 @@ public class TimerRGBFragment extends Fragment{
 	/**
 	 * 选择的是星期几 默认为0表示没有选择
 	 */
-	int selected_week=0;
+	//int selected_week=0;
 	private void initWeekView(View view) {
 		final LinearLayout llt_week_content = (LinearLayout) view. findViewById(R.id.llt_week_content);
 		int childCount = llt_week_content.getChildCount();
@@ -184,37 +244,37 @@ public class TimerRGBFragment extends Fragment{
 					case R.id.cb_1:
 						newTimer.week.remove(0);
 						newTimer.week.add(0, isChecked? 1:0);
-						selected_week=1;
+						//selected_week=1;
 						break;
 					case R.id.cb_2:
 						newTimer.week.remove(1);
 						newTimer.week.add(1, isChecked? 1:0);
-						selected_week=2;
+					//	selected_week=2;
 						break;
 					case R.id.cb_3:
 						newTimer.week.remove(2);
 						newTimer.week.add(2, isChecked? 1:0);
-						selected_week=3;
+						//selected_week=3;
 						break;
 					case R.id.cb_4:
 						newTimer.week.remove(3);
 						newTimer.week.add(3, isChecked? 1:0);
-						selected_week=4;
+						//selected_week=4;
 						break;
 					case R.id.cb_5:
 						newTimer.week.remove(4);
 						newTimer.week.add(4, isChecked? 1:0);
-						selected_week=5;
+						//selected_week=5;
 						break;
 					case R.id.cb_6:
 						newTimer.week.remove(5);
 						newTimer.week.add(5, isChecked? 1:0);
-						selected_week=6;
+						//selected_week=6;
 						break;
 					case R.id.cb_7:
 						newTimer.week.remove(6);
 						newTimer.week.add(6, isChecked? 1:0);
-						selected_week=7;
+						//selected_week=7;
 						break;
 					default:
 						break;
@@ -227,7 +287,7 @@ public class TimerRGBFragment extends Fragment{
 			});
 		}
 	}
-	private int[] handSelectedTimes;
+	private int[] handSelectedTimes = new int[2];
 	private void initData() {
 		timerEntity = SwipeAdapter.getTimerEntity(getActivity());
 		//第一次是没有数据的
@@ -239,11 +299,14 @@ public class TimerRGBFragment extends Fragment{
 		newTimer = new TimerEntity.Data();
 		newTimer.state=1;//初始值 默认显示 ON
 		newTimer.time="00:00";
+		newTimer.color=-31744;
 		newTimer.type=1; //默认选中 lights on
 		newTimer.TimerType=TimerEntity.TIMERTYPE_UNSELECT; //默认没有选则
 		newTimer.week=new ArrayList<Integer>();
+		newTimer.alarmTimes=new ArrayList<Long>();
 		for (int i = 0; i < 7; i++) {
 			newTimer.week.add(0);//七天默认全部没有选择
+			newTimer.alarmTimes.add(0L);
 		}
 	}
 
@@ -290,8 +353,8 @@ public class TimerRGBFragment extends Fragment{
 				LogUtils.i( "llpp======selectedIndex: " + selectedIndex + ", item: " + 
 						item+"displayItemCount:"+wva_hour.displayItemCount);
 				selectedHour=Integer.parseInt(item);
-				//tipDistanceTime = handSelectedTime(Integer.parseInt(item),selectedMinute);
-				//updateTipData();		
+				handSelectedTimes = handSelectedTime(selectedHour, selectedMinute);
+				updateTipData(handSelectedTimes);		
 			}
 
 		});
@@ -305,15 +368,14 @@ public class TimerRGBFragment extends Fragment{
 				LogUtils.i( "llpp======selectedIndex: " + selectedIndex + ", item: " + 
 						item+"displayItemCount:"+wva_minute.displayItemCount);
 				selectedMinute=Integer.parseInt(item);
-				//	tipDistanceTime = handSelectedTime(selectedHour,Integer.parseInt(item));
-				//	updateTipData();
+				handSelectedTimes = handSelectedTime(selectedHour, selectedMinute);
+				updateTipData(handSelectedTimes);
 			}
 		});
 	}
 
-
 	private void updateTipData( int[] tipDistanceTime) {
-		if(newTimer.state==1){//如果选则的是 lights on
+		if(newTimer.type==1){//如果选则的是 lights on
 			tv_tip_time.setText("lights on "+tipDistanceTime[0]+" hours and "+
 					tipDistanceTime[1]+" minutes later");
 		}else{//如果选则的是 lights off

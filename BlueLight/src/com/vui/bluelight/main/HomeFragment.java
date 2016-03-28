@@ -9,12 +9,10 @@ import com.vui.bluelight.base.view.RoundImageView;
 import com.vui.bluelight.base.view.VisualizerView;
 import com.vui.bluelight.group.GroupFragment;
 import com.vui.bluelight.mod.ModeFragment;
-import com.vui.bluelight.mod.ModeShakingActivity;
-import com.vui.bluelight.mod.ModeShakingFragment;
 import com.vui.bluelight.music.MusicPlayFragment;
 import com.vui.bluelight.music.MusicService;
-import com.vui.bluelight.rgb.RGBMainActivity;
-import com.vui.bluelight.timer.TimerActivity;
+import com.vui.bluelight.rgb.RGBMainFragment;
+import com.vui.bluelight.timer.fragment.TimerFragment;
 import com.vui.bluelight.utils.BitmapUtils;
 import com.vui.bluelight.utils.LogUtils;
 import com.vui.bluelight.utils.SharepreferenceUtils;
@@ -194,8 +192,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			tvw_music_name.setText(mService.getCurMusicName());
 			break;
 		case R.id.llt_rgbw:
-			 intent = new Intent(getActivity(), RGBMainActivity.class);
-			 getActivity().startActivity(intent);
+			RGBMainFragment rgbMainFrg = new RGBMainFragment();
+			((MainActivity) getActivity()).replaceFrg(rgbMainFrg,"rgbMainFrg");
 			
 			break;
 		case R.id.llt_mode:
@@ -203,8 +201,10 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			((MainActivity) getActivity()).replaceFrg(modeFrg,"modeFrg");
 			break;
 		case R.id.llt_timer:
-			 intent = new Intent(getActivity(), TimerActivity.class);
-			 getActivity().startActivity(intent);
+			/* intent = new Intent(getActivity(), TimerActivity.class);
+			 getActivity().startActivity(intent);*/
+				TimerFragment timerFrg = new TimerFragment();
+				((MainActivity) getActivity()).replaceFrg(timerFrg,"timerFrg");
 			 
 			break;
 		case R.id.llt_group:

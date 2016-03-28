@@ -5,62 +5,26 @@
     android:background="#1BA4CB"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:id="@+id/in_head_bar"
+    <com.vui.bluelight.base.view.TopBarView
+        android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray_bg"
-        android:padding="10dp" >
-
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="55dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="-17dp"
-            android:padding="11dp"
-            android:src="@drawable/back_arr" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="mode"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/right_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="OK"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-    </RelativeLayout>
+        android:layout_height="wrap_content" />
 
     <!-- 中间的彩盘 -->
 
     <FrameLayout
         android:id="@+id/id_content"
         android:layout_width="400dp"
-        android:layout_height="340dp"
-        android:layout_gravity="center" />
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1" />
 
     <!-- 下面两部分的rongq -->
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <include
-            android:id="@+id/inc_foot"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            layout="@layout/bottom_switcher_bar" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp" >
 
         <RadioGroup
             android:id="@+id/rg_type_select_content"

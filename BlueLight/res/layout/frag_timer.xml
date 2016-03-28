@@ -28,7 +28,7 @@
     <com.vui.bluelight.customview.SwipeListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/tv_frg_time"
         android:background="#cccccc"
         android:divider="@null"

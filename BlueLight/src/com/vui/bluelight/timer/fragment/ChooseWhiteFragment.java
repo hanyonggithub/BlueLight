@@ -5,25 +5,19 @@ import java.util.ArrayList;
 import com.vui.bluelight.R;
 import com.vui.bluelight.customview.RotateView;
 import com.vui.bluelight.customview.RotateView.OnColorChangeListener;
-import com.vui.bluelight.customview.SwipeAdapter;
 import com.vui.bluelight.customview.TimerHalfRingView;
 import com.vui.bluelight.customview.WheelView;
-import com.vui.bluelight.timer.TimerActivity;
 import com.vui.bluelight.utils.LogUtils;
 import com.vui.bluelight.utils.ScreenUtils;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.RotateAnimation;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class ChooseWhiteFragment extends Fragment implements OnColorChangeListener {
 	private View view;
@@ -59,15 +53,16 @@ public class ChooseWhiteFragment extends Fragment implements OnColorChangeListen
 	}
 
 	private void backLastFragment(boolean isOk) {
-		TimerActivity activity = (TimerActivity) getActivity();
-		Fragment lastFragment = activity.getLastFragment();
 		if (isOk) {
 			int dotColor = cus_view_halring.getDotColor();
-			if (lastFragment instanceof TimerRGBFragment) {
-				((TimerRGBFragment) lastFragment).setChooseViewColor(dotColor);
+			Fragment timerRGBFrg=getFragmentManager().findFragmentByTag("timerRGBFrg");
+			
+			if (timerRGBFrg!=null&&timerRGBFrg instanceof TimerRGBFragment) {
+				
+				((TimerRGBFragment)timerRGBFrg).setChooseViewColor(dotColor);
 			}
 		}
-		TimerActivity.switchFragment(ChooseWhiteFragment.this, lastFragment, (TimerActivity) getActivity());
+		getFragmentManager().popBackStack();
 	}
 
 	private void initWheelView(View view) {

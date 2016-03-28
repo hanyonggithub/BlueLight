@@ -1,12 +1,15 @@
 package com.vui.bluelight.timer.fragment;
 import java.util.List;
+
+import com.vui.bluelight.MainActivity;
 import com.vui.bluelight.R;
 import com.vui.bluelight.customview.SwipeAdapter;
 import com.vui.bluelight.customview.SwipeListView;
-import com.vui.bluelight.timer.TimerActivity;
+import com.vui.bluelight.timer.AlarmUtil;
 import com.vui.bluelight.timer.entity.TimerEntity;
 import com.vui.bluelight.timer.entity.TimerEntity.Data;
 import com.vui.bluelight.utils.LogUtils;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -88,9 +91,8 @@ public class TimerFragment extends Fragment{
 		tv_add.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				 TimerRGBFragment timerRGBFragment = new TimerRGBFragment();
-				//ChooseRGBFragment chooseRGBFragment = new ChooseRGBFragment();
-				TimerActivity.switchFragment(TimerFragment.this,timerRGBFragment,(TimerActivity) getActivity());
+				TimerRGBFragment timerRGBFrg=new TimerRGBFragment();
+				((MainActivity)getActivity()).replaceFrg(timerRGBFrg, "timerRGBFrg");
 			}
 		});
 		mListView.addHeaderView(headView);
@@ -117,8 +119,9 @@ public class TimerFragment extends Fragment{
 			if(timerEntity!=null){
 				List<Data> items = timerEntity.items;
 				if(items!=null){
+					AlarmUtil.cancelAlarm(getActivity(), timerEntity.items.get(position).alarmTimes);
 					items.remove(position);
-					SwipeAdapter.saveToLocal(swipeAdapter.timerEntity,getActivity());
+					SwipeAdapter.saveToLocal(swipeAdapter.timerEntity,getActivity());				
 					swipeAdapter.notifyDataSetChanged();
 				}else{
 					LogUtils.e("llpp==============items==null");

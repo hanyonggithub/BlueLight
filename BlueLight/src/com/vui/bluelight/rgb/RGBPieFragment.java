@@ -35,7 +35,7 @@ public class RGBPieFragment extends Fragment{
 			public void onGetColor(int color) {
 				view_colorpreview.setBackgroundColor(color);
 				
-				((RGBMainActivity)getActivity()).setSelectedColor(color);
+//				((RGBMainActivity)getActivity()).setSelectedColor(color);
 				String deal="a3".concat(DataFormatUtils.toHexStr(Color.red(color))).concat(DataFormatUtils.toHexStr(Color.green(color))).concat(DataFormatUtils.toHexStr(Color.blue(color))).concat("ff").concat("ffffff");
 				BleUtils.getInstance().write(deal);
 			}
