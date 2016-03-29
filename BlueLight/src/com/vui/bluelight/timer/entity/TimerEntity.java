@@ -3,7 +3,6 @@ package com.vui.bluelight.timer.entity;
 import java.util.List;
 
 public class TimerEntity {
-	public static final int TIMERTYPE_UNSELECT=0;
 	public static final int TIMERTYPE_RGB=1;
 	public static final int TIMERTYPE_WHITE=2;
 	public static final int TIMERTYPE_MUSIC=3;
@@ -18,7 +17,7 @@ public class TimerEntity {
 		public int during;//亮灯的持续时间
 		public List<Long> alarmTimes; //
 		public List<Integer> week;
-		public int TimerType;// 定时类型 RGB white music flicker 默认没有选择
+		public int timerType;// 定时类型 RGB white music flicker 默认没有选择
 	
 	}
 }
