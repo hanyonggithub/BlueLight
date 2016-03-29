@@ -88,7 +88,7 @@
 
             <com.vui.bluelight.customview.WheelView
                 android:id="@+id/main_wv2"
-                android:layout_width="40dp"
+                android:layout_width="80dp"
                 android:layout_height="80dp" />
         </LinearLayout>
     </RelativeLayout>

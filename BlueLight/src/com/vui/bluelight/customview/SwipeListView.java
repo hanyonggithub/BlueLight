@@ -209,6 +209,7 @@ public class SwipeListView extends ListView {
 
                     // can't move beyond boundary
                     if (dx < 0 && dx > -mRightViewWidth) {
+                    	if(mCurrentItemView!=null)
                         mCurrentItemView.scrollTo((int)(-dx), 0);
                     }
 
@@ -267,13 +268,19 @@ public class SwipeListView extends ListView {
 
     private void clearPressedState() {
         // TODO current item is still has background, issue
-        mCurrentItemView.setPressed(false);
+    	if(mCurrentItemView!=null){
+    		 mCurrentItemView.setPressed(false);
+    	}
+       
         setPressed(false);
         refreshDrawableState();
         // invalidate();
     }
 
     private void showRight(View view) {
+    	if(view==null){//=======================================================
+    		return ;
+    	}
         Message msg = new MoveHandler().obtainMessage();
         msg.obj = view;
         msg.arg1 = view.getScrollX();

@@ -44,7 +44,7 @@ public class RGBARingFragment extends Fragment implements OnColorChangeListener{
 		final TimerHalfRingView cus_view_halring = (TimerHalfRingView)view.findViewById(R.id.cus_view_halring);
 		final RotateView timer_ring = (RotateView) view.findViewById(R.id.timer_ring);
 		final ImageView timer_ring_color = (ImageView) view.findViewById(R.id.timer_ring_color);
-		timer_ring.setViews(cus_view_halring,iv_roll_cir,timer_ring_color);	
+		timer_ring.setViews(iv_roll_cir,timer_ring_color);	
 		timer_ring.setOnColorChangeListener(this);
 		wva2.setCustomWidth(ScreenUtils.getScreenWidth(getActivity())/8);
 		wva2.setIsDrawLine(false);
@@ -94,7 +94,7 @@ public class RGBARingFragment extends Fragment implements OnColorChangeListener{
 	}
 	
 	@Override
-	public void onColorChange(int color, double rotation) {
+	public void onColorChange(int color,float angle) {
 	/*	int index=50;
 		if(rotation>=0&&rotation<90){
 			index=(int) ((rotation/90)*50)+50;

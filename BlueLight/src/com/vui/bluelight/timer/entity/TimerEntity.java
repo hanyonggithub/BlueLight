@@ -15,6 +15,7 @@ public class TimerEntity {
 		public int state; //是否开启该定时任务
 		public String time; 
 		public int color;
+		public int during;//亮灯的持续时间
 		public List<Long> alarmTimes; //
 		public List<Integer> week;
 		public int TimerType;// 定时类型 RGB white music flicker 默认没有选择

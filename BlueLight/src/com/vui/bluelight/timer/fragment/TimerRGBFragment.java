@@ -183,10 +183,11 @@ public class TimerRGBFragment extends Fragment{
 
 	}
 
-	public void setChooseViewColor(int color){
+	public void saveChoosedColorAndTime(int color,int during){
 		bt_choose.setTextColor(color);
 		newTimer.color=color;
-		LogUtils.i("llpp:设置的颜色是："+color);
+		newTimer.during=during;
+		LogUtils.i("llpp:设置的颜色是："+color+" 时间是："+during);
 	}
 	private ChooseRGBFragment chooseRGBFragment;
 	private void initChooseView(View view) {
@@ -300,6 +301,7 @@ public class TimerRGBFragment extends Fragment{
 		newTimer.state=1;//初始值 默认显示 ON
 		newTimer.time="00:00";
 		newTimer.color=-31744;
+		newTimer.during=0;
 		newTimer.type=1; //默认选中 lights on
 		newTimer.TimerType=TimerEntity.TIMERTYPE_UNSELECT; //默认没有选则
 		newTimer.week=new ArrayList<Integer>();

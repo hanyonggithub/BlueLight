@@ -54,57 +54,39 @@ public class ChooseCCTFragment extends Fragment implements OnColorChangeListener
 
 	private void backLastFragment(boolean isOk) {
 		if (isOk) {
-			int dotColor = cus_view_halring.getDotColor();
 			Fragment timerRGBFrg=getFragmentManager().findFragmentByTag("timerRGBFrg");
 			
 			if (timerRGBFrg!=null&&timerRGBFrg instanceof TimerRGBFragment) {
 				
-				((TimerRGBFragment)timerRGBFrg).setChooseViewColor(dotColor);
+				((TimerRGBFragment)timerRGBFrg).saveChoosedColorAndTime(dotColor,during);
 			}
 		}
 		getFragmentManager().popBackStack();
 	}
-
+	private static final int BRIGHTNESS_MAX=30;
+	private static final int BRIGHTNESS_MIN=15;
+	int during=0;
+	private int dotColor;
 	private void initWheelView(View view) {
 		wva2 = (WheelView) view.findViewById(R.id.main_wv2);
 		final ImageView iv_roll_cir = (ImageView) view.findViewById(R.id.iv_roll_cir);
 		cus_view_halring = (TimerHalfRingView) view.findViewById(R.id.cus_view_halring);
 		final RotateView timer_ring = (RotateView) view.findViewById(R.id.timer_ring);
 		final ImageView timer_ring_color = (ImageView) view.findViewById(R.id.timer_ring_color);
-		timer_ring.setViews(cus_view_halring, iv_roll_cir, timer_ring_color);
+		timer_ring.setViews( iv_roll_cir, timer_ring_color);
 		timer_ring.setOnColorChangeListener(this);
-		wva2.setCustomWidth(ScreenUtils.getScreenWidth(getActivity()) / 8);
+		wva2.setCustomWidth(ScreenUtils.getScreenWidth(getActivity()) / 3);
 		wva2.setIsDrawLine(false);
 		wva2.setOffset(1);
 		wva2.setItems(getSetTime(0, 100));
 		wva2.setCurrentPosition(50);
 		wva2.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-			int lastPosition = 0;
-
 			@Override
 			public void onSelected(int selectedIndex, String item) {
-
-				int item_i = Integer.parseInt(item);
-				if (item_i > lastPosition) {// 向上滑动
-					// timer_ring.updateUI(0.10,false);
-				} else if (item_i < lastPosition) { // 向下
-					// timer_ring.updateUI(0.05,true);
-				}
-
-				try {
-					int index = Integer.parseInt(item);
-					float radius = 0;
-					if (index >= 0 && index <= 50) {
-						radius = (index * 180 / 100) + 270;
-					} else if (index > 50 && index <= 100) {
-						radius = (index - 50) * 180 / 100;
-					}
-					LogUtils.e("index" + Integer.parseInt(item) + ",rotation=" + radius);
-					timer_ring.setRotation(radius);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				lastPosition = item_i;
+				int brightness = Integer.parseInt(item)+BRIGHTNESS_MIN;
+				cus_view_halring.setDotBrightness(brightness);
+				onColorChange(dotColor,0);
+				LogUtils.i("llpp:===============设置点点的亮度为："+brightness);
 			}
 
 		});
@@ -116,19 +98,9 @@ public class ChooseCCTFragment extends Fragment implements OnColorChangeListener
 		main_wv.setItems(getSetTime(0, 100));
 		main_wv.setCurrentPosition(50);
 		main_wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-			int lastPosition = 0;
-
 			@Override
 			public void onSelected(int selectedIndex, String item) {
-				LogUtils.i("llpp======selectedIndex: " + selectedIndex + ", item: " + item + "   displayItemCount:"
-						+ main_wv.displayItemCount);
-				int item_i = Integer.parseInt(item);
-				if (item_i > lastPosition) {// 向上滑动
-					timer_ring.updateUI(0.05, false);
-				} else if (item_i < lastPosition) { // 向下
-					timer_ring.updateUI(0.025, true);
-				}
-				lastPosition = item_i;
+			 during = Integer.parseInt(item);
 			}
 
 		});
@@ -144,17 +116,13 @@ public class ChooseCCTFragment extends Fragment implements OnColorChangeListener
 	}
 
 	@Override
-	public void onColorChange(int color, double rotation) {
-		int index = 50;
-		if (rotation >= 0 && rotation < 90) {
-			index = (int) ((rotation / 90) * 50) + 50;
-		} else if (rotation <= 270) {
-			index = 100 - ((int) (rotation - 90) * 50 / 180);
-		} else if (rotation > 270 && rotation <= 360) {
-			index = (int) ((rotation - 270) * 50 / 90);
-		}
-		LogUtils.e("rotation=" + rotation + ",index=" + index + ",R:" + Color.red(color) + ",G:" + Color.green(color)
-				+ ",B:" + Color.blue(color));
-		wva2.setCurrentPosition(index);
+	public void onColorChange(int color,float angle) {
+		dotColor=color;
+		int dotBrightness = cus_view_halring.getDotBrightness();
+		int red = Color.red(color)*dotBrightness/BRIGHTNESS_MAX;
+		int green = Color.green(color)*dotBrightness/BRIGHTNESS_MAX;
+		int blue = Color.blue(color)*dotBrightness/BRIGHTNESS_MAX;
+		int argb = Color.rgb(red, green, blue);
+		cus_view_halring.setDotColor(argb);
 	}
 }
