@@ -16,12 +16,20 @@ public class TimerHalfRingView extends View {
 
 	private Paint paint;
 	private RectF oval;
+	public int dotBrightness=100;
 	public TimerHalfRingView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
 	}
 
+	public int getDotBrightness(){
+		return dotBrightness;
+	}
 
+	public void setDotBrightness(int dotBrightness){
+		this.dotBrightness = dotBrightness;
+	}
+	
 	public TimerHalfRingView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		// TODO Auto-generated constructor stub
@@ -46,7 +54,7 @@ public class TimerHalfRingView extends View {
 	}
 	int radius;
 	int cy;
-	private  int dotColor=Color.parseColor("#FF8400");
+	private int dotColor=Color.parseColor("#FF8400");
 	
 	@Override
 	protected void onDraw(Canvas canvas) {

@@ -50,7 +50,6 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 	float lastDegree=5;
 	private double rotation;
 	private ImageView rotatedView;
-	private TimerHalfRingView cus_view_halring;
 	private ImageView timer_ring_color;
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {	
@@ -81,7 +80,7 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 			//判断方向
 			boolean direction=false;
 			direction = geDirection(BX, BY);
-			LogUtils.e("direction="+direction+",al="+al);
+			//LogUtils.e("direction="+direction+",al="+al);
 			updateUI(al, direction);
 			AX = BX;
 			AY = BY;
@@ -89,6 +88,8 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 		return true;
 	}
 
+	public float zoomRatio_clcokwise=50*1.2f;
+	public float zoomRatio_unclcokwise=50;
 	/**
 	 * 
 	 * @param radian 本次要改变的角度，会被放大50-100倍 只能为正值
@@ -96,10 +97,10 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 	 */
 	public void updateUI(double radian, boolean direction) {
 		if(direction){
-			rotation+=radian*50*2; //radianToDegrees(radian);//radian*180/Math.PI*2;
+			rotation+=radian*zoomRatio_clcokwise; //radianToDegrees(radian);//radian*180/Math.PI*2;
 
 		}else{
-			rotation-= radian*50*1;;//radianToDegrees(radian);//
+			rotation-= radian*zoomRatio_unclcokwise;//radianToDegrees(radian);//
 		}
 
 		float  rotatedDegrees=(float) rotation%360;
@@ -107,17 +108,16 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 		//顺时针方向为正值，是在原先值的基础上进行加或者减来进行旋转
 		rotatedView.setRotation(rotatedDegrees);
 		int colorFromColorRing = getColorFromColorRing(timer_ring_color,180-rotatedDegrees);
-		cus_view_halring.setDotColor(colorFromColorRing);
 		if(mOnColorChangeListener!=null){
-			mOnColorChangeListener.onColorChange(colorFromColorRing, rotatedDegrees);
+			mOnColorChangeListener.onColorChange(colorFromColorRing,rotatedDegrees);
 		}
 	}
 	
-	public void setRotation(float radius){
+/*	public void setRotation(float radius){
 		rotatedView.setRotation(radius);
 		int colorFromColorRing = getColorFromColorRing(timer_ring_color,180-radius);
 		cus_view_halring.setDotColor(colorFromColorRing);
-	}
+	}*/
 	
 	private boolean geDirection(float BX, float BY) {
 		if(Math.abs(BX-AX)>Math.abs(BY-AY)){ //如果横向移动大于纵向移动
@@ -153,8 +153,7 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 		return true;
 	}
 
-	public void setViews(TimerHalfRingView colorChangedView,ImageView rotatedView,ImageView originColorView){
-		cus_view_halring=colorChangedView;
+	public void setViews(ImageView rotatedView,ImageView originColorView){
 		this.rotatedView=rotatedView;
 		timer_ring_color=originColorView;
 	}
@@ -228,7 +227,7 @@ public class RotateView extends FrameLayout implements OnTouchListener {
 	}
 	
 	public interface OnColorChangeListener{
-		public void onColorChange(int color,double roation);
+		public void onColorChange(int color,float angle);
 	}
 
 }

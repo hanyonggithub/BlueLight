@@ -54,83 +54,51 @@ public class ChooseCCTFragment extends Fragment implements OnColorChangeListener
 
 	private void backLastFragment(boolean isOk) {
 		if (isOk) {
-			int dotColor = cus_view_halring.getDotColor();
 			Fragment timerRGBFrg=getFragmentManager().findFragmentByTag("timerRGBFrg");
 			
 			if (timerRGBFrg!=null&&timerRGBFrg instanceof TimerRGBFragment) {
 				
-				((TimerRGBFragment)timerRGBFrg).setChooseViewColor(dotColor);
+				((TimerRGBFragment)timerRGBFrg).saveChoosedColorAndTime(dotColor,during);
 			}
 		}
 		getFragmentManager().popBackStack();
 	}
-
+	private static final int BRIGHTNESS_MAX=99;
+	private static final int BRIGHTNESS_MIN=0;
+	int during=0;
+	private int dotColor;
 	private void initWheelView(View view) {
 		wva2 = (WheelView) view.findViewById(R.id.main_wv2);
 		final ImageView iv_roll_cir = (ImageView) view.findViewById(R.id.iv_roll_cir);
 		cus_view_halring = (TimerHalfRingView) view.findViewById(R.id.cus_view_halring);
+		dotColor=cus_view_halring.getDotColor();
 		final RotateView timer_ring = (RotateView) view.findViewById(R.id.timer_ring);
 		final ImageView timer_ring_color = (ImageView) view.findViewById(R.id.timer_ring_color);
-		timer_ring.setViews(cus_view_halring, iv_roll_cir, timer_ring_color);
-		timer_ring.setOnColorChangeListener(this);
+		timer_ring.setViews(iv_roll_cir, timer_ring_color);
 		wva2.setCustomWidth(ScreenUtils.getScreenWidth(getActivity()) / 8);
 		wva2.setIsDrawLine(false);
 		wva2.setOffset(1);
-		wva2.setItems(getSetTime(0, 100));
-		wva2.setCurrentPosition(50);
+		wva2.setItems(getSetTime(BRIGHTNESS_MIN, BRIGHTNESS_MAX));
+		wva2.setCurrentPosition((BRIGHTNESS_MAX-BRIGHTNESS_MIN)/2+1);
 		wva2.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-			int lastPosition = 0;
-
 			@Override
 			public void onSelected(int selectedIndex, String item) {
-
-				int item_i = Integer.parseInt(item);
-				if (item_i > lastPosition) {// 向上滑动
-					// timer_ring.updateUI(0.10,false);
-				} else if (item_i < lastPosition) { // 向下
-					// timer_ring.updateUI(0.05,true);
-				}
-
-				try {
-					int index = Integer.parseInt(item);
-					float radius = 0;
-					if (index >= 0 && index <= 50) {
-						radius = (index * 180 / 100) + 270;
-					} else if (index > 50 && index <= 100) {
-						radius = (index - 50) * 180 / 100;
-					}
-					LogUtils.e("index" + Integer.parseInt(item) + ",rotation=" + radius);
-					timer_ring.setRotation(radius);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				lastPosition = item_i;
 			}
-
 		});
+
+		timer_ring.setOnColorChangeListener(this);
 
 		final WheelView main_wv = (WheelView) view.findViewById(R.id.main_wv);
 		main_wv.setCustomWidth(ScreenUtils.getScreenWidth(getActivity()) / 8);
 		main_wv.setIsDrawLine(false);
 		main_wv.setOffset(1);
-		main_wv.setItems(getSetTime(0, 100));
-		main_wv.setCurrentPosition(50);
+		main_wv.setItems(getSetTime(0, 30));
+		main_wv.setCurrentPosition(0);
 		main_wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-			int lastPosition = 0;
-
 			@Override
 			public void onSelected(int selectedIndex, String item) {
-				LogUtils.i("llpp======selectedIndex: " + selectedIndex + ", item: " + item + "   displayItemCount:"
-						+ main_wv.displayItemCount);
-				int item_i = Integer.parseInt(item);
-				if (item_i > lastPosition) {// 向上滑动
-					timer_ring.updateUI(0.05, false);
-				} else if (item_i < lastPosition) { // 向下
-					timer_ring.updateUI(0.025, true);
-				}
-				lastPosition = item_i;
+				during = Integer.parseInt(item);
 			}
-
 		});
 
 	}
@@ -144,17 +112,39 @@ public class ChooseCCTFragment extends Fragment implements OnColorChangeListener
 	}
 
 	@Override
-	public void onColorChange(int color, double rotation) {
-		int index = 50;
-		if (rotation >= 0 && rotation < 90) {
-			index = (int) ((rotation / 90) * 50) + 50;
-		} else if (rotation <= 270) {
-			index = 100 - ((int) (rotation - 90) * 50 / 180);
-		} else if (rotation > 270 && rotation <= 360) {
-			index = (int) ((rotation - 270) * 50 / 90);
+	public void onColorChange(int color,float angle) {
+		dotColor=color;
+		cus_view_halring.setDotColor(dotColor);
+		//-360-360
+		if(angle<0){
+			angle+=360;
 		}
-		LogUtils.e("rotation=" + rotation + ",index=" + index + ",R:" + Color.red(color) + ",G:" + Color.green(color)
-				+ ",B:" + Color.blue(color));
-		wva2.setCurrentPosition(index);
+		int wheelNumber_new = getWheelNumber(angle);	
+			wva2.setCurrentPosition(wheelNumber_new);	
+	}
+	
+	private int getWheelNumber(float angle) {
+		//[-90,90]度对应[0,99]
+		//(90,270)度对应[98,1]
+		double number=0;
+		//100个数度平均分成180分，每份是 
+		
+		if(angle>=270||angle<=90){		
+			float average=100f/(180f);
+			if(angle>=270){
+				angle=angle-360;//转成负值
+			}		
+			number = Math.ceil(average*angle);//
+			//-50,49
+				number=number-1;
+			number+=50;//0,99
+		}else{//90-270
+			float average=98f/(180f);
+			number = average*angle;//49.-146.===>98，1
+			number=146-number+1;//97+1,0+1  	
+		}
+		LogUtils.i("number===："+number);
+		LogUtils.i("llpp:--旋转的角度为："+angle);
+		return (int) number;
 	}
 }

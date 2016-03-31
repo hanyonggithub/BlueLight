@@ -19,6 +19,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vui.bluelight.utils.LogUtils;
+
 public class WheelView extends ScrollView {
     public static final String TAG = WheelView.class.getSimpleName();
 
@@ -64,7 +66,7 @@ public class WheelView extends ScrollView {
     }
 
 
-    public static final int OFF_SET_DEFAULT = 3;
+    public static final int OFF_SET_DEFAULT = 1;
     int offset = OFF_SET_DEFAULT; // 偏移量（需要在最前面和最后面补全）
 
     public int getOffset() {
@@ -195,26 +197,7 @@ public class WheelView extends ScrollView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-
-//        Log.d(TAG, "l: " + l + ", t: " + t + ", oldl: " + oldl + ", oldt: " + oldt);
-
-//        try {
-//            Field field = ScrollView.class.getDeclaredField("mScroller");
-//            field.setAccessible(true);
-//            OverScroller mScroller = (OverScroller) field.get(this);
-//
-//
-//            if(mScroller.isFinished()){
-//                Log.d(TAG, "isFinished...");
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-
         refreshItemView(t);
-
         if (t > oldt) {
 //            Log.d(TAG, "向下滚动");
             scrollDirection = SCROLL_DIRECTION_DOWN;

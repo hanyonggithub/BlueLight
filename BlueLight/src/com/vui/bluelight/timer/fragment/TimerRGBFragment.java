@@ -66,7 +66,7 @@ public class TimerRGBFragment extends Fragment{
 		});
 		right_btn.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) {			
 				boolean checkCanCommit = checkCanCommit();
 				if(checkCanCommit){
 					getAlarmTime();
@@ -161,21 +161,25 @@ public class TimerRGBFragment extends Fragment{
 					bt_choose.setTag(TimerEntity.TIMERTYPE_RGB);
 					rb_on.setText("lights on");
 					rb_off.setText("lights off");
+					newTimer.timerType=TimerEntity.TIMERTYPE_RGB;
 				}else if(checkedId==R.id.rb_white){
 					bt_choose.setText("choose white color");
 					bt_choose.setTag(TimerEntity.TIMERTYPE_WHITE);
 					rb_on.setText("lights on");
 					rb_off.setText("lights off");
+					newTimer.timerType=TimerEntity.TIMERTYPE_WHITE;
 				}else if(checkedId==R.id.rb_music){
 					bt_choose.setText("choose music");
 					bt_choose.setTag(TimerEntity.TIMERTYPE_MUSIC);
 					rb_on.setText("music on");
 					rb_off.setText("music off");
+					newTimer.timerType=TimerEntity.TIMERTYPE_MUSIC;
 				}else if(checkedId==R.id.rb_flicker){
 					bt_choose.setText("choose flicker style");
 					bt_choose.setTag(TimerEntity.TIMERTYPE_FLICKER);
 					rb_on.setText("flicker on");
 					rb_off.setText("flicker off");
+					newTimer.timerType=TimerEntity.TIMERTYPE_FLICKER;
 				}
 
 			}
@@ -183,10 +187,11 @@ public class TimerRGBFragment extends Fragment{
 
 	}
 
-	public void setChooseViewColor(int color){
+	public void saveChoosedColorAndTime(int color,int during){
 		bt_choose.setTextColor(color);
 		newTimer.color=color;
-		LogUtils.i("llpp:设置的颜色是："+color);
+		newTimer.during=during;
+		LogUtils.i("llpp:设置的颜色是："+color+" 时间是："+during);
 	}
 	private ChooseRGBFragment chooseRGBFragment;
 	private void initChooseView(View view) {
@@ -211,6 +216,7 @@ public class TimerRGBFragment extends Fragment{
 					if(chooseWhiteFragment==null){
 						chooseWhiteFragment = new ChooseWhiteFragment();
 					}
+					//switchFragment(new ChooseCCTFragment());
 					switchFragment(chooseWhiteFragment);
 					break;
 				case TimerEntity.TIMERTYPE_MUSIC:
@@ -300,8 +306,9 @@ public class TimerRGBFragment extends Fragment{
 		newTimer.state=1;//初始值 默认显示 ON
 		newTimer.time="00:00";
 		newTimer.color=-31744;
+		newTimer.during=0;
 		newTimer.type=1; //默认选中 lights on
-		newTimer.TimerType=TimerEntity.TIMERTYPE_UNSELECT; //默认没有选则
+		newTimer.timerType=TimerEntity.TIMERTYPE_RGB; //默认RGB
 		newTimer.week=new ArrayList<Integer>();
 		newTimer.alarmTimes=new ArrayList<Long>();
 		for (int i = 0; i < 7; i++) {

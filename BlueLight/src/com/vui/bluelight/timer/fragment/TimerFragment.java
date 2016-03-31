@@ -79,7 +79,8 @@ public class TimerFragment extends Fragment{
 		right_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getActivity(), "开发中。。。", 0).show();
+				int[] latestTaskTime = AlarmUtil.getLatestTaskTime(getActivity(),false);
+				Toast.makeText(getActivity(), "获取最近的灯光任务", 0).show();
 			}
 		});
 	}
