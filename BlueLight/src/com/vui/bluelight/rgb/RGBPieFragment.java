@@ -36,8 +36,8 @@ public class RGBPieFragment extends Fragment{
 				view_colorpreview.setBackgroundColor(color);
 				
 //				((RGBMainActivity)getActivity()).setSelectedColor(color);
-				String deal="a3".concat(DataFormatUtils.toHexStr(Color.red(color))).concat(DataFormatUtils.toHexStr(Color.green(color))).concat(DataFormatUtils.toHexStr(Color.blue(color))).concat("ff").concat("ffffff");
-				BleUtils.getInstance().write(deal);
+				String deal="a3".concat(DataFormatUtils.toHexStr(Color.red(color))).concat(DataFormatUtils.toHexStr(Color.green(color))).concat(DataFormatUtils.toHexStr(Color.blue(color))).concat("00").concat("ffffff55");
+				BleUtils.getInstance().write(BleUtils.CHAR_UUID,deal);
 			}
 		});
 	}

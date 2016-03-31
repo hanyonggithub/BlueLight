@@ -1,11 +1,14 @@
 package com.vui.bluelight.group;
 
 import java.security.PolicySpi;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.vui.bluelight.MainActivity;
 import com.vui.bluelight.R;
 import com.vui.bluelight.base.view.TopBarView;
 import com.vui.bluelight.ble.BleUtils;
+import com.vui.bluelight.ble.BtDevice;
 import com.vui.bluelight.utils.LogUtils;
 
 import android.app.AlertDialog;
@@ -172,7 +175,7 @@ public class GroupFragment extends Fragment implements OnClickListener {
 
 				showDialog(view);
 
-				selectType=0;
+				selectType=1;
 				selectPosition=position;
 				
 				lvw_group.setAdapter(new BaseAdapter() {
@@ -225,6 +228,14 @@ public class GroupFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.tvw_connect_group:
 			LogUtils.e("connect group");
+			if(selectType==0){//连接一组设备
+				
+			}else if(selectType==1){
+				BtDevice device=BleUtils.mList.get(selectPosition);
+				List<BtDevice> list=new ArrayList<BtDevice>();
+				list.add(device);
+				BleUtils.getInstance().connect(list);
+			}
 			break;
 		case R.id.tvw_delete_group:
 			LogUtils.e("delete group");

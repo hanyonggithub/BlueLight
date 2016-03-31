@@ -1,12 +1,32 @@
 package com.vui.bluelight.ble;
 
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattService;
 
 public class BtDevice {
 
 	private String address;
 	private String name;
 	private BluetoothGatt mBluetoothGatt;
+	private int connectedState;
+	private BluetoothGattService mGattService;
+
+	public int getConnectedState() {
+		return connectedState;
+	}
+
+	public void setConnectedState(int connectedState) {
+		this.connectedState = connectedState;
+	}
+
+	public BluetoothGattService getmGattService() {
+		return mGattService;
+	}
+
+	public void setmGattService(BluetoothGattService mGattService) {
+		this.mGattService = mGattService;
+	}
 
 	public BtDevice(String address, String name) {
 		this.address=address;

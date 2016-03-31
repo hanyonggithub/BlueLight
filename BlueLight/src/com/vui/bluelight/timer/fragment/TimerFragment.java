@@ -73,7 +73,7 @@ public class TimerFragment extends Fragment{
 		back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				getActivity().finish();
+			getFragmentManager().popBackStack();
 			}
 		});
 		right_btn.setOnClickListener(new OnClickListener() {

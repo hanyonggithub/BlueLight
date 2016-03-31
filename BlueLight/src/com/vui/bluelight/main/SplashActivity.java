@@ -2,14 +2,12 @@ package com.vui.bluelight.main;
 
 import com.vui.bluelight.MainActivity;
 import com.vui.bluelight.R;
-import com.vui.bluelight.utils.SharepreferenceUtils;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
-import android.widget.ImageView;
 
 public class SplashActivity extends Activity{
 	
@@ -19,9 +17,7 @@ public class SplashActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		ImageView ivw=new ImageView(this);
-		ivw.setImageDrawable(getResources().getDrawable(R.drawable.splash));
-		setContentView(ivw);
+		setContentView(R.layout.aty_splash);
 		handler.postDelayed(new Runnable(){
 			@Override
 			public void run() {

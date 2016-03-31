@@ -2,6 +2,7 @@ package com.vui.bluelight;
 
 import com.vui.bluelight.base.view.VisualizerView;
 import com.vui.bluelight.ble.BleUtils;
+import com.vui.bluelight.main.BrightnessFragment;
 import com.vui.bluelight.main.HomeFragment;
 import com.vui.bluelight.main.UserFragment;
 import com.vui.bluelight.music.MusicService;
@@ -18,6 +19,7 @@ import android.os.IBinder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.LinearLayout;
 
 public class MainActivity extends Activity implements OnClickListener {
 
@@ -27,14 +29,22 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private VisualizerView mVisualizerView;
 
-
 	FragmentManager fm;
+	
+	private LinearLayout llt_home;
+	private LinearLayout llt_switcher;
+	private LinearLayout llt_brightness;
+	
+	private boolean isOn=true;
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+		findView();
 
 		intent = new Intent(MainActivity.this, MusicService.class);
 		startService(intent);
@@ -56,22 +66,54 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		Intent intent;
 		switch (v.getId()) {
 
-		default:
+		case R.id.llt_home:
+			
+			break;
+		case R.id.llt_switcher:
+			if(isOn){
+				//关灯
+				/*String order_close_light="a4b3ffffffffffff55";
+				BleUtils.getInstance().write(BleUtils.CHAR_UUID,order_close_light);*/
+				
+				String order="a7ffffffffffffff55";
+				BleUtils.getInstance().write(BleUtils.CHAR_UUID,order);
+				
+				isOn=false;
+			}else{
+				//开灯
+				String order_open_light="a4b2ffffffffffff55";
+				BleUtils.getInstance().write(BleUtils.CHAR_UUID,order_open_light);
+			
+				isOn=true;
+			}
+			break;
+		case R.id.llt_brightness:
+		
+			if(brightnessFrg!=null&&brightnessFrg.isAdded()){
+				fm.popBackStack();
+			}else{
+				brightnessFrg = new BrightnessFragment();
+				addFrg(brightnessFrg);
+			}
+
 			break;
 		}
 
 	}
-
-	public void setListener() {
-
+	public void findView(){
+		llt_home=(LinearLayout) findViewById(R.id.llt_home);
+		llt_switcher=(LinearLayout) findViewById(R.id.llt_switcher);
+		llt_brightness=(LinearLayout) findViewById(R.id.llt_brightness);
+		llt_home.setOnClickListener(this);
+		llt_switcher.setOnClickListener(this);
+		llt_brightness.setOnClickListener(this);
 	}
+	
 
 	public View getBottom() {
 		return findViewById(R.id.inc_foot);
-
 	}
 
 
@@ -93,6 +135,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			// false 则不显示
 		}
 	};
+	private BrightnessFragment brightnessFrg;
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);

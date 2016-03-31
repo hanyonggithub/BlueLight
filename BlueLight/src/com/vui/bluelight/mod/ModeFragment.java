@@ -2,41 +2,18 @@ package com.vui.bluelight.mod;
 
 import com.vui.bluelight.R;
 import com.vui.bluelight.base.view.TopBarView;
-import com.vui.bluelight.mod.ModeShakingActivity.MyAdapter;
-import com.vui.bluelight.mod.ShakeListenerUtils.OnShakedListener;
-import com.vui.bluelight.utils.GsonUtils;
-import com.vui.bluelight.utils.LogUtils;
 
 import android.app.Fragment;
 import android.app.Service;
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.Shape;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.AbsListView;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class ModeFragment extends Fragment implements OnClickListener{
