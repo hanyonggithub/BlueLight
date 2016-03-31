@@ -2,6 +2,7 @@ package com.vui.bluelight.main;
 
 import com.vui.bluelight.R;
 import com.vui.bluelight.ble.BleUtils;
+import com.vui.bluelight.ble.BleUtils2;
 import com.vui.bluelight.utils.DataFormatUtils;
 
 import android.app.Fragment;
@@ -52,7 +53,7 @@ public class BrightnessFragment extends Fragment implements OnClickListener {
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				int w=progress*255/1000;
 				String order="a3000000".concat(DataFormatUtils.toHexStr(w)).concat("ffffff55");
-				BleUtils.getInstance().write(BleUtils.CHAR_UUID, order);
+				BleUtils2.getInstance().write(BleUtils2.CHAR_UUID, order);
 			}
 		});
 	}

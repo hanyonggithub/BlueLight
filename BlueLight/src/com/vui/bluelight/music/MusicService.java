@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.vui.bluelight.Constants;
 import com.vui.bluelight.R;
+import com.vui.bluelight.ble.BleUtils;
+import com.vui.bluelight.ble.BleUtils2;
 import com.vui.bluelight.music.entity.MusicInfo;
 import com.vui.bluelight.utils.SharepreferenceUtils;
 

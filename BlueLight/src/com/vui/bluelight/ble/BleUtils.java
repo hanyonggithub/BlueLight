@@ -55,15 +55,12 @@ public class BleUtils {
 
 	public static final String SER_UUID = "00001000-0000-1000-8000-00805f9b34fb";
 	public static final String CHAR_UUID = "00001002-0000-1000-8000-00805f9b34fb";
+	
 
 	private static BleUtils instance;
-
-	private BleUtils() {
-
-	}
+	private BleUtils() {}
 
 	public static BleUtils getInstance() {
-
 		if (instance == null) {
 			synchronized (BleUtils.class) {
 				if (instance == null) {
@@ -78,15 +75,15 @@ public class BleUtils {
 		mList.clear();
 		gattMap.clear();
 		groupMap.clear();
-		if(selectDevices!=null){
-			selectDevices.clear();	
-		}else{
-			selectDevices=new ArrayList<BtDevice>();
+		if (selectDevices != null) {
+			selectDevices.clear();
+		} else {
+			selectDevices = new ArrayList<BtDevice>();
 		}
-		if(selectedMap!=null){
+		if (selectedMap != null) {
 			selectedMap.clear();
-		}else{
-			selectedMap=new HashMap<String, BtDevice>();
+		} else {
+			selectedMap = new HashMap<String, BtDevice>();
 		}
 		selectedMap.clear();
 		manager = BluetoothManager.getInstance();
@@ -139,19 +136,6 @@ public class BleUtils {
 
 	}
 
-	public class ScanLeTask extends AsyncTask<Void, Void, Void> {
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			if (instance != null) {
-				instance.scanLeDevice(true);
-			}
-
-			return null;
-		}
-
-	}
-
 	// Device scan callback.
 	private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
 
@@ -166,13 +150,9 @@ public class BleUtils {
 					if (!mList.contains(mDevice)) {
 						mList.add(mDevice);
 
-						/*
-						 * manager.connect(mDevice.getAddress(),
-						 * mList.size()-1);
-						 */
 						Log.d(TAG, "deviceName=" + device.getName() + ",deviceAddress=" + device.getAddress() + ",size="
 								+ mList.size());
-								// 读设备特征值，分组信息
+						// 读设备特征值，分组信息
 
 						// 连接设备
 
@@ -299,49 +279,15 @@ public class BleUtils {
 
 	}
 
-	byte[] WriteBytes = new byte[20];
-	private BluetoothGattCharacteristic mNotifyCharacteristic;
-
-	public boolean write(String str) {
-		Log.e(TAG, "write:" + str);
-		if (mCharacteristic != null) {
-			final int charaProp = mCharacteristic.getProperties();
-			if ((charaProp | BluetoothGattCharacteristic.PROPERTY_WRITE) > 0) {
-				byte[] value = new byte[20];
-				value[0] = (byte) 0x00;
-				if (str != null && str.length() > 0) {
-					WriteBytes = DataFormatUtils.hex2byte(str.getBytes());
-				}
-				mCharacteristic.setValue(value[0], BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-				mCharacteristic.setValue(WriteBytes);
-				if (mBluetoothLeService != null) {
-					mBluetoothLeService.writeCharacteristic(mCharacteristic);
-
-					if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
-						mNotifyCharacteristic = mCharacteristic;
-//						mBluetoothLeService.setCharacteristicNotification(mCharacteristic, true);
-					}
-					return true;
-				}
-			}
-		} else {
-			Log.e(TAG, "当前设备未连接！");
-		}
-		return false;
-	}
-	public void write(String uuid,String content){
-		LogUtils.e("content:"+content);
-		if(mBluetoothLeService!=null){
+	public void write(String uuid, String content) {
+		LogUtils.e("content:" + content);
+		if (mBluetoothLeService != null) {
 			mBluetoothLeService.write(uuid, content);
 		}
-		
+
 	}
 
 	public void read(String result) {
-
-	}
-
-	public void handle() {
 
 	}
 

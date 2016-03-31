@@ -1,23 +1,20 @@
 package com.vui.bluelight.group;
 
-import java.security.PolicySpi;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.vui.bluelight.MainActivity;
 import com.vui.bluelight.R;
 import com.vui.bluelight.base.view.TopBarView;
-import com.vui.bluelight.ble.BleUtils;
+import com.vui.bluelight.ble.BleUtils2;
 import com.vui.bluelight.ble.BtDevice;
 import com.vui.bluelight.utils.LogUtils;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,16 +23,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 
 public class GroupFragment extends Fragment implements OnClickListener {
 	private TopBarView tbv;
@@ -108,7 +101,7 @@ public class GroupFragment extends Fragment implements OnClickListener {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				TextView tvw = new TextView(getActivity());
-				tvw.setText(BleUtils.mList.get(position).getName());
+				tvw.setText(BleUtils2.mList.get(position).getName());
 				tvw.setTextColor(Color.WHITE);
 				tvw.setTextSize(20);
 				tvw.setGravity(Gravity.CENTER);
@@ -123,13 +116,13 @@ public class GroupFragment extends Fragment implements OnClickListener {
 			@Override
 			public Object getItem(int position) {
 				// TODO Auto-generated method stub
-				return BleUtils.mList.get(position);
+				return BleUtils2.mList.get(position);
 			}
 
 			@Override
 			public int getCount() {
 				// TODO Auto-generated method stub
-				return BleUtils.mList.size();
+				return BleUtils2.mList.size();
 			}
 		});
 
@@ -231,10 +224,10 @@ public class GroupFragment extends Fragment implements OnClickListener {
 			if(selectType==0){//连接一组设备
 				
 			}else if(selectType==1){
-				BtDevice device=BleUtils.mList.get(selectPosition);
+				BtDevice device=BleUtils2.mList.get(selectPosition);
 				List<BtDevice> list=new ArrayList<BtDevice>();
 				list.add(device);
-				BleUtils.getInstance().connect(list);
+				BleUtils2.getInstance().connect(list);
 			}
 			break;
 		case R.id.tvw_delete_group:
@@ -251,7 +244,7 @@ public class GroupFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.tvw_connect_device:
 			LogUtils.e("connect device");
-			BleUtils.getInstance().connect(BleUtils.mList.get(selectPosition).getAddress());
+			BleUtils2.getInstance().connect(BleUtils2.mList.get(selectPosition).getAddress());
 			break;
 		case R.id.tvw_rename_device:
 			LogUtils.e("rename device");

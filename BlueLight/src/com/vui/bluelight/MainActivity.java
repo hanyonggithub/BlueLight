@@ -2,6 +2,7 @@ package com.vui.bluelight;
 
 import com.vui.bluelight.base.view.VisualizerView;
 import com.vui.bluelight.ble.BleUtils;
+import com.vui.bluelight.ble.BleUtils2;
 import com.vui.bluelight.main.BrightnessFragment;
 import com.vui.bluelight.main.HomeFragment;
 import com.vui.bluelight.main.UserFragment;
@@ -53,7 +54,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		HomeFragment homeFragment = new HomeFragment();
 		fm.beginTransaction().replace(R.id.flt_content, homeFragment, "homeFrg").commit();
 		
-		BleUtils.getInstance().initBt(this);
+		BleUtils2.getInstance().initBt(this);
 	}
 
 	public void replaceFrg(Fragment frg, String tag) {
@@ -78,13 +79,13 @@ public class MainActivity extends Activity implements OnClickListener {
 				BleUtils.getInstance().write(BleUtils.CHAR_UUID,order_close_light);*/
 				
 				String order="a7ffffffffffffff55";
-				BleUtils.getInstance().write(BleUtils.CHAR_UUID,order);
+				BleUtils2.getInstance().write(BleUtils2.CHAR_UUID,order);
 				
 				isOn=false;
 			}else{
 				//开灯
 				String order_open_light="a4b2ffffffffffff55";
-				BleUtils.getInstance().write(BleUtils.CHAR_UUID,order_open_light);
+				BleUtils2.getInstance().write(BleUtils2.CHAR_UUID,order_open_light);
 			
 				isOn=true;
 			}
@@ -162,7 +163,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		BleUtils.getInstance().destroyBt();
 
 	}
 }

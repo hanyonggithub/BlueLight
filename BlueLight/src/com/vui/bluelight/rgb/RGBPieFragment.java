@@ -2,6 +2,7 @@ package com.vui.bluelight.rgb;
 
 import com.vui.bluelight.R;
 import com.vui.bluelight.ble.BleUtils;
+import com.vui.bluelight.ble.BleUtils2;
 import com.vui.bluelight.customview.ColorPickerView;
 import com.vui.bluelight.customview.ColorPickerView.OnGetColorListener;
 import com.vui.bluelight.utils.DataFormatUtils;
@@ -37,7 +38,7 @@ public class RGBPieFragment extends Fragment{
 				
 //				((RGBMainActivity)getActivity()).setSelectedColor(color);
 				String deal="a3".concat(DataFormatUtils.toHexStr(Color.red(color))).concat(DataFormatUtils.toHexStr(Color.green(color))).concat(DataFormatUtils.toHexStr(Color.blue(color))).concat("00").concat("ffffff55");
-				BleUtils.getInstance().write(BleUtils.CHAR_UUID,deal);
+				BleUtils2.getInstance().write(BleUtils2.CHAR_UUID,deal);
 			}
 		});
 	}
