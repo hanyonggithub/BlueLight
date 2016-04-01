@@ -290,7 +290,7 @@ public class SwipeListView extends ListView {
         mIsShown = true;
     }
 
-    private void hiddenRight(View view) {
+    public void hiddenRight(View view) {
         if (mCurrentItemView == null) {
             return;
         }

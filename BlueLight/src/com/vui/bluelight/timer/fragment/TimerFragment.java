@@ -125,8 +125,15 @@ public class TimerFragment extends Fragment{
 				if(items!=null){
 					AlarmUtil.cancelAlarm(getActivity(), timerEntity.items.get(position).alarmTimes);
 					items.remove(position);
-					SwipeAdapter.saveToLocal(swipeAdapter.timerEntity,getActivity());				
-					swipeAdapter.notifyDataSetChanged();
+					mListView.hiddenRight(view);
+					SwipeAdapter.saveToLocal(swipeAdapter.timerEntity,getActivity());	
+					view.postDelayed(new Runnable() {
+						@Override
+						public void run() {								
+							swipeAdapter.notifyDataSetChanged();
+						}
+					}, 250);
+					
 				}else{
 					LogUtils.e("llpp==============items==null");
 				}
