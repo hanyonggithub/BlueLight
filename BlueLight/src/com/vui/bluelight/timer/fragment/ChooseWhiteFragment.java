@@ -7,17 +7,21 @@ import com.vui.bluelight.customview.RotateView;
 import com.vui.bluelight.customview.RotateView.OnColorChangeListener;
 import com.vui.bluelight.customview.TimerHalfRingView;
 import com.vui.bluelight.customview.WheelView;
+import com.vui.bluelight.utils.DataFormatUtils;
 import com.vui.bluelight.utils.LogUtils;
 import com.vui.bluelight.utils.ScreenUtils;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class ChooseWhiteFragment extends Fragment implements OnColorChangeListener {
+public class ChooseWhiteFragment extends Fragment implements OnColorChangeListener, OnTouchListener {
 	private View view;
 	private TimerHalfRingView cus_view_halring;
 	private WheelView wva2;
@@ -29,6 +33,7 @@ public class ChooseWhiteFragment extends Fragment implements OnColorChangeListen
 			initTitleBar(view);
 			initWheelView(view);
 		}
+		view.setOnTouchListener(this);
 		return view;
 	}
 
@@ -56,13 +61,17 @@ public class ChooseWhiteFragment extends Fragment implements OnColorChangeListen
 
 			if (timerRGBFrg!=null&&timerRGBFrg instanceof TimerRGBFragment) {
 
-				((TimerRGBFragment)timerRGBFrg).saveChoosedColorAndTime(dotColor,during);
+			
+				int w=wva2.getCurrentPosition();
+				String w_hex=DataFormatUtils.toHexStr((w*255/100));
+				int selectColor=Color.parseColor("#"+w_hex+"000000");
+				((TimerRGBFragment)timerRGBFrg).saveChoosedColorAndTime(selectColor,during);
 			}
 		}
 		getFragmentManager().popBackStack();
 	}
 
-	private static final int BRIGHTNESS_MAX=99;
+	private static final int BRIGHTNESS_MAX=100;
 	private static final int BRIGHTNESS_MIN=0;
 	private int during=0;
 	private int dotColor;
@@ -78,10 +87,25 @@ public class ChooseWhiteFragment extends Fragment implements OnColorChangeListen
 		wva2.setIsDrawLine(false);
 		wva2.setOffset(1);
 		wva2.setItems(getSetTime(BRIGHTNESS_MIN, BRIGHTNESS_MAX));
-		wva2.setCurrentPosition((BRIGHTNESS_MAX-BRIGHTNESS_MIN)/2+1);
+		wva2.setCurrentPosition((BRIGHTNESS_MAX-BRIGHTNESS_MIN)/2);
 		wva2.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
 			@Override
 			public void onSelected(int selectedIndex, String item) {
+				LogUtils.e("selectedindex="+selectedIndex+",item="+item);
+				try {
+					int index = Integer.parseInt(item);
+					float radius = 0;
+					if (index >= 0 && index <= 50) {
+						radius=(index*180/100)+270;
+					}else if(index>50&&index<=100){
+						radius=(index-50)*180/100;
+					}
+					LogUtils.e("index" + Integer.parseInt(item) + ",rotation=" + radius);
+					timer_ring.setRotation(radius);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 			}
 		});
 
@@ -97,6 +121,7 @@ public class ChooseWhiteFragment extends Fragment implements OnColorChangeListen
 			@Override
 			public void onSelected(int selectedIndex, String item) {
 				during = Integer.parseInt(item);
+				
 			}
 		});
 	}
@@ -110,15 +135,19 @@ public class ChooseWhiteFragment extends Fragment implements OnColorChangeListen
 	}
 
 	@Override
-	public void onColorChange(int color,float angle) {
+	public void onColorChange(int color,float angle,int mode) {
 		dotColor=color;
 		cus_view_halring.setDotColor(dotColor);
-		//-360-360
-		if(angle<0){
-			angle+=360;
+		
+		if(mode==0){
+			//-360-360
+			if(angle<0){
+				angle+=360;
+			}
+			int wheelNumber_new = getWheelNumber(angle);	
+				wva2.setCurrentPosition(wheelNumber_new);	
 		}
-		int wheelNumber_new = getWheelNumber(angle);	
-			wva2.setCurrentPosition(wheelNumber_new);	
+		
 	}
 
 	private int getWheelNumber(float angle) {
@@ -145,4 +174,11 @@ public class ChooseWhiteFragment extends Fragment implements OnColorChangeListen
 		LogUtils.i("llpp:--旋转的角度为："+angle);
 		return (int) number;
 	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

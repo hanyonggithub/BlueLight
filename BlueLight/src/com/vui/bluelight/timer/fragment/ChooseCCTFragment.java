@@ -14,12 +14,14 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class ChooseCCTFragment extends Fragment implements OnColorChangeListener {
+public class ChooseCCTFragment extends Fragment implements OnColorChangeListener, OnTouchListener {
 	private View view;
 	private TimerHalfRingView cus_view_halring;
 	private WheelView wva2;
@@ -31,6 +33,7 @@ public class ChooseCCTFragment extends Fragment implements OnColorChangeListener
 			initTitleBar(view);
 			initWheelView(view);
 		}
+		view.setOnTouchListener(this);
 		return view;
 	}
 
@@ -112,7 +115,7 @@ public class ChooseCCTFragment extends Fragment implements OnColorChangeListener
 	}
 
 	@Override
-	public void onColorChange(int color,float angle) {
+	public void onColorChange(int color,float angle,int mode) {
 		dotColor=color;
 		cus_view_halring.setDotColor(dotColor);
 		//-360-360
@@ -146,5 +149,11 @@ public class ChooseCCTFragment extends Fragment implements OnColorChangeListener
 		LogUtils.i("number===："+number);
 		LogUtils.i("llpp:--旋转的角度为："+angle);
 		return (int) number;
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }

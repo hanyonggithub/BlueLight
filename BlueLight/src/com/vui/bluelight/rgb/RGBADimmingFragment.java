@@ -61,6 +61,19 @@ public class RGBADimmingFragment extends Fragment implements OnColorChangeListen
 		wva2.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
 			@Override
 			public void onSelected(int selectedIndex, String item) {
+				try {
+					int index = Integer.parseInt(item);
+					float radius = 0;
+					if (index >= 0 && index <= 50) {
+						radius=(index*180/100)+270;
+					}else if(index>50&&index<=100){
+						radius=(index-50)*180/100;
+					}
+					LogUtils.e("index" + Integer.parseInt(item) + ",rotation=" + radius);
+					timer_ring.setRotation(radius);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		timer_ring.setOnColorChangeListener(this);
@@ -75,15 +88,18 @@ public class RGBADimmingFragment extends Fragment implements OnColorChangeListen
 	}
 
 	@Override
-	public void onColorChange(int color,float angle) {
+	public void onColorChange(int color,float angle,int mode) {
 		dotColor=color;
 		cus_view_halring.setDotColor(dotColor);
 		//-360-360
-		if(angle<0){
-			angle+=360;
+		if(mode==0){
+			if(angle<0){
+				angle+=360;
+			}
+			int wheelNumber_new = getWheelNumber(angle);	
+				wva2.setCurrentPosition(wheelNumber_new);
 		}
-		int wheelNumber_new = getWheelNumber(angle);	
-			wva2.setCurrentPosition(wheelNumber_new);	
+			
 	}
 
 	private int getWheelNumber(float angle) {

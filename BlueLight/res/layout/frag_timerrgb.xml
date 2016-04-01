@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     android:background="#1BA4CB"
     android:orientation="vertical" >
-
-    <include 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/v_topbar"
-        />
+   <com.vui.bluelight.base.view.TopBarView
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
     <RadioGroup
         android:id="@+id/rg_onoff"
         android:layout_width="match_parent"
@@ -54,7 +53,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:padding="5dp"
-        android:text="lights on 0hrs and 0 munites later"
+        android:text="lights on 0 hrs and 0 munites later"
         android:textColor="#ffffff"
         android:textSize="14sp" />
 

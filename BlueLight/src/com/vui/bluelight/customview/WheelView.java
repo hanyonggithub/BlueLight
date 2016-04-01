@@ -178,8 +178,10 @@ public class WheelView extends ScrollView {
         tv.setTextSize(textSizeNormal);
         tv.setText(item);
         tv.setGravity(Gravity.CENTER);
+    
+        
         int padding = dip2px(5);
-        tv.setPadding(padding, padding, dip2px(9), dip2px(3));
+        tv.setPadding(0, padding,0, dip2px(5));
         if (0 == itemHeight) {
             itemHeight = getViewMeasuredHeight(tv);
            // Log.d(TAG, "itemHeight: " + itemHeight);
@@ -335,6 +337,10 @@ public class WheelView extends ScrollView {
         });
 
     }
+    
+    public int getCurrentPosition(){
+    	return selectedIndex;
+    }
 
     /**
      * 获取选择的item
@@ -357,8 +363,7 @@ public class WheelView extends ScrollView {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_UP) {
-
-            startScrollerTask();
+        	  startScrollerTask();
         }
         return super.onTouchEvent(ev);
     }

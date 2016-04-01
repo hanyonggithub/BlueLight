@@ -18,16 +18,19 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MusicListFragment extends Fragment implements OnClickListener{
+public class MusicListFragment extends Fragment implements OnClickListener, OnTouchListener{
 
 	private MusicService mService;//音乐服务
 	private TopBarView tbv;
@@ -37,6 +40,10 @@ public class MusicListFragment extends Fragment implements OnClickListener{
 	private TextView tvw_current_music_name;
 	private TextView tvw_current_music_author;
 	private TextView tvw_current_music_duration;
+	private LinearLayout llt_current_music;
+	private View first_divider;
+	
+	private int mode;//0 音乐播放，1 音乐定时
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,6 +56,7 @@ public class MusicListFragment extends Fragment implements OnClickListener{
 		if(view!=null&&view.getParent()!=null){
 			((ViewGroup)view.getParent()).removeView(view);
 		}
+		view.setOnTouchListener(this);
 		return view;
 	}
 	
@@ -60,9 +68,10 @@ public class MusicListFragment extends Fragment implements OnClickListener{
 		tvw_current_music_name=(TextView) view.findViewById(R.id.tvw_current_music_name);
 		tvw_current_music_author=(TextView) view.findViewById(R.id.tvw_current_music_author);
 		tvw_current_music_duration=(TextView) view.findViewById(R.id.tvw_current_music_duration);
-		
+		llt_current_music=(LinearLayout) view.findViewById(R.id.llt_current_music);
+		first_divider=view.findViewById(R.id.first_divider);
 		tbv.setTitleText("localmusic");
-		tbv.setRightText("online music");
+	
 		lvw_music_list.setAdapter(adapter);
 		lvw_music_list.setOnItemClickListener(new OnItemClickListener() {
 
@@ -77,6 +86,14 @@ public class MusicListFragment extends Fragment implements OnClickListener{
 		
 		((MainActivity)getActivity()).getBottom().setVisibility(View.GONE);
 		tbv.getLeftBtn().setOnClickListener(this);
+		if(mode==0){
+			tbv.setRightText("online music");
+			llt_current_music.setVisibility(View.VISIBLE);
+		}else if(mode==1){
+			tbv.setRightText("OK");
+			llt_current_music.setVisibility(View.GONE);
+			first_divider.setVisibility(View.GONE);
+		}
 		
 		
 	}
@@ -84,6 +101,10 @@ public class MusicListFragment extends Fragment implements OnClickListener{
 		tvw_current_music_name.setText(music.getTitle());
 		tvw_current_music_author.setText(music.getArtist());
 		tvw_current_music_duration.setText(TimeUtils.parseMills2TimeStr(music.getDuration()));
+	}
+	public void setMode(int mode){
+			this.mode=mode;
+		
 	}
 
 	public void onDestroy() {
@@ -164,6 +185,11 @@ public class MusicListFragment extends Fragment implements OnClickListener{
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		return true;
 	}
 	
 }

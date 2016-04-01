@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.vui.bluelight.MainActivity;
+import com.vui.bluelight.customview.SwipeAdapter;
+import com.vui.bluelight.timer.entity.TimerEntity;
+import com.vui.bluelight.timer.fragment.TimerFragment;
 import com.vui.bluelight.utils.DataFormatUtils;
 import com.vui.bluelight.utils.LogUtils;
 
@@ -30,7 +34,7 @@ public class BleUtils2 {
 	private static final String TAG = "BleUtils2";
 
 	public static List<BtDevice> mList = new ArrayList<BtDevice>();// 所有扫描到设备
-	
+
 	public static Map<String, List<BtDevice>> groupMap = new HashMap<String, List<BtDevice>>();// 分组设备
 
 	public static List<BtDevice> selectDevices = new ArrayList<BtDevice>();// 选中要连接的设备
@@ -140,7 +144,7 @@ public class BleUtils2 {
 						mList.add(mDevice);
 						Log.d(TAG, "deviceName=" + device.getName() + ",deviceAddress=" + device.getAddress() + ",size="
 								+ mList.size());
-						// 读设备特征值，分组信息
+								// 读设备特征值，分组信息
 
 						// 如需自动连接，则连接，考虑用队列
 
@@ -221,13 +225,13 @@ public class BleUtils2 {
 		@Override
 		public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
 			if (status == BluetoothGatt.GATT_SUCCESS) {
-				handleData(gatt,characteristic);
+				handleData(gatt, characteristic);
 			}
 		}
 
 		@Override
 		public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-			handleData(gatt,characteristic);
+			handleData(gatt, characteristic);
 		}
 
 		@Override
@@ -236,7 +240,7 @@ public class BleUtils2 {
 		}
 	};
 
-	private void handleData(BluetoothGatt gatt,BluetoothGattCharacteristic characteristic) {
+	private void handleData(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
 
 		// This is special handling for the Heart Rate Measurement profile. Data
 		// parsing is
@@ -259,14 +263,39 @@ public class BleUtils2 {
 			final byte[] data = characteristic.getValue();
 			if (data != null && data.length > 0) {
 				final StringBuilder stringBuilder = new StringBuilder(data.length);
-				for (byte byteChar : data)
+				for (byte byteChar : data) {
 					stringBuilder.append(String.format("%02X ", byteChar));
-				
-				LogUtils.e("recieve data:" +stringBuilder.toString());
-				
-				
+				}
+
+				LogUtils.e("recieve data:" + stringBuilder.toString());
+
+			/*	TimerEntity.Data timerData = TimerEntity.parseToData(stringBuilder.toString());
+				if (timerData != null) {
+					TimerEntity timerEntity = SwipeAdapter.getTimerEntity(context);
+					if (timerEntity == null) {
+						timerEntity = new TimerEntity();
+						timerEntity.items = new ArrayList<TimerEntity.Data>();
+					}
+					timerEntity.items.add(timerData);
+					LogUtils.e("添加定时");
+					boolean saveToLocal = SwipeAdapter.saveToLocal(timerEntity, context);
+					LogUtils.e("保存定时");
+					SwipeAdapter.getTimerEntity(context);
+					((MainActivity) context).runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							TimerFragment timerFrg = (TimerFragment) ((MainActivity) context).getFragmentManager()
+									.findFragmentByTag("timerFrg");
+							if (timerFrg != null) {
+								timerFrg.swipeAdapter.notifyDataSetChanged();
+							}
+						}
+					});
+
+				}*/
+
 			}
-			
+
 		}
 	}
 

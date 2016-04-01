@@ -3,6 +3,7 @@ import java.util.List;
 
 import com.vui.bluelight.MainActivity;
 import com.vui.bluelight.R;
+import com.vui.bluelight.base.view.TopBarView;
 import com.vui.bluelight.customview.SwipeAdapter;
 import com.vui.bluelight.customview.SwipeListView;
 import com.vui.bluelight.timer.AlarmUtil;
@@ -27,6 +28,7 @@ public class TimerFragment extends Fragment{
 	private SwipeListView mListView;
 	private Activity activity;
 	private SwipeAdapter swipeAdapter;
+	private TopBarView tbv;
 
 
 	@Override
@@ -68,19 +70,20 @@ public class TimerFragment extends Fragment{
 	}
 	
 	private void initTitleBar(View view) {
-		View back = view.findViewById(R.id.back);
-		View right_btn = view.findViewById(R.id.right_btn);
-		back.setOnClickListener(new OnClickListener() {
+		tbv=(TopBarView) view.findViewById(R.id.topbar);
+		tbv.setTitleText("timer");
+		tbv.getLeftBtn().setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 			getFragmentManager().popBackStack();
 			}
 		});
-		right_btn.setOnClickListener(new OnClickListener() {
+		tbv.getRightBtn().setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				int[] latestTaskTime = AlarmUtil.getLatestTaskTime(getActivity(),false);
-				Toast.makeText(getActivity(), "获取最近的灯光任务", 0).show();
+//				int[] latestTaskTime = AlarmUtil.getLatestTaskTime(getActivity(),false);
+				getFragmentManager().popBackStack();
+				
 			}
 		});
 	}

@@ -14,12 +14,14 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class ChooseRGBFragment extends Fragment implements OnColorChangeListener{
+public class ChooseRGBFragment extends Fragment implements OnColorChangeListener, OnTouchListener{
 	private View view;
 	private TimerHalfRingView cus_view_halring;
 	private WheelView wva2;
@@ -33,6 +35,7 @@ public class ChooseRGBFragment extends Fragment implements OnColorChangeListener
 			initTitleBar(view);
 			initWheelView(view);
 		}
+		view.setOnTouchListener(this);
 		return view;
 	}
 
@@ -66,8 +69,8 @@ public class ChooseRGBFragment extends Fragment implements OnColorChangeListener
 		getFragmentManager().popBackStack();
 	}
 
-	private static final int BRIGHTNESS_MAX=30;
-	private static final int BRIGHTNESS_MIN=15;
+	private static final int BRIGHTNESS_MAX=100;
+	private static final int BRIGHTNESS_MIN=0;
 	int during=0;
 	private void initWheelView(View view ) {
 		wva2 = (WheelView) view.findViewById(R.id.main_wv2);
@@ -91,7 +94,7 @@ public class ChooseRGBFragment extends Fragment implements OnColorChangeListener
 				super.onSelected(selectedIndex, item);
 				int brightness = Integer.parseInt(item)+BRIGHTNESS_MIN;
 				cus_view_halring.setDotBrightness(brightness);
-				onColorChange(dotColor,0);
+				onColorChange(dotColor,0,0);
 				LogUtils.i("llpp:===============设置点点的亮度为："+brightness);
 
 			}
@@ -101,7 +104,7 @@ public class ChooseRGBFragment extends Fragment implements OnColorChangeListener
 		main_wv.setCustomWidth(ScreenUtils.getScreenWidth(getActivity())/8);
 		main_wv.setIsDrawLine(false);
 		main_wv.setOffset(1);
-		main_wv.setItems(getSetTime(0,30));
+		main_wv.setItems(getSetTime(0,15));
 		//main_wv.setCurrentPosition(50);
 		main_wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
 			@Override
@@ -122,7 +125,7 @@ public class ChooseRGBFragment extends Fragment implements OnColorChangeListener
 
 	int dotColor;
 	@Override
-	public void onColorChange(int color,float angle) {
+	public void onColorChange(int color,float angle,int mode) {
 		dotColor=color;
 		int dotBrightness = cus_view_halring.getDotBrightness();
 		int red = Color.red(color)*dotBrightness/BRIGHTNESS_MAX;
@@ -130,5 +133,11 @@ public class ChooseRGBFragment extends Fragment implements OnColorChangeListener
 		int blue = Color.blue(color)*dotBrightness/BRIGHTNESS_MAX;
 		int argb = Color.rgb(red, green, blue);
 		cus_view_halring.setDotColor(argb);
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }

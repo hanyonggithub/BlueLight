@@ -78,9 +78,6 @@ public class MainActivity extends Activity implements OnClickListener {
 				/*String order_close_light="a4b3ffffffffffff55";
 				BleUtils.getInstance().write(BleUtils.CHAR_UUID,order_close_light);*/
 				
-				String order="a7ffffffffffffff55";
-				BleUtils2.getInstance().write(BleUtils2.CHAR_UUID,order);
-				
 				isOn=false;
 			}else{
 				//开灯

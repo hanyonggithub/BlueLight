@@ -6,8 +6,12 @@ import java.util.List;
 
 import com.vui.bluelight.MainActivity;
 import com.vui.bluelight.R;
+import com.vui.bluelight.base.view.TopBarView;
+import com.vui.bluelight.ble.BleUtils2;
 import com.vui.bluelight.customview.SwipeAdapter;
 import com.vui.bluelight.customview.WheelView;
+import com.vui.bluelight.mod.ModeFlickerFragment;
+import com.vui.bluelight.music.MusicListFragment;
 import com.vui.bluelight.timer.AlarmUtil;
 import com.vui.bluelight.timer.entity.TimerEntity;
 import com.vui.bluelight.utils.LogUtils;
@@ -34,6 +38,7 @@ import android.widget.Toast;
 public class TimerRGBFragment extends Fragment{
 	private TimerEntity timerEntity;
 	private TimerEntity.Data newTimer;
+	private TopBarView tbv;
 
 
 	@Override
@@ -49,22 +54,21 @@ public class TimerRGBFragment extends Fragment{
 			initChooseView(view);
 			initTypeChooseView(view);
 		}
-
-
 		return view;
 	}
 
 	private void initTitleBar(View view) {
-		View back = view.findViewById(R.id.back);
-		View right_btn = view.findViewById(R.id.right_btn);
-		back.setOnClickListener(new OnClickListener() {
+		tbv=(TopBarView) view.findViewById(R.id.topbar);
+		tbv.setTitleText("timer");
+	
+		tbv.getLeftBtn().setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				backTimerFragment();
 			}
 
 		});
-		right_btn.setOnClickListener(new OnClickListener() {
+		tbv.getRightBtn().setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {			
 				boolean checkCanCommit = checkCanCommit();
@@ -73,11 +77,12 @@ public class TimerRGBFragment extends Fragment{
 					timerEntity.items.add(newTimer);
 					boolean saveToLocal = SwipeAdapter.saveToLocal(timerEntity, getActivity());
 					LogUtils.i("创建的定时任务保存到本地是否成功："+saveToLocal);
+					LogUtils.e("order="+TimerEntity.parseToOrder(newTimer, 1));
+					BleUtils2.getInstance().write(BleUtils2.CHAR_UUID, TimerEntity.parseToOrder(newTimer, 1));
 					if(saveToLocal){//开始定时启动该任务
 						if(newTimer.state==1){
 							AlarmUtil.setAlarm(getActivity(), newTimer.alarmTimes);
 						}
-						
 					}
 					backTimerFragment();
 				}else{
@@ -200,6 +205,8 @@ public class TimerRGBFragment extends Fragment{
 		bt_choose.setTag(TimerEntity.TIMERTYPE_RGB);
 		bt_choose.setOnClickListener(new OnClickListener() {		
 			private ChooseWhiteFragment chooseWhiteFragment;
+			private MusicListFragment musicListFrg;
+			private ModeFlickerFragment modeFlickerFrg;
 
 			@Override
 			public void onClick(View v) {	
@@ -220,11 +227,18 @@ public class TimerRGBFragment extends Fragment{
 					switchFragment(chooseWhiteFragment);
 					break;
 				case TimerEntity.TIMERTYPE_MUSIC:
-				/*	Intent intent=new Intent(getActivity(), MusicListActivity.class);
-					startActivity(intent);*/
+					if(musicListFrg==null){
+						musicListFrg = new MusicListFragment();
+					}
+					musicListFrg.setMode(1);
+					switchFragment(musicListFrg);
 					break;
 				case TimerEntity.TIMERTYPE_FLICKER:
-					
+					if(modeFlickerFrg==null){
+						modeFlickerFrg = new ModeFlickerFragment();
+					}
+					modeFlickerFrg.setMode(1);
+					switchFragment(modeFlickerFrg);
 					break;
 				default:
 					break;
@@ -383,7 +397,7 @@ public class TimerRGBFragment extends Fragment{
 
 	private void updateTipData( int[] tipDistanceTime) {
 		if(newTimer.type==1){//如果选则的是 lights on
-			tv_tip_time.setText("lights on "+tipDistanceTime[0]+" hours and "+
+			tv_tip_time.setText("lights on "+tipDistanceTime[0]+" hrs and "+
 					tipDistanceTime[1]+" minutes later");
 		}else{//如果选则的是 lights off
 			tv_tip_time.setText("lights off "+tipDistanceTime[0]+" hours and "+

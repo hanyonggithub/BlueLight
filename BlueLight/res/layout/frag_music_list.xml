@@ -26,13 +26,19 @@
             android:id="@+id/tvw_current_music_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:singleLine="true"
             android:text="Beat It"
             android:textColor="@android:color/white"
-            android:textSize="30sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal" >
 
             <TextView
@@ -42,7 +48,7 @@
                 android:layout_weight="1"
                 android:text="Machel Jackson"
                 android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tvw_current_music_duration"
@@ -50,11 +56,12 @@
                 android:layout_height="wrap_content"
                 android:text="04:40"
                 android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                android:textSize="13sp" />
         </LinearLayout>
     </LinearLayout>
 
     <View
+        android:id="@+id/first_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="30dp"

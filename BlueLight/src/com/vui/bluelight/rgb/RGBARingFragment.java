@@ -38,8 +38,8 @@ public class RGBARingFragment extends Fragment implements OnColorChangeListener{
 		return view;
 	}
 
-	private static final int BRIGHTNESS_MAX=30;
-	private static final int BRIGHTNESS_MIN=15;
+	private static final int BRIGHTNESS_MAX=100;
+	private static final int BRIGHTNESS_MIN=0;
 	int during=0;
 	private void initWheelView(View view ) {
 		wva2 = (WheelView) view.findViewById(R.id.main_wv2);
@@ -63,7 +63,7 @@ public class RGBARingFragment extends Fragment implements OnColorChangeListener{
 				super.onSelected(selectedIndex, item);
 				int brightness = Integer.parseInt(item)+BRIGHTNESS_MIN;
 				cus_view_halring.setDotBrightness(brightness);
-				onColorChange(dotColor,0);
+				onColorChange(dotColor,0,0);
 				LogUtils.i("llpp:===============设置点点的亮度为："+brightness);
 
 			}
@@ -82,7 +82,7 @@ public class RGBARingFragment extends Fragment implements OnColorChangeListener{
 	int dotColor;
 	private TimerHalfRingView cus_view_halring;
 	@Override
-	public void onColorChange(int color,float angle) {
+	public void onColorChange(int color,float angle,int mode) {
 		dotColor=color;
 		int dotBrightness = cus_view_halring.getDotBrightness();
 		int red = Color.red(color)*dotBrightness/BRIGHTNESS_MAX;

@@ -1,5 +1,7 @@
 package com.vui.bluelight.utils;
 
+import java.util.Random;
+
 public class DataFormatUtils {
 	
 	public static byte[] hex2byte(byte[] b) {
@@ -23,5 +25,11 @@ public class DataFormatUtils {
 			result="0".concat(result);
 		}
 		return result;
+	}
+	
+	public static String getSUM(){
+		Random random=new Random();
+		return DataFormatUtils.toHexStr(random.nextInt(255));
+		
 	}
 }

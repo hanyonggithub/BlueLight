@@ -3,22 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <FrameLayout
-        android:id="@+id/fl_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        <include
+   <com.vui.bluelight.base.view.TopBarView
+            android:id="@+id/topbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/v_topbar" />
-    </FrameLayout>
+            />
 
     <TextView
         android:id="@+id/tv_frg_time"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:layout_below="@id/fl_content"
+        android:layout_below="@id/topbar"
         android:background="#1BA4CB"
         android:gravity="center"
         android:text="12:35"
